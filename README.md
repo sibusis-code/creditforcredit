@@ -13,9 +13,12 @@ site is built so anyone can maintain or extend it.
 
 ## 1. The Spine (positioning — do not drift from this)
 
-The programme is **not** sold as "AI training courses." It is sold as **credit-bearing modules that
-ladder toward a national qualification**. The whole site revolves around this spine (boss-approved,
-28 Jun 2026):
+**What we sell:** **credit-bearing modules / skills courses** that deliver **B-BBEE returns**. We do
+**not** sell full qualifications, and we do **not** position this as "AI training courses." Each
+module is a small, claimable, credit-bearing unit; the **Occupational Certificate is the *destination*
+credits ladder toward — never the thing being sold.** Lead with *modules → credits → B-BBEE returns*,
+with the qualification as the optional end-point. The whole site revolves around this spine
+(boss-approved, 28 Jun 2026):
 
 1. **Start small, no big commitment** — enrol someone in a single credit-bearing module (days, not months). No need to commit anyone to a full qualification up front.
 2. **Credits accumulate over time** — every module carries credits toward the Occupational Certificate: Computer Technician (NQF 5, 282 credits); learners build toward certification at their own pace.
@@ -41,6 +44,33 @@ sector goes digital."*
   SPS earns B-BBEE Skills Development points along the way.
 - **Driver's-seat line:** AI is changing how the energy sector works — and the people who get ahead of
   it will be the ones who shape where it goes… Not training handed down — a path they own.
+
+---
+
+## The Engine — One Platform, Many Companies (white-label)
+
+This site is the **first instance of a reusable platform ("the engine")**. The *same* platform will be
+**replicated across Newgx-invested companies** — e.g. **SPS, Maziv, Funig, Inhance** — each as its own
+website: identical engine and product model, different company brand.
+
+The **product never changes** between companies: credit-bearing modules / skills courses → claimable
+**B-BBEE returns** → credits that ladder toward a national qualification.
+
+| Changes per company (the re-skin) | Stays the same (the engine) |
+|---|---|
+| Company name & logo (`sps-dark-logo.svg`) | Page structure, sections & components |
+| Accent colours (`--accent`, `--accent-green`) | Monochrome design system (B/W/grey + sparing accents) |
+| Contact details (email, phone, hours) | The four pillars + modules→credits→B-BBEE→qualification spine |
+| Industry line (SPS = solar; Maziv = fibre/telecoms; etc.) | `course.html` template + catalog/content model |
+| Hero wording nuance | Video-lightbox + PDF-download mechanics |
+| Accreditation partner/number (if not Centenary Networks) | Nav, footer, CTA patterns (`Explore Modules` / `Talk to Our Team`) |
+
+**Recommended build:** centralise every company-specific value into a single **`BRAND` config block**
+(name, logo path, accent colours, contact, industry line, accreditation details). Launching a new
+company site then = copy the repo, edit one block, drop in the logo. *Status: proposed — not yet
+refactored; the current site has SPS values inline.*
+
+**Repo model:** one repo + GitHub Pages site per company (this one is `sibusis-code/sps.academy`).
 
 ---
 
