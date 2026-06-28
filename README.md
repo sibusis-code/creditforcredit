@@ -206,8 +206,9 @@ accredited qualification.
 
 - [x] **Align site to the one-pager** — micro-learning/credits language, energy-sector framing, "Will AI replace you…" hook, and "Start Building / Talk to Our Team" CTAs across home + course template.
 - [x] **Per-course module outlines** — each of the 20 modules now has its own tailored curriculum (`MOD_*` arrays in `course.html`).
+- [x] **Working contact form** — wired to **FormSubmit.co → accounts@cn.co.za** (redirects to `thanks.html`); real email/phone in place. *First submission triggers a one-time activation email to accounts@cn.co.za — click it to start receiving enquiries.*
+- [x] **AI assistant** — self-contained client-side helper (`Ask the Academy`) on both pages: finds modules, explains credits/B-BBEE/accreditation, routes to the team. No backend/API key (safe on static hosting); upgradeable to a live LLM later if a backend is added.
 - [ ] **Real content** — videos + PDFs + facilitator bios from SPS/Centenary.
-- [ ] **Working contact form** — currently a non-submitting placeholder; needs an email/Formspree endpoint, and real email/phone (currently `[email address]` / `[phone number]`).
 - [ ] **Energy-sector imagery** — tilt course/hero photography toward the energy industry (copy is already energy-framed).
 - [ ] **Custom domain** (e.g. `academy.sps…`) once decided.
 
