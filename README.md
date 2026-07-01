@@ -100,30 +100,39 @@ accents — never as the dominant colour. (Set by the boss, 27 Jun 2026.)
 
 ```
 sps/
-├── index.html              # Home: hero, AI-in-Action demo, why/about, course catalogue, contact
-├── course.html             # ONE data-driven course template — renders any course via ?c=<slug>
+├── index.html              # Home (lean): hero, 4 pillars, popular-modules teaser, CTA
+├── modules.html            # Modules hub: full catalogue + accredited pathway
+├── about.html              # About: driver's-seat, energy-sector line, accreditation
+├── ai-in-action.html       # Interactive AI demo + impact stats
+├── contact.html            # Contact details + working enquiry form
+├── course.html             # ONE data-driven MODULE template — renders any module via ?c=<slug>
 ├── ai-fundamentals.html    # Legacy URL → redirects to course.html?c=ai-fundamentals
+├── thanks.html             # Form submission confirmation page
+│
+├── styles.css              # SHARED stylesheet for every page (monochrome design system)
+├── site.js                 # SHARED: nav toggle, scroll shadow, scroll-reveal
+├── cards.js                # SHARED: module-card photo banners + links (Home + Modules)
+├── assistant.js            # SHARED: client-side "Ask the Academy" AI assistant
+├── neural.js               # Home hero neural-network canvas
+├── demo.js                 # AI-in-Action typewriter demo + counters
+│
 ├── sps-dark-logo.svg       # Brand mark
-├── resources/              # Downloadable PDF resources (placeholders, swappable)
-│   ├── ai-fundamentals-workbook.pdf
-│   ├── ai-fundamentals-slides.pdf
-│   ├── ai-tools-cheatsheet.pdf
-│   ├── ai-prompting-guide.pdf
-│   └── ai-reading-list.pdf
+├── resources/*.pdf         # Downloadable PDF resources (placeholders, swappable)
 ├── .gitattributes          # Marks PDFs/images as binary (prevents corruption)
 └── README.md               # This blueprint
 ```
 
-Each HTML file is **fully self-contained** (inline `<style>` and `<script>`) — there is no build
-step, bundler, or dependency to install.
+**Multi-page, shared-asset architecture** (no build step). Every page links `styles.css` + `site.js`
++ `assistant.js`, so design/behaviour lives in **one place** — ideal for the white-label goal
+(re-skin = edit `styles.css` tokens + swap logo). Nav links navigate between real pages; the current
+page is marked with `class="active"`.
 
 ### Key pages
-- **`index.html`** — the marketing home. Sections: hero · "AI in Action" interactive demo ·
-  why-it-works · about · **course catalogue** (cards link to course pages) · contact form · CTA.
-- **`course.html`** — the **Harvard-Online-style** course template, **video-heavy with PDF
-  downloads**, driven entirely by a JS catalog. Sections: course hero with intro video ·
-  "what you'll learn" · expandable module/lesson accordion (video lightbox) · video highlights
-  gallery · downloadable resources · facilitator · enrol CTA.
+- **Home / About / Modules / AI in Action / Contact** — one independent, lean, course-focused page each.
+- **`course.html`** — the **Harvard-Online-style** MODULE template, **video-heavy with PDF
+  downloads**, driven by a JS catalog (20 modules, each with its own curriculum). Sections: hero with
+  intro video · "what you'll learn" · module/lesson accordion (video lightbox) · video gallery ·
+  downloadable resources · facilitator · CTA.
 
 ---
 
