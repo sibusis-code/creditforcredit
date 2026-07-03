@@ -3,38 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPS Academy — Empowering the people who power SPS</title>
-<meta name="description" content="Credit-bearing AI and technical skills modules for SPS. Start small, stack credits toward a national qualification, and earn B-BBEE Skills Development points — delivered in association with Centenary Networks (QCTO).">
+<title>SPS Academy</title>
+<meta name="description" content="Credit-bearing AI and technical skills modules. Start small, stack credits toward a national qualification, and earn B-BBEE Skills Development points — delivered through an accredited provider.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="brand.js"></script>
 </head>
-<body>
+<body data-page="home" data-title="Empowering the people who power SPS">
 
-<!-- ============ NAV ============ -->
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></a>
-    <div class="nav-links" id="navLinks">
-      <a href="about.html" data-nav="about">About</a>
-      <a href="modules.html" data-nav="modules">Modules</a>
-      <a href="contact.html" data-nav="contact">Contact</a>
-      <a href="contact.html" class="nav-cta">Talk to Our Team</a>
-    </div>
-    <div class="nav-icons">
-      <a href="modules.html" aria-label="Search modules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-    </div>
-  </div>
-</nav>
+<!-- ============ NAV (rendered from brand.js) ============ -->
+<nav id="nav"></nav>
+<script>SITE.renderNav()</script>
 
 <!-- ============ HERO ============ -->
 <header class="hero">
   <div class="hero-photo" style="background-image:url(https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1800&q=80)"></div>
   <div class="hero-inner">
-    <h1>Welcome to SPS Academy</h1>
-    <p class="lead">Credit-bearing AI &amp; technical skills for the people who power SPS.</p>
+    <h1>Welcome to <span data-b="academyName">SPS Academy</span></h1>
+    <p class="lead">Credit-bearing AI &amp; technical skills for the people who power <span data-b="companyShort">SPS</span>.</p>
     <form class="hero-search" data-search-form>
       <input type="text" placeholder="What do you want to learn?" aria-label="Search modules">
       <button class="go" type="submit" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
@@ -88,7 +76,7 @@
   </div>
 </section>
 
-<!-- ============ HOW IT WORKS (our work) ============ -->
+<!-- ============ HOW IT WORKS ============ -->
 <section>
   <div class="wrap">
     <div class="split reveal">
@@ -96,8 +84,8 @@
       <div>
         <span class="eyebrow">How it works</span>
         <h2>Modules → credits → a qualification they keep</h2>
-        <p>SPS Academy isn't a one-off course. Each module is a small, credit-bearing unit your people can start in days — not months. Every module they complete carries credits toward the <strong>Occupational Certificate: Computer Technician</strong> (NQF 5, 282 credits).</p>
-        <p>Delivered through an accredited provider, every module also supports your <strong>B-BBEE Skills Development</strong> scorecard — recognised training, properly documented. Your people build a portable national credential; SPS earns claimable skills spend along the way.</p>
+        <p><span data-b="academyName">SPS Academy</span> isn't a one-off course. Each module is a small, credit-bearing unit your people can start in days — not months. Every module they complete carries credits toward the <strong data-b="qualification">Occupational Certificate: Computer Technician</strong> (<span data-b="nqf">NQF 5</span>, <span data-b="credits">282</span> credits).</p>
+        <p>Delivered through an accredited provider, every module also supports your <strong>B-BBEE Skills Development</strong> scorecard — recognised training, properly documented. Your people build a portable national credential; the company earns claimable skills spend along the way.</p>
         <a href="modules.html" class="btn btn-primary">Browse modules</a>
       </div>
     </div>
@@ -106,14 +94,14 @@
       <div class="split-media grad" style="display:grid;place-items:center;color:#fff;text-align:center;padding:30px">
         <div>
           <div style="font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:10px;font-weight:600">Accredited Qualification</div>
-          <div style="font-size:56px;font-weight:800;line-height:1">NQF&nbsp;5</div>
-          <div style="opacity:.9;margin-top:10px;font-size:15px">Qualification ID 101408 · 282 credits</div>
+          <div style="font-size:56px;font-weight:800;line-height:1" data-b="nqf">NQF&nbsp;5</div>
+          <div style="opacity:.9;margin-top:10px;font-size:15px">Qualification ID <span data-b="qualId">101408</span> · <span data-b="credits">282</span> credits</div>
         </div>
       </div>
       <div>
         <span class="eyebrow">The destination</span>
         <h3>The accredited pathway</h3>
-        <p>The Occupational Certificate: Computer Technician is the nationally accredited qualification the shorter modules ladder toward — delivered in association with <strong>Centenary Networks (Pty) Ltd</strong>, accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills Development Provider.</p>
+        <p>The <span data-b="qualification">Occupational Certificate: Computer Technician</span> is the nationally accredited qualification the shorter modules ladder toward — delivered in association with <strong data-b="provider">Centenary Networks (Pty) Ltd</strong>, accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills Development Provider.</p>
         <p>Learners choose their modules, build credits at their own pace around their work, and earn a credential that's theirs to keep.</p>
         <a href="course.html?c=computer-technician" class="btn btn-soft">Learn more</a>
       </div>
@@ -121,18 +109,18 @@
   </div>
 </section>
 
-<!-- ============ WHY SPS (pillars) ============ -->
+<!-- ============ WHY (pillars) ============ -->
 <section class="section-soft">
   <div class="wrap">
     <div class="sec-head center reveal">
-      <span class="eyebrow">For SPS teams</span>
-      <h2>Why this works for SPS</h2>
+      <span class="eyebrow">For your teams</span>
+      <h2>Why this works</h2>
     </div>
     <div class="pillars">
       <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Start small</h3><p>Enrol someone in a single credit-bearing module — days, not months. No need to commit anyone to a full qualification up front.</p></div>
-      <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div><h3>Credits accumulate</h3><p>Every module carries credits toward the Occupational Certificate: Computer Technician. Learners build toward certification at their own pace.</p></div>
+      <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div><h3>Credits accumulate</h3><p>Every module carries credits toward the accredited national qualification. Learners build toward certification at their own pace.</p></div>
       <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></div><h3>Skills spend that scores</h3><p>Delivered through an accredited provider, so each module supports your B-BBEE Skills Development scorecard — recognised, documented training.</p></div>
-      <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg></div><h3>A credential they keep</h3><p>Employees earn a national, portable qualification — a real reason to stay, learn, and grow with SPS as the sector goes digital.</p></div>
+      <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg></div><h3>A credential they keep</h3><p>Employees earn a national, portable qualification — a real reason to stay, learn, and grow as the sector goes digital.</p></div>
     </div>
   </div>
 </section>
@@ -144,10 +132,10 @@
     <div class="sec-head center reveal">
       <span class="eyebrow">Accredited delivery</span>
       <h2>Our accreditation partner</h2>
-      <p>SPS Academy operates in association with Centenary Networks, a QCTO-accredited Skills Development Provider — so your training is recognised and scorecard-ready.</p>
+      <p>This academy operates in association with an accredited Skills Development Provider — so your training is recognised and scorecard-ready.</p>
     </div>
     <div class="partners reveal">
-      <div class="plogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg> Centenary Networks (QCTO)</div>
+      <div class="plogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg> <span data-b="providerShort">Centenary Networks (QCTO)</span></div>
       <div class="plogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> QCTO Skills Development</div>
       <div class="plogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> B-BBEE Scorecard Aligned</div>
     </div>
@@ -163,42 +151,9 @@
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
-<footer>
-  <div class="wrap">
-    <div class="foot-logo"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></div>
-    <div class="foot-grid">
-      <div class="foot-addr">
-        SPS Academy — in association with Centenary Networks (Pty) Ltd<br>
-        QCTO-accredited Skills Development Provider<br>
-        Online · Nationwide, South Africa<br>
-        <a href="mailto:accounts@cn.co.za" style="color:var(--orange);font-weight:600">accounts@cn.co.za</a>
-      </div>
-      <div class="foot-col">
-        <h4>Explore</h4>
-        <a href="index.html">Home</a>
-        <a href="modules.html">Modules</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="foot-col">
-        <h4>Get in touch</h4>
-        <a href="contact.html">Talk to our team</a>
-        <a href="mailto:accounts@cn.co.za">accounts@cn.co.za</a>
-        <a href="tel:0123456789">012 345 6789</a>
-        <div class="foot-social">
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM3 8.75h3.85V21H3V8.75Zm6.3 0h3.7v1.68h.05a4.06 4.06 0 0 1 3.65-2c3.9 0 4.62 2.57 4.62 5.9V21h-3.85v-5.4c0-1.29 0-2.94-1.8-2.94s-2.07 1.4-2.07 2.85V21H9.3V8.75Z"/></svg></a>
-          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg></a>
-        </div>
-      </div>
-    </div>
-    <div class="foot-accred">
-      <strong>Accreditation</strong>
-      Modules are credit-bearing toward the Occupational Certificate: Computer Technician (NQF 5, Qualification ID 101408, 282 credits), delivered in association with Centenary Networks (Pty) Ltd, accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills Development Provider. Accreditation No. 07-QCTO/SDP180526182035, valid 15 May 2026 – 14 May 2031.
-    </div>
-    <div class="foot-copy">Modules are credit-bearing units toward an accredited national qualification. Content shown is illustrative pending final SPS/Centenary material. © 2026 SPS — Sustainable Power Solutions. All rights reserved.</div>
-  </div>
-</footer>
+<!-- ============ FOOTER (rendered from brand.js) ============ -->
+<footer id="siteFooter"></footer>
+<script>SITE.renderFooter()</script>
 
 <script src="catalog.js"></script>
 <script src="app.js"></script>

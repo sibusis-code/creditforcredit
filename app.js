@@ -8,6 +8,10 @@
   var $  = function(s,c){return (c||document).querySelector(s);};
   var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
   var M  = window.MODULES || [];
+  var B  = window.BRAND || {};
+
+  /* Fill brand placeholders (nav/footer are rendered inline per page) */
+  if(window.SITE){ window.SITE.applyText(); }
 
   /* ---------- NAV ---------- */
   var nav = $("#nav"), links = $("#navLinks"), toggle = $("#navToggle");
@@ -137,7 +141,7 @@
   if(detail){
     var slug = new URLSearchParams(location.search).get("c") || "ai-fundamentals";
     var m = M.filter(function(x){return x.slug===slug;})[0] || M[0];
-    document.title = m.title + " — SPS Academy";
+    document.title = m.title + " — " + (B.academyName || "Academy");
 
     var learnByTopic = {
       "Business":["Frame where AI creates measurable value","Apply everyday AI tools to real work tasks","Brief a team and set responsible-use ground rules","Spot risks, bias and where AI gets things wrong"],
@@ -146,7 +150,7 @@
       "Computer Science":["Understand the core technical concepts hands-on","Build and test a working example end to end","Read and adapt real code and models","Deploy your result to a real target"],
       "Health & Medicine":["Understand the foundations of AI in a clinical context","Interpret AI-assisted analysis critically","Recognise data, bias and safety considerations","Apply techniques to real biomedical problems"],
       "Social Sciences":["Connect policy, strategy and technology","Assess risk across emerging technologies","Weigh ethical and societal implications","Translate insight into organisational strategy"],
-      "Accredited":["Build the technical foundations of computer systems","Diagnose, repair and support hardware and networks","Meet the outcomes of a national NQF 5 qualification","Earn 282 credits toward a portable credential"]
+      "Accredited":["Build the technical foundations of computer systems","Diagnose, repair and support hardware and networks","Meet the outcomes of a national "+(B.nqf||"NQF 5")+" qualification","Earn "+(B.credits||"282")+" credits toward a portable credential"]
     };
     var learn = learnByTopic[m.topic] || learnByTopic["Business"];
 
@@ -174,13 +178,14 @@
       item(i_topic,"g","Training topic", m.topic) +
       item(i_lvl,"o","Level", m.level) +
       item(i_lang,"","Language", "English") +
-      item(i_cred,"g","Credits", m.credits + " credits toward NQF 5") +
+      item(i_cred,"g","Credits", m.credits + " credits toward " + (B.nqf||"NQF 5")) +
       item(i_dur,"o","Duration", m.hours) +
-      item(i_reg,"","Provider", "In association with Centenary Networks (QCTO)");
+      item(i_reg,"","Provider", "In association with " + (B.providerShort||"an accredited provider"));
 
+    var qual = B.qualification || "Occupational Certificate: Computer Technician";
     var accredLine = m.accred
-      ? '<p>This is the accredited destination qualification the shorter modules ladder toward — the <strong>Occupational Certificate: Computer Technician</strong> (NQF Level 5, Qualification ID 101408, 282 credits), delivered in association with Centenary Networks (Pty) Ltd, accredited by the QCTO as a Skills Development Provider.</p>'
-      : '<p>This module is a small, credit-bearing unit. Each one your people complete carries credits toward the <strong>Occupational Certificate: Computer Technician</strong> (NQF 5, 282 credits) — and, delivered through an accredited provider, supports your <strong>B-BBEE Skills Development</strong> scorecard.</p>';
+      ? '<p>This is the accredited destination qualification the shorter modules ladder toward — the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', Qualification ID '+(B.qualId||"101408")+', '+(B.credits||"282")+' credits), delivered in association with '+(B.provider||"an accredited Skills Development Provider")+', accredited by the QCTO as a Skills Development Provider.</p>'
+      : '<p>This module is a small, credit-bearing unit. Each one your people complete carries credits toward the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', '+(B.credits||"282")+' credits) — and, delivered through an accredited provider, supports your <strong>B-BBEE Skills Development</strong> scorecard.</p>';
 
     detail.querySelector("#crumbCur").textContent = m.title;
     detail.querySelector("#courseTitle").textContent = m.title;

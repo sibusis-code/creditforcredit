@@ -3,29 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thank you — SPS Academy</title>
+<title>Thank you</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="brand.js"></script>
 </head>
-<body>
+<body data-page="" data-title="Thank you">
 
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="brand"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></a>
-    <div class="nav-links" id="navLinks">
-      <a href="about.html">About</a>
-      <a href="modules.html">Modules</a>
-      <a href="contact.html">Contact</a>
-      <a href="contact.html" class="nav-cta">Talk to Our Team</a>
-    </div>
-    <div class="nav-icons">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-    </div>
-  </div>
-</nav>
+<nav id="nav"></nav>
+<script>SITE.renderNav()</script>
 
 <section style="min-height:70vh;display:grid;place-items:center;text-align:center;background:linear-gradient(180deg,var(--header),#fff)">
   <div class="wrap" style="max-width:640px">
@@ -39,11 +28,8 @@
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-copy" style="border:0;text-align:center">© 2026 SPS — Sustainable Power Solutions. In association with Centenary Networks (QCTO). All rights reserved.</div>
-  </div>
-</footer>
+<footer id="siteFooter"></footer>
+<script>SITE.renderFooter()</script>
 
 <script src="app.js"></script>
 </body>

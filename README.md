@@ -56,19 +56,26 @@ website: identical engine and product model, different company brand.
 The **product never changes** between companies: credit-bearing modules / skills courses → claimable
 **B-BBEE returns** → credits that ladder toward a national qualification.
 
-| Changes per company (the re-skin) | Stays the same (the engine) |
+| Changes per company (edit `brand.js`) | Stays the same (the engine) |
 |---|---|
-| Company name & logo (`sps-dark-logo.svg`) | Page structure, sections & components |
-| Accent colours (`--accent`, `--accent-green`) | Monochrome design system (B/W/grey + sparing accents) |
-| Contact details (email, phone, hours) | The four pillars + modules→credits→B-BBEE→qualification spine |
-| Industry line (SPS = solar; Maziv = fibre/telecoms; etc.) | `course.html` template + catalog/content model |
-| Hero wording nuance | Video-lightbox + PDF-download mechanics |
-| Accreditation partner/number (if not Centenary Networks) | Nav, footer, CTA patterns (`Explore Modules` / `Talk to Our Team`) |
+| Company/academy name, logo, industry line | Page structure, sections & components (the HTML) |
+| Brand colours (`BRAND.colors`) | ITU-style airy design system in `styles.css` |
+| Contact details (email, phone, hours, location) | The pillars + modules→credits→B-BBEE→qualification spine |
+| Enquiry-form target + redirect | `course.html` template + `catalog.js` content model |
+| Accreditation partner, numbers, qualification | Nav + footer (rendered from `brand.js`), CTA patterns |
 
-**Recommended build:** centralise every company-specific value into a single **`BRAND` config block**
-(name, logo path, accent colours, contact, industry line, accreditation details). Launching a new
-company site then = copy the repo, edit one block, drop in the logo. *Status: proposed — not yet
-refactored; the current site has SPS values inline.*
+**Status: DONE (3 Jul 2026).** Every company-specific value now lives in a single **`brand.js`** config
+(`window.BRAND`). The shared **nav and footer are rendered from it**, colours override the CSS tokens,
+and page text is filled via `data-b` placeholders — so the SPS values are no longer scattered inline.
+
+**Launching a new company (Maziv / Inhance / Fungi Utilities):**
+1. Copy the repo.
+2. Edit the `BRAND` object in **`brand.js`** — name, colours, contact, accreditation, and the FormSubmit
+   target/redirect. Drop in the new logo file and point `BRAND.logo` at it.
+3. Edit **`catalog.js`** if the module line-up differs.
+4. **Review page headlines/copy for industry framing** — e.g. change "solar business" to "fibre /
+   telecoms" for Maziv. (Identity *names* swap automatically via `brand.js`; positioning *copy* is a
+   deliberate human step — you don't want "solar" auto-pasted into a telecoms site.)
 
 **Repo model:** one repo + GitHub Pages site per company (this one is `sibusis-code/sps.academy`).
 
@@ -115,10 +122,12 @@ sps/
 ├── contact.html            # Contact details + working enquiry form (FormSubmit.co)
 ├── thanks.html             # Form submission confirmation page
 │
-├── styles.css              # SHARED stylesheet — ITU-style airy layout in SPS colours
+├── brand.js                # THE re-skin file — window.BRAND (name, logo, colours, contact,
+│                           #   form target, accreditation) + renders the shared nav & footer
+├── styles.css              # SHARED stylesheet — ITU-style airy layout; colour tokens overridden by brand.js
 ├── catalog.js              # SHARED data — the 20-module catalogue (window.MODULES) + helpers
-├── app.js                  # SHARED behaviour — nav, reveal, hero search, carousel,
-│                           #   catalogue filtering, and the course-detail renderer
+├── app.js                  # SHARED behaviour — nav toggle, reveal, hero search, carousel,
+│                           #   catalogue filtering, the course-detail renderer, brand text fill
 │
 ├── sps-dark-logo.svg       # Brand mark
 ├── resources/*.pdf         # Downloadable PDF resources (placeholders, swappable)
@@ -126,10 +135,11 @@ sps/
 └── README.md               # This blueprint
 ```
 
-**Multi-page, shared-asset architecture** (no build step). Every page links `styles.css` +
-`catalog.js` + `app.js`, so design, data and behaviour each live in **one place** — ideal for the
-white-label goal (re-skin = edit `styles.css` tokens + swap logo; re-content = edit `catalog.js`).
-Nav links navigate between real pages; the current page is marked with `class="active"`.
+**Multi-page, shared-asset architecture** (no build step). Every page links `brand.js` (in `<head>`) +
+`styles.css` + `catalog.js` + `app.js`, so brand, design, data and behaviour each live in **one place**.
+Each page ships empty `<nav id="nav">` / `<footer id="siteFooter">` placeholders that `brand.js` fills,
+and `data-b="…"` attributes on brand-specific text; `<body data-page="…">` marks the active nav link.
+Re-skin = edit `brand.js`; re-content = edit `catalog.js`.
 
 > **History:** the site was fully rebuilt to the ITU Academy structure on 3 Jul 2026 (boss-approved).
 > The previous monochrome build's extra files (`ai-in-action.html`, `ai-fundamentals.html`, `site.js`,
@@ -212,8 +222,8 @@ git push          # site updates automatically
 - **Swap a photo** → change the module's `img` id in `catalog.js`, or the hero/split `background-image`
   URLs in the HTML.
 - **Change copy** → hero + section copy lives in each page's HTML; module copy lives in `catalog.js`.
-- **Re-skin for another company** → edit the CSS variables in `:root` (`--orange`, `--amber`,
-  `--green`, `--header`), swap `sps-dark-logo.svg`, and update contact/accreditation details.
+- **Re-skin for another company** → edit **`brand.js`** only (name, `BRAND.colors`, logo path, contact,
+  form target, accreditation), drop in the new logo, then review page copy for industry framing.
 
 ---
 
