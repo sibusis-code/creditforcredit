@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Course — SPS Academy</title>
-<meta name="description" content="Video-led online AI courses with downloadable workbooks and resources — by SPS Academy, in association with Centenary Networks.">
+<title>Module — SPS Academy</title>
+<meta name="description" content="A credit-bearing SPS Academy module. Every module carries credits toward the Occupational Certificate: Computer Technician (NQF 5) and supports your B-BBEE Skills Development scorecard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,524 +16,111 @@
   <div class="nav-inner">
     <a href="index.html" class="brand"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html" data-nav="home">Home</a>
-      <a href="ai-in-action.html" data-nav="ai">AI in Action</a>
       <a href="about.html" data-nav="about">About</a>
-      <a href="modules.html" data-nav="modules" class="active">Modules</a>
+      <a href="modules.html" data-nav="modules">Modules</a>
       <a href="contact.html" data-nav="contact">Contact</a>
       <a href="contact.html" class="nav-cta">Talk to Our Team</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:26px;height:26px;display:block"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <div class="nav-icons">
+      <a href="modules.html" aria-label="Search modules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
   </div>
 </nav>
 
-<header class="chero">
-  <div class="wrap">
-    <div class="crumb"><a href="index.html">Home</a><span>/</span><a href="modules.html">Modules</a><span>/</span><span id="c-crumb" style="color:#fff;margin:0"></span></div>
-    <div class="chero-grid">
-      <div>
-        <div class="tags" id="c-tags"></div>
-        <h1 id="c-h1"></h1>
-        <p class="lead" id="c-lead"></p>
-        <div class="actions">
-          <a href="contact.html" class="btn btn-primary" id="c-enrol">Talk to Our Team</a>
-          <button class="btn btn-light videoplay" data-src="SAMPLE" data-title="Course Introduction">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M8 5v14l11-7z"/></svg> Watch intro
-          </button>
-        </div>
-        <div class="ataglance" id="c-facts"></div>
+<div id="courseDetail">
+  <!-- HERO -->
+  <section class="course-hero">
+    <div class="wrap">
+      <div class="crumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <a href="modules.html">Full catalogue of modules</a>
+        <span>›</span>
+        <span class="cur" id="crumbCur">Module</span>
       </div>
-      <div id="c-herobox"></div>
+      <h1 id="courseTitle" style="font-size:clamp(32px,5vw,56px);font-weight:800;color:var(--ink);max-width:22ch">Module</h1>
+      <p class="lead" id="courseLead" style="font-size:18px;color:var(--body);margin-top:14px;max-width:70ch"></p>
+    </div>
+    <div class="hero-curve"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,56 L0,26 C320,58 560,58 720,40 C900,20 1160,10 1440,38 L1440,56 Z" fill="#ffffff"/></svg></div>
+  </section>
+
+  <!-- INFO GRID + ENROL -->
+  <div class="wrap">
+    <div class="info-layout">
+      <div class="info-grid reveal" id="infoGrid"><!-- rendered by app.js --></div>
+      <aside class="enrol-box reveal">
+        <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--body);margin-bottom:14px" id="enrolLabel">Open — enrol anytime</div>
+        <div class="price"><span id="priceMain">Enquire</span><small id="priceSub">Talk to our team for pricing</small></div>
+        <a href="contact.html" class="btn btn-primary">Talk to our team</a>
+        <p class="note">Credit-bearing toward the Occupational Certificate: Computer Technician (NQF 5) · supports your B-BBEE scorecard.</p>
+      </aside>
     </div>
   </div>
-</header>
 
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">What you'll learn</span>
-      <h2>Skills you'll walk away with</h2>
-      <p>Every module pairs short, practical video lessons with a downloadable workbook so you can apply what you learn straight away.</p>
-    </div>
-    <ul class="learn reveal" id="c-learn"></ul>
-  </div>
-</section>
+  <!-- WHAT YOU'LL LEARN + ABOUT -->
+  <section class="course-body">
+    <div class="wrap">
+      <h2>What you'll learn</h2>
+      <ul class="learn-list reveal" id="learnList"></ul>
 
-<section class="section-soft">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Course content</span>
-      <h2 id="c-modtitle">Video lessons &amp; modules</h2>
-      <p>Click any module to expand it, then play a lesson. Each module includes a downloadable PDF workbook.</p>
-    </div>
-    <div class="modules reveal" id="c-modules"></div>
-  </div>
-</section>
+      <h2 style="margin-top:56px">About this module</h2>
+      <div class="prose reveal" id="courseProse"></div>
 
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Video highlights</span>
-      <h2>A taste of the lessons</h2>
-      <p>Short, focused videos you can watch at your own pace, on any device.</p>
-    </div>
-    <div class="vgrid reveal" id="c-gallery"></div>
-  </div>
-</section>
-
-<section class="section-soft">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Downloadable resources</span>
-      <h2>Workbooks &amp; guides you can keep</h2>
-      <p>Every learner gets a set of PDF resources to download, print and refer back to long after the course.</p>
-    </div>
-    <div class="dgrid reveal">
-      <a class="dcard" href="resources/ai-fundamentals-workbook.pdf" download><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="ext">PDF</span></span><div class="dmeta"><h4>Course Workbook</h4><p>Exercises &amp; activities for every module.</p><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download PDF</span></div></a>
-      <a class="dcard" href="resources/ai-fundamentals-slides.pdf" download><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="ext">PDF</span></span><div class="dmeta"><h4>Lecture Slides</h4><p>The full deck used across all modules.</p><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download PDF</span></div></a>
-      <a class="dcard" href="resources/ai-tools-cheatsheet.pdf" download><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="ext">PDF</span></span><div class="dmeta"><h4>Tools Cheat Sheet</h4><p>One-page reference of recommended tools.</p><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download PDF</span></div></a>
-      <a class="dcard" href="resources/ai-prompting-guide.pdf" download><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="ext">PDF</span></span><div class="dmeta"><h4>Quick-Start Guide</h4><p>Practical patterns, templates and examples.</p><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download PDF</span></div></a>
-      <a class="dcard" href="resources/ai-reading-list.pdf" download><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span class="ext">PDF</span></span><div class="dmeta"><h4>Recommended Reading</h4><p>Curated articles and further resources.</p><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Download PDF</span></div></a>
-      <div class="dcard" style="background:var(--orange-tint);border-color:var(--orange)"><span class="fic" style="background:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span><div class="dmeta"><h4>Certificate of Completion</h4><p>Earn a certificate when you finish all modules.</p><span class="dl" style="color:var(--orange-deep)">Included with enrolment</span></div></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="instructor reveal">
-      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=70" alt="Course facilitator portrait">
-      <div>
-        <div class="ieyebrow">Your facilitator</div>
-        <h3>Facilitated by the SPS Academy team</h3>
-        <div class="role">AI Skills &amp; Workforce Development</div>
-        <p>Our courses are delivered by experienced facilitators in association with Centenary Networks, a QCTO-accredited Skills Development Provider. Lessons are practical and grounded in real South African workplace examples — designed so anyone can follow along, regardless of technical background.</p>
+      <div class="reveal" style="margin-top:36px">
+        <a href="modules.html" class="btn btn-soft">Back to catalogue</a>
+        <a href="contact.html" class="btn btn-primary" style="margin-left:10px">Enrol a team member</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="enrol-band">
-  <div class="wrap">
-    <h2>Ready to upskill your team?</h2>
-    <p>Enrol an individual or train a whole department. Speak to our team about group rates and tailored programmes.</p>
-    <a href="contact.html" class="btn btn-primary">Talk to Our Team</a>
-  </div>
-</section>
+  <!-- RELATED -->
+  <section class="section-soft">
+    <div class="wrap">
+      <div class="row-head reveal"><h2>Related modules</h2></div>
+      <div class="grid-cards" id="relatedTrack" style="grid-template-columns:repeat(4,1fr)"><!-- rendered by app.js --></div>
+    </div>
+  </section>
+</div>
 
+<!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></div>
-      <div class="foot-accred">
-        <strong>Accreditation</strong>
-        <span>Modules are credit-bearing toward the Occupational Certificate: Computer Technician (NQF 5, Qualification ID 101408, 282 credits), delivered in association with Centenary Networks (Pty) Ltd, accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills Development Provider. Accreditation No. 07-QCTO/SDP180526182035, valid 15 May 2026 – 14 May 2031.</span>
+    <div class="foot-logo"><img src="sps-dark-logo.svg" alt="SPS — Sustainable Power Solutions"></div>
+    <div class="foot-grid">
+      <div class="foot-addr">
+        SPS Academy — in association with Centenary Networks (Pty) Ltd<br>
+        QCTO-accredited Skills Development Provider<br>
+        Online · Nationwide, South Africa<br>
+        <a href="mailto:accounts@cn.co.za" style="color:var(--orange);font-weight:600">accounts@cn.co.za</a>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="modules.html">Modules</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Get in touch</h4>
+        <a href="contact.html">Talk to our team</a>
+        <a href="mailto:accounts@cn.co.za">accounts@cn.co.za</a>
+        <a href="tel:0123456789">012 345 6789</a>
+        <div class="foot-social">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM3 8.75h3.85V21H3V8.75Zm6.3 0h3.7v1.68h.05a4.06 4.06 0 0 1 3.65-2c3.9 0 4.62 2.57 4.62 5.9V21h-3.85v-5.4c0-1.29 0-2.94-1.8-2.94s-2.07 1.4-2.07 2.85V21H9.3V8.75Z"/></svg></a>
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg></a>
+        </div>
       </div>
     </div>
-    <p class="disclaimer">Professional AI courses are non-accredited short courses unless explicitly marked as an accredited qualification. Videos and downloadable resources shown are placeholders for demonstration. SPS Academy operates in association with Centenary Networks. © 2026 SPS — Sustainable Power Solutions. All rights reserved.</p>
+    <div class="foot-accred">
+      <strong>Accreditation</strong>
+      Modules are credit-bearing toward the Occupational Certificate: Computer Technician (NQF 5, Qualification ID 101408, 282 credits), delivered in association with Centenary Networks (Pty) Ltd, accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills Development Provider. Accreditation No. 07-QCTO/SDP180526182035, valid 15 May 2026 – 14 May 2031.
+    </div>
+    <div class="foot-copy">Modules are credit-bearing units toward an accredited national qualification. Content shown is illustrative pending final SPS/Centenary material. © 2026 SPS — Sustainable Power Solutions. All rights reserved.</div>
   </div>
 </footer>
 
-<div class="vmodal" id="vmodal" aria-hidden="true">
-  <div class="vinner">
-    <button class="vclose" id="vclose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="width:13px;height:13px;margin-right:5px"><path d="M18 6 6 18M6 6l12 12"/></svg>Close</button>
-    <div id="vmount"></div>
-  </div>
-</div>
-
-<script>
-  const SAMPLE="https://www.w3schools.com/html/mov_bbb.mp4"; // placeholder stream — swap per lesson
-  function img(id,w){return "https://images.unsplash.com/photo-"+id+"?auto=format&fit=crop&w="+(w||900)+"&q=70";}
-  const POOL=["1677442136019-21780ecad995","1526374965328-7f61d4dc18c5","1488229297570-58520851e868","1531746790731-6c087fecd65a","1454165804606-c3d57bc86b40","1518186285589-2f7649de83e0"];
-  const DUR=["8:40","9:15","10:05","7:50","11:20","9:30","8:10","10:40","9:55","12:05","8:35","11:10"];
-
-  const LEARN={
-    "Business":["Understand where AI creates real business value","Identify high-impact opportunities in your work","Use AI tools to save time on routine tasks","Communicate AI ideas clearly to your team","Apply AI responsibly and manage the risks"],
-    "Computer Science":["Grasp the core technical concepts","Work hands-on with the relevant tools","Follow a real implementation end to end","Understand best practices and pitfalls","Build the confidence to keep going further"],
-    "Health & Medicine":["See how AI is applied in clinical and research settings","Understand the data and models behind the tools","Explore real case studies and applications","Weigh the ethics, safety and limitations","Recognise where AI adds value in practice"],
-    "Social Sciences":["Understand AI's impact on people and society","Explore policy, governance and regulation","Evaluate AI claims and risks critically","Apply responsible-use principles","Connect the ideas to real-world decisions"],
-    "Compliance":["Recognise the key risks and obligations","Protect privacy and sensitive data","Spot and reduce bias and inaccuracy","Use AI safely in a professional setting","Help shape a simple, practical AI policy"],
-    "Leadership":["Set a clear AI vision for your organisation","Lead AI-enabled teams with confidence","Put governance and risk controls in place","Drive responsible adoption and change","Measure the impact of your AI investment"],
-    "Accredited":["Build accredited, job-ready technical skills","Practise hands-on, real-world competencies","Prepare thoroughly for assessment","Earn a nationally recognised qualification","Open up clear career pathways"]
-  };
-
-  function defaultModules(){return [
-    {t:"Foundations",lessons:["Welcome & how this course works","The key ideas, in plain language","Why this matters right now"]},
-    {t:"Core Concepts",lessons:["The essential building blocks","A closer look, step by step","Common patterns & examples"]},
-    {t:"Tools & Techniques",lessons:["The tools you'll actually use","A guided, hands-on walkthrough","Tips, shortcuts & best practice"]},
-    {t:"Putting It Into Practice",lessons:["A real-world worked example","Your personal action plan","Wrap-up, quiz & next steps"]}
-  ];}
-
-  // Per-course bespoke curriculum (AI Fundamentals keeps its original outline)
-  const MOD_FUND=[
-    {t:"Getting Started with AI",lessons:["What is AI, really?","A short history of machine learning","How AI assistants actually work","Module wrap-up & quiz"]},
-    {t:"AI Tools for Everyday Work",lessons:["Writing & email assistants","Research & summarising tools","Spreadsheets & data helpers","Building your personal AI toolkit"]},
-    {t:"Prompting Like a Pro",lessons:["The anatomy of a good prompt","Prompt patterns & reusable templates","Avoiding common mistakes"]},
-    {t:"Using AI Responsibly",lessons:["Data privacy at work","Accuracy, sources & hallucinations","Bias & fairness","A simple workplace AI policy"]},
-    {t:"Putting It Into Practice",lessons:["Mapping AI to your role","A real workflow, start to finish","Your 30-day AI action plan"]}
-  ];
-  const MOD_TOOLS=[
-    {t:"Your AI Toolkit",lessons:["The landscape of workplace AI tools","Choosing the right tool for the job","Setting up safely & securely"]},
-    {t:"Writing & Communication",lessons:["Drafting emails & documents fast","Editing, tone & summarising","Meeting notes & follow-ups"]},
-    {t:"Research & Information",lessons:["Searching & summarising with AI","Fact-checking & verifying sources","Turning research into reports"]},
-    {t:"Data & Automation",lessons:["Spreadsheets & quick analysis","Automating repetitive tasks","Building your daily AI workflow"]}
-  ];
-  const MOD_RESP=[
-    {t:"Foundations of Responsible AI",lessons:["Why responsible AI matters","Key principles & frameworks","Your duty of care at work"]},
-    {t:"Privacy & Data Protection",lessons:["What not to put into AI tools","POPIA & data protection basics","Keeping client data safe"]},
-    {t:"Accuracy & Bias",lessons:["Hallucinations & misinformation","Recognising and reducing bias","Human oversight & accountability"]},
-    {t:"Responsible Use in Practice",lessons:["Disclosure & transparency","Drafting a workplace AI policy","Case studies & red flags"]}
-  ];
-  const MOD_LEAD=[
-    {t:"The Leader's View of AI",lessons:["What every leader must know","Separating hype from value","AI maturity & readiness"]},
-    {t:"Finding Opportunities",lessons:["Spotting high-value use cases","Building the business case","Prioritising & sequencing"]},
-    {t:"Leading AI-Enabled Teams",lessons:["Skills, roles & upskilling","Managing change & resistance","Governance & risk controls"]},
-    {t:"From Pilot to Scale",lessons:["Running a successful pilot","Measuring impact & ROI","Your AI leadership roadmap"]}
-  ];
-  const MOD_VENTURE=[
-    {t:"AI & Opportunity",lessons:["New business models powered by AI","Where the gaps are in Africa","Validating an AI idea"]},
-    {t:"Building the Venture",lessons:["From concept to MVP","AI tools for founders","Lean experimentation"]},
-    {t:"Go-To-Market",lessons:["Customers, pricing & positioning","Growth with limited resources","Pitching & funding"]},
-    {t:"Scaling Responsibly",lessons:["Data, ethics & trust","Building a team","Your venture action plan"]}
-  ];
-  const MOD_TECH=[
-    {t:"Computer Systems Fundamentals",lessons:["Hardware components & architecture","Operating systems overview","Number systems & data"]},
-    {t:"Hardware Installation & Maintenance",lessons:["Assembling & upgrading systems","Diagnostics & fault-finding","Preventative maintenance"]},
-    {t:"Networking Essentials",lessons:["Network types & topologies","Setting up & configuring networks","Troubleshooting connectivity"]},
-    {t:"Software & Support",lessons:["Installing & configuring software","User & technical support","Security & backups"]},
-    {t:"Workplace Practice & Assessment",lessons:["Workplace safety & ethics","Documentation & service records","Portfolio of Evidence & assessment"]}
-  ];
-  const MOD_DEPLOY_TML=[
-    {t:"From Model to Microcontroller",lessons:["Recap: the TinyML pipeline","Why deploy on-device","Hardware & toolchain setup"]},
-    {t:"TensorFlow Lite for Microcontrollers",lessons:["Converting & quantising models","Writing the inference code","Memory & performance limits"]},
-    {t:"Building the Application",lessons:["Capturing sensor data","Running inference on-device","Handling outputs & actions"]},
-    {t:"Deploy & Iterate",lessons:["Flashing to the device","Debugging on hardware","Optimising & shipping your app"]}
-  ];
-  const MOD_FUND_TML=[
-    {t:"What is TinyML?",lessons:["Machine learning in tiny places","Embedded systems basics","Real-world TinyML applications"]},
-    {t:"The Machine Learning Basics",lessons:["Data, features & labels","Training a simple model","Evaluating performance"]},
-    {t:"Neural Networks Demystified",lessons:["How neural networks learn","Models small enough to fit","Tradeoffs & constraints"]},
-    {t:"The Language of TinyML",lessons:["Sensors & signals","The end-to-end workflow","Where to go next"]}
-  ];
-  const MOD_STRATEGY=[
-    {t:"The Strategic Landscape",lessons:["AI beyond the hype","What's actually changing","Threats & opportunities"]},
-    {t:"Building Your AI Strategy",lessons:["Aligning AI to business goals","Capabilities, data & talent","Prioritising initiatives"]},
-    {t:"Creating Real Value",lessons:["Use cases that move the needle","Measuring value & ROI","Avoiding common traps"]},
-    {t:"Leading the Transformation",lessons:["Operating model & governance","Culture & change","Your 90-day strategy plan"]}
-  ];
-  const MOD_MED_FOUND=[
-    {t:"AI in Medicine, Explained",lessons:["Why AI in healthcare now","Core concepts for clinicians","Data in medicine"]},
-    {t:"Machine Learning for Health",lessons:["How clinical models are built","Validation & evidence","Reading the literature critically"]},
-    {t:"Applications in Practice",lessons:["Imaging & diagnostics","Prediction & risk scoring","Workflow & decision support"]},
-    {t:"Safety, Ethics & the Future",lessons:["Bias, equity & safety","Regulation & governance","The future of AI in medicine"]}
-  ];
-  const MOD_ETHICS_BIZ=[
-    {t:"The Ethics of AI at Work",lessons:["Why ethics is a business issue","Key risks & harms","Principles & frameworks"]},
-    {t:"Bias & Fairness",lessons:["Where bias comes from","Detecting & measuring bias","Mitigation strategies"]},
-    {t:"Trust & Transparency",lessons:["Explainability & disclosure","Privacy & consent","Accountability & oversight"]},
-    {t:"Building an Ethical Culture",lessons:["Policies & guardrails","Responsible procurement","Your ethical AI checklist"]}
-  ];
-  const MOD_IN_ACTION=[
-    {t:"Understanding AI in All Its Forms",lessons:["The AI toolbox","What AI can & can't do","Mapping AI to your organisation"]},
-    {t:"Strategy & Adoption",lessons:["Building an adoption roadmap","Data readiness","Risk & responsible adoption"]},
-    {t:"People & Process",lessons:["Roles, skills & culture","Redesigning workflows","Change management"]},
-    {t:"Delivering Impact",lessons:["Measuring outcomes","Scaling what works","Your organisational action plan"]}
-  ];
-  const MOD_CYBER=[
-    {t:"The Cyber Threat Landscape",lessons:["Threats, actors & motives","Anatomy of an attack","Risk in context"]},
-    {t:"Technology & Defence",lessons:["Core security technologies","Identity, access & encryption","Detection & response"]},
-    {t:"Policy & Governance",lessons:["Laws, standards & compliance","Building security policy","Incident & crisis response"]},
-    {t:"Leading on Cyber",lessons:["Security culture & awareness","Boardroom communication","Your cyber resilience plan"]}
-  ];
-  const MOD_MED_NLP=[
-    {t:"NLP in Healthcare",lessons:["Why language matters in medicine","Clinical text & its challenges","The NLP pipeline"]},
-    {t:"Core NLP Techniques",lessons:["From text to data","Named entities & coding","Large language models in medicine"]},
-    {t:"Applications",lessons:["Clinical notes & documentation","Literature & evidence mining","Patient communication"]},
-    {t:"Safety & Implementation",lessons:["Bias, privacy & safety","Validation & oversight","Deploying NLP responsibly"]}
-  ];
-  const MOD_CS_LAW=[
-    {t:"How Computers Work",lessons:["Data, bits & encoding","Software, systems & the internet","Key concepts for lawyers"]},
-    {t:"Data & Algorithms",lessons:["How algorithms make decisions","Databases & data flows","Security & encryption basics"]},
-    {t:"AI & Emerging Tech",lessons:["What AI really is","Privacy, IP & liability","Evidence & e-discovery"]},
-    {t:"Tech in Legal Practice",lessons:["Legal tech tools","Advising tech-driven clients","Your tech-fluency toolkit"]}
-  ];
-  const MOD_ESS_BIZ=[
-    {t:"AI Foundations",lessons:["What AI is, in business terms","The tools you'll meet","Opportunities & limits"]},
-    {t:"AI at Work",lessons:["Everyday business use cases","Working alongside AI","Productivity & quality"]},
-    {t:"Value & Risk",lessons:["Building the case for AI","Risk, ethics & compliance","Avoiding the pitfalls"]},
-    {t:"Getting Started",lessons:["Your first AI projects","Upskilling your team","Your business AI plan"]}
-  ];
-  const MOD_AGENTIC=[
-    {t:"What is Agentic AI?",lessons:["From chatbots to agents","How AI agents work","Where agents add value"]},
-    {t:"Business Applications",lessons:["Automating multi-step work","Agents in the enterprise","Real-world examples"]},
-    {t:"Risks & Controls",lessons:["New risks of autonomy","Guardrails & oversight","Security & reliability"]},
-    {t:"Adopting Agents",lessons:["Designing agent workflows","Governance & accountability","Your agentic AI roadmap"]}
-  ];
-  const MOD_COMPETING=[
-    {t:"The New Rules of Competition",lessons:["How AI reshapes industries","Digital operating models","Network effects & scale"]},
-    {t:"The AI-Powered Firm",lessons:["Data & the AI factory","Rearchitecting the business","Removing the bottlenecks"]},
-    {t:"Strategy & Advantage",lessons:["New sources of advantage","Ecosystems & platforms","Disruption & response"]},
-    {t:"Leading the Change",lessons:["Capabilities & culture","Ethics & responsibility","Your competitive AI agenda"]}
-  ];
-  const MOD_LEAD_EMERG=[
-    {t:"The Emerging-Tech Landscape",lessons:["AI, security & beyond","Strategic significance","Risk & opportunity"]},
-    {t:"Strategy & Decision-Making",lessons:["Evaluating new technologies","Investment & prioritisation","Building capability"]},
-    {t:"Security & Risk",lessons:["Threats & resilience","Governance & policy","Crisis leadership"]},
-    {t:"Leading Through Change",lessons:["Culture & talent","Ethics & responsibility","Your leadership action plan"]}
-  ];
-  const MOD_MED_SIGNAL=[
-    {t:"Biomedical Signals 101",lessons:["Signals in medicine (ECG, EEG & more)","From sensor to data","Why interpretation is hard"]},
-    {t:"Machine Learning for Signals",lessons:["Features & representations","Deep learning for time series","Training & validation"]},
-    {t:"Diagnostic Applications",lessons:["Detecting abnormalities","Monitoring & alerts","Case studies"]},
-    {t:"Safety & Deployment",lessons:["Evidence, bias & safety","Clinical integration","The road ahead"]}
-  ];
-
-  const COURSES={
-    "ai-fundamentals":{title:"AI Fundamentals for the Workplace",cat:"Business",mode:"Online · Self-paced",level:"Beginner",img:"1677442136019-21780ecad995",lead:"A practical, video-led introduction to artificial intelligence for non-technical staff — what it is, how it works, and how to use everyday AI tools confidently and responsibly.",modules:MOD_FUND},
-    "ai-tools-productivity":{title:"AI Tools for Productivity",cat:"Business",mode:"Online · Self-paced",level:"Beginner",img:"1581091226825-a6a2a5aee158",lead:"Hands-on training in the AI tools transforming day-to-day work — writing assistants, research tools, data tools and workflow automation."},
-    "responsible-ai":{title:"Responsible & Ethical AI Use",cat:"Compliance",mode:"Online · Self-paced",level:"Intermediate",img:"1620712943543-bcc4688e7485",lead:"Using AI safely at work: data privacy, accuracy, bias, and the practical do's and don'ts of AI in a professional setting."},
-    "ai-leaders":{title:"AI for Leaders & Managers",cat:"Leadership",mode:"Online · Self-paced",level:"Intermediate",img:"1552664730-d307ca884978",lead:"For decision-makers: identifying AI opportunities, managing AI-enabled teams, and leading responsible adoption across your organisation."},
-    "new-venture":{title:"AI & New Venture Creation",cat:"Computer Science",mode:"Online · Self-paced",level:"Intermediate",avail:"Coming Soon",img:"1559136555-9303baea8ebd",lead:"Explore how AI is enabling new business models and entrepreneurial opportunities across Africa's growing digital economy."},
-    "computer-technician":{title:"Occupational Certificate: Computer Technician",cat:"Accredited",mode:"Online",level:"NQF 5",accred:true,img:"1581092160562-40aa08e78837",lead:"A nationally accredited qualification covering the technical foundations of computer systems, hardware and support. Qualification ID 101408 · 282 credits · NQF Level 5, delivered in association with Centenary Networks (QCTO)."},
-    "deploying-tinyml":{title:"Deploying TinyML",cat:"Computer Science",mode:"Online · Self-paced",level:"Advanced",img:"1593376853899-fbb47a057fa0",lead:"Learn to program in TensorFlow Lite for microcontrollers, write the code, and deploy your model to your very own tiny microcontroller — implementing an entire TinyML application."},
-    "fundamentals-tinyml":{title:"Fundamentals of TinyML",cat:"Computer Science",mode:"Online · Self-paced",level:"Intermediate",img:"1518770660439-4636190af475",lead:"Focusing on the basics of machine learning and embedded systems, this course introduces you to the “language” of TinyML."},
-    "ai-strategy":{title:"AI Strategy for Business Leaders: From Hype to Impact",cat:"Business",mode:"Online Live",level:"Executive",img:"1542744173-8e7e53415bb0",lead:"Leverage new technologies to build real, measurable value for your organisation — moving AI from hype to impact."},
-    "ai-medicine-foundations":{title:"AI in Medicine: Foundations and Applications",cat:"Health & Medicine",mode:"Online · Self-paced",level:"Intermediate",img:"1576091160550-2173dba999ef",lead:"Explore the foundational principles of artificial intelligence and its transformative applications in medicine and biomedical research."},
-    "ai-ethics-business":{title:"AI Ethics in Business: Managing Bias and Ethical Usage",cat:"Business",mode:"Online Live",level:"Intermediate",img:"1488229297570-58520851e868",lead:"Prepare for the future and learn the best way to use new AI tools and capabilities responsibly, managing bias and ethical risk."},
-    "ai-in-action":{title:"AI in Action: Organizational Strategy for Responsible Adoption",cat:"Social Sciences",mode:"Online · Online Live",level:"Executive",img:"1504384308090-c894fdcc538d",lead:"AI in Action provides the insights and tools you'll need to understand and utilise AI in all its forms across your organisation."},
-    "cybersecurity":{title:"Cybersecurity: The Intersection of Policy and Technology",cat:"Social Sciences",mode:"Online · Online Live",level:"Executive",img:"1550751827-4bd374c3f58b",lead:"An executive program exploring how policy and technology, together, can address the critical threats of the cyber world."},
-    "ai-medicine-nlp":{title:"AI in Medicine: Natural Language Processing",cat:"Health & Medicine",mode:"Online · Self-paced",level:"Advanced",img:"1518186285589-2f7649de83e0",lead:"Discover how natural language processing is applied in medicine — from clinical notes to the research literature."},
-    "cs-for-lawyers":{title:"Computer Science for Lawyers",cat:"Social Sciences",mode:"Online · Self-paced",level:"Intermediate",img:"1589829545856-d10d557cf95f",lead:"A practical grounding in the computer science concepts every modern legal professional should understand."},
-    "ai-essentials-business":{title:"AI Essentials for Business",cat:"Business",mode:"Online · Self-paced",level:"Beginner",img:"1454165804606-c3d57bc86b40",lead:"The essential AI knowledge every business professional needs to stay relevant and add value."},
-    "agentic-ai":{title:"Agentic AI Foundations: Business Applications and Risks",cat:"Computer Science",mode:"Online · Self-paced",level:"Advanced",img:"1531746790731-6c087fecd65a",lead:"Understand agentic AI — autonomous AI systems — their business applications, opportunities and risks."},
-    "competing-age-ai":{title:"Competing in the Age of AI",cat:"Business",mode:"Online · Self-paced",level:"Executive",img:"1485827404703-89b55fcc595e",lead:"Learn how leading organisations compete and win in the age of AI, and what it means for your strategy."},
-    "leadership-emerging-tech":{title:"Leadership in Emerging Technology: Security, Strategy & Risk",cat:"Social Sciences",mode:"In-Person",level:"Executive",img:"1521737604893-d14cc237f11d",lead:"An executive program equipping leaders with the technical, strategic and policy foundations to navigate critical emerging technologies."},
-    "ai-medicine-signal":{title:"AI in Medicine: Biomedical Signal Interpretation",cat:"Health & Medicine",mode:"Online · Self-paced",level:"Advanced",img:"1559757148-5c350d0d3c56",lead:"Learn about advances in interpreting biomedical signals and the use of machine learning and deep learning to aid analysis and diagnosis."}
-  };
-
-  // attach each module's bespoke curriculum
-  const MODMAP={"ai-tools-productivity":MOD_TOOLS,"responsible-ai":MOD_RESP,"ai-leaders":MOD_LEAD,"new-venture":MOD_VENTURE,"computer-technician":MOD_TECH,"deploying-tinyml":MOD_DEPLOY_TML,"fundamentals-tinyml":MOD_FUND_TML,"ai-strategy":MOD_STRATEGY,"ai-medicine-foundations":MOD_MED_FOUND,"ai-ethics-business":MOD_ETHICS_BIZ,"ai-in-action":MOD_IN_ACTION,"cybersecurity":MOD_CYBER,"ai-medicine-nlp":MOD_MED_NLP,"cs-for-lawyers":MOD_CS_LAW,"ai-essentials-business":MOD_ESS_BIZ,"agentic-ai":MOD_AGENTIC,"competing-age-ai":MOD_COMPETING,"leadership-emerging-tech":MOD_LEAD_EMERG,"ai-medicine-signal":MOD_MED_SIGNAL};
-  for(const k in MODMAP){ if(COURSES[k]) COURSES[k].modules=MODMAP[k]; }
-
-  function getSlug(){
-    const p=new URLSearchParams(location.search).get('c');
-    return (p && COURSES[p]) ? p : 'ai-fundamentals';
-  }
-  const ESC=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-  const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>';
-  const CHEV='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:20px;height:20px"><path d="m6 9 6 6 6-6"/></svg>';
-
-  function render(){
-    const c=COURSES[getSlug()];
-    const modules=c.modules||defaultModules();
-
-    document.title=c.title+" — SPS Academy";
-    document.getElementById('c-crumb').textContent=c.title;
-    document.getElementById('c-h1').textContent=c.title;
-    document.getElementById('c-lead').textContent=c.lead;
-    document.getElementById('c-modtitle').textContent="Video lessons across "+modules.length+" modules";
-
-    // tags
-    const tags=[];
-    if(c.accred)tags.push('<span class="accred">QCTO Accredited</span>');
-    tags.push('<span>'+ESC(c.cat)+'</span>','<span>'+ESC(c.mode)+'</span>','<span>'+ESC(c.level)+'</span>');
-    if(c.avail)tags.push('<span>'+ESC(c.avail)+'</span>');
-    document.getElementById('c-tags').innerHTML=tags.join('');
-
-    // facts
-    let nLessons=0;modules.forEach(m=>nLessons+=m.lessons.length);
-    const facts=[["Duration",c.accred?"12 months":"6 weeks"],["Effort",c.accred?"Part-time":"3–4 hrs / week"],["Format","Video + workbooks"],["Lessons",nLessons+" videos"],["Resources","5 PDF downloads"]];
-    document.getElementById('c-facts').innerHTML=facts.map(f=>'<div><span>'+f[0]+'</span><strong>'+f[1]+'</strong></div>').join('');
-
-    // hero video
-    document.getElementById('c-herobox').innerHTML=
-      '<button class="videobox videoplay" data-src="SAMPLE" data-title="'+ESC(c.title)+' — Introduction" style="background-image:url(\''+img(c.img,900)+'\')">'+
-      '<span class="vbadge">Sample preview</span><span class="play">'+PLAY+'</span>'+
-      '<span class="vlabel">Watch the course introduction</span></button>';
-
-    // learn
-    const learn=LEARN[c.cat]||LEARN["Business"];
-    document.getElementById('c-learn').innerHTML=learn.map(x=>'<li>'+CHECK+' '+ESC(x)+'</li>').join('');
-
-    // modules + flatten lessons for gallery
-    let li=0;const flat=[];
-    const modHtml=modules.map((m,mi)=>{
-      const rows=m.lessons.map(name=>{
-        const dur=DUR[li%DUR.length];const src=li<3?'SAMPLE':'';
-        flat.push({name:name,dur:dur,src:src});li++;
-        return '<div class="lesson videoplay" data-src="'+src+'" data-title="'+ESC(name)+'">'+
-          '<span class="lp">'+PLAY+'</span><span class="lname">'+ESC(name)+'</span>'+
-          '<span class="lmeta"><span class="ltag">Video</span><span class="ldur">'+dur+'</span></span></div>';
-      }).join('');
-      const mins=m.lessons.length*9;
-      return '<div class="module'+(mi===0?' open':'')+'">'+
-        '<button class="module-head"><span class="module-num">'+(mi+1)+'</span>'+
-        '<div class="mt"><h4>'+ESC(m.t)+'</h4><div class="meta">'+m.lessons.length+' lessons · ~'+mins+' min · workbook included</div></div>'+CHEV+'</button>'+
-        '<div class="module-body">'+rows+'</div></div>';
-    }).join('');
-    document.getElementById('c-modules').innerHTML=modHtml;
-
-    // gallery (first 6 lessons)
-    document.getElementById('c-gallery').innerHTML=flat.slice(0,6).map((l,i)=>{
-      const poster=i===0?c.img:POOL[i%POOL.length];
-      return '<div class="vcard"><button class="videobox videoplay" data-src="'+l.src+'" data-title="'+ESC(l.name)+'" style="background-image:url(\''+img(poster,640)+'\')">'+
-        '<span class="play">'+PLAY+'</span><span class="vlabel">'+l.dur+'</span></button>'+
-        '<div class="vc-body"><div class="k">Lesson '+(i+1)+'</div><h4>'+ESC(l.name)+'</h4></div></div>';
-    }).join('');
-
-    bind();
-  }
-
-  /* interactions */
-  const nav=document.getElementById('nav'),toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
-  toggle.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
-  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>10));
-
-  const modal=document.getElementById('vmodal'),mount=document.getElementById('vmount'),vclose=document.getElementById('vclose');
-  function openVideo(src,title){
-    if(src==='SAMPLE')src=SAMPLE;
-    if(src){mount.innerHTML='<video controls autoplay playsinline src="'+src+'"></video>';}
-    else{mount.innerHTML='<div class="soon"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#f37424" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:30px;height:30px"><path d="M8 5v14l11-7z"/></svg></div><h3>'+(title||'Lesson video')+'</h3><p>This lesson unlocks on enrolment. Full video content will appear here once added.</p></div>';}
-    modal.classList.add('open');document.body.style.overflow='hidden';
-  }
-  function closeVideo(){modal.classList.remove('open');mount.innerHTML='';document.body.style.overflow='';}
-  vclose.addEventListener('click',closeVideo);
-  modal.addEventListener('click',e=>{if(e.target===modal)closeVideo();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVideo();});
-
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
-  function bind(){
-    document.querySelectorAll('.module-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
-    document.querySelectorAll('.videoplay').forEach(el=>el.addEventListener('click',()=>openVideo(el.dataset.src,el.dataset.title)));
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  }
-
-  render();
-</script>
-<script>
-/* ===== SPS Academy — client-side AI assistant (self-contained, no backend) ===== */
-(function(){
-  if(window.__aiwLoaded)return; window.__aiwLoaded=1;
-  var css=
-  ".aiw-btn{position:fixed;right:20px;bottom:20px;z-index:300;display:inline-flex;align-items:center;gap:9px;background:#1a1a1c;color:#fff;border:0;border-radius:30px;padding:12px 18px;font:600 14px/1 Inter,-apple-system,Segoe UI,sans-serif;cursor:pointer;box-shadow:0 16px 36px -14px rgba(0,0,0,.55)}"+
-  ".aiw-btn:hover{background:#000}.aiw-btn svg{width:18px;height:18px}.aiw-btn .dot{width:7px;height:7px;border-radius:50%;background:#4da446}"+
-  ".aiw-panel{position:fixed;right:20px;bottom:20px;z-index:301;width:min(384px,calc(100vw - 32px));height:min(564px,calc(100vh - 40px));background:#fff;border:1px solid #e6e4e1;border-radius:16px;box-shadow:0 34px 80px -28px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}"+
-  ".aiw-panel.open{display:flex}"+
-  ".aiw-head{background:#1a1a1c;color:#fff;padding:14px 15px;display:flex;align-items:center;gap:11px;flex:0 0 auto}"+
-  ".aiw-head .av{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#43434a,#121214);display:grid;place-items:center}.aiw-head .av svg{width:19px;height:19px}"+
-  ".aiw-head h4{margin:0;font-size:15px;color:#fff;font-weight:700;line-height:1.1}.aiw-head p{margin:2px 0 0;font-size:11px;color:#b7b2ac}"+
-  ".aiw-head .x{margin-left:auto;background:none;border:0;color:#b7b2ac;cursor:pointer;padding:4px;line-height:0}.aiw-head .x:hover{color:#fff}.aiw-head .x svg{width:18px;height:18px}"+
-  ".aiw-body{flex:1;overflow-y:auto;padding:15px;background:#f5f5f4;display:flex;flex-direction:column;gap:10px}"+
-  ".aiw-msg{max-width:88%;font-size:13.5px;line-height:1.5;padding:10px 13px;border-radius:13px;word-wrap:break-word}"+
-  ".aiw-msg.bot{background:#fff;border:1px solid #e6e4e1;align-self:flex-start;color:#2b2b2b;border-bottom-left-radius:4px}"+
-  ".aiw-msg.me{background:#1a1a1c;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}"+
-  ".aiw-msg.bot a{color:#c4561a;font-weight:700}.aiw-msg.bot b{color:#1c1c1f}"+
-  ".aiw-cards{display:flex;flex-direction:column;gap:7px;align-self:flex-start;max-width:94%}"+
-  ".aiw-card{display:block;background:#fff;border:1px solid #e6e4e1;border-left:3px solid #ef6c1a;border-radius:10px;padding:9px 12px;text-decoration:none}.aiw-card:hover{border-color:#ef6c1a}"+
-  ".aiw-card b{display:block;font-size:13px;color:#1c1c1f;line-height:1.25}.aiw-card span{font-size:11px;color:#5c5c5c;text-transform:uppercase;letter-spacing:.05em}"+
-  ".aiw-chipset{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;max-width:96%}"+
-  ".aiw-chip{background:#fff;border:1px solid #e6e4e1;border-radius:30px;padding:7px 11px;font:600 12px Inter,sans-serif;color:#2b2b2b;cursor:pointer}.aiw-chip:hover{border-color:#1a1a1c}"+
-  ".aiw-foot{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e6e4e1;background:#fff;flex:0 0 auto}"+
-  ".aiw-foot input{flex:1;border:1px solid #e6e4e1;border-radius:9px;padding:10px 12px;font:14px Inter,sans-serif;color:#2b2b2b}.aiw-foot input:focus{outline:2px solid #1a1a1c}"+
-  ".aiw-foot button{background:#1a1a1c;border:0;color:#fff;border-radius:9px;padding:0 14px;cursor:pointer;line-height:0}.aiw-foot button:hover{background:#000}.aiw-foot button svg{width:18px;height:18px}"+
-  ".aiw-typing span{display:inline-block;width:6px;height:6px;margin:0 1px;border-radius:50%;background:#b7b2ac;animation:aiwb 1s infinite}.aiw-typing span:nth-child(2){animation-delay:.15s}.aiw-typing span:nth-child(3){animation-delay:.3s}"+
-  "@keyframes aiwb{0%,60%,100%{opacity:.3}30%{opacity:1}}"+
-  "@media(max-width:480px){.aiw-panel{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 16px)}.aiw-btn{right:14px;bottom:14px}}"+
-  "@media(prefers-reduced-motion:reduce){.aiw-typing span{animation:none}}";
-  var st=document.createElement('style'); st.appendChild(document.createTextNode(css)); document.head.appendChild(st);
-
-  var MODULES=[
-   {t:"AI Fundamentals for the Workplace",slug:"ai-fundamentals",cat:"Beginner · Business",kw:"basics fundamentals introduction beginner workplace nontechnical everyday start"},
-   {t:"AI Tools for Productivity",slug:"ai-tools-productivity",cat:"Beginner · Business",kw:"tools productivity writing email research automation workflow assistants admin"},
-   {t:"Responsible & Ethical AI Use",slug:"responsible-ai",cat:"Compliance",kw:"responsible ethical ethics privacy bias safe compliance policy popia data"},
-   {t:"AI for Leaders & Managers",slug:"ai-leaders",cat:"Leadership",kw:"leaders managers leadership management decision adoption teams executives boss"},
-   {t:"AI & New Venture Creation",slug:"new-venture",cat:"Business",kw:"venture startup entrepreneur business innovation founder"},
-   {t:"Occupational Certificate: Computer Technician",slug:"computer-technician",cat:"Accredited · NQF 5",kw:"computer technician hardware systems networking support technical accredited certificate installer repair maintenance qualification"},
-   {t:"Deploying TinyML",slug:"deploying-tinyml",cat:"Advanced · Computer Science",kw:"tinyml deploy microcontroller tensorflow embedded edge iot device sensors coding"},
-   {t:"Fundamentals of TinyML",slug:"fundamentals-tinyml",cat:"Computer Science",kw:"tinyml fundamentals machine learning embedded basics iot sensors"},
-   {t:"AI Strategy for Business Leaders",slug:"ai-strategy",cat:"Executive · Business",kw:"strategy business leaders value roi executive transformation hype impact"},
-   {t:"AI in Medicine: Foundations",slug:"ai-medicine-foundations",cat:"Health & Medicine",kw:"medicine medical health clinical healthcare foundations doctor research"},
-   {t:"AI Ethics in Business",slug:"ai-ethics-business",cat:"Business",kw:"ethics business bias responsible governance"},
-   {t:"AI in Action: Organizational Strategy",slug:"ai-in-action",cat:"Executive",kw:"organizational organisational strategy adoption operations action"},
-   {t:"Cybersecurity: Policy & Technology",slug:"cybersecurity",cat:"Executive",kw:"cybersecurity security cyber threats policy technology risk hacking protection"},
-   {t:"AI in Medicine: Natural Language Processing",slug:"ai-medicine-nlp",cat:"Health & Medicine",kw:"medicine nlp natural language clinical text notes health"},
-   {t:"Computer Science for Lawyers",slug:"cs-for-lawyers",cat:"Social Sciences",kw:"lawyers legal law computer science legaltech"},
-   {t:"AI Essentials for Business",slug:"ai-essentials-business",cat:"Beginner · Business",kw:"business essentials basics professional value"},
-   {t:"Agentic AI Foundations",slug:"agentic-ai",cat:"Advanced · Computer Science",kw:"agentic agents autonomous automation advanced"},
-   {t:"Competing in the Age of AI",slug:"competing-age-ai",cat:"Executive · Business",kw:"competing competition strategy industry advantage business"},
-   {t:"Leadership in Emerging Technology",slug:"leadership-emerging-tech",cat:"Executive",kw:"leadership emerging technology security strategy risk executive"},
-   {t:"AI in Medicine: Biomedical Signal Interpretation",slug:"ai-medicine-signal",cat:"Health & Medicine",kw:"medicine biomedical signal ecg eeg health diagnosis deep learning"}
-  ];
-  var STOP="the and for with module modules course courses find want need looking about can you help please from that this your our".split(" ");
-
-  function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  function search(s){
-    var toks=s.replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(function(w){return w.length>2 && STOP.indexOf(w)<0;});
-    return MODULES.map(function(m){
-      var hay=(m.t+" "+m.kw+" "+m.cat).toLowerCase(),sc=0;
-      toks.forEach(function(t){ if(hay.indexOf(t)>=0)sc++; });
-      return {m:m,sc:sc};
-    }).filter(function(x){return x.sc>0;}).sort(function(a,b){return b.sc-a.sc;}).slice(0,3).map(function(x){return x.m;});
-  }
-  function T(v){return {k:"text",v:v};}
-  function C(v){return {k:"cards",v:v};}
-  function CH(v){return {k:"chips",v:v};}
-
-  function reply(q){
-    var s=q.toLowerCase();
-    function has(){for(var i=0;i<arguments.length;i++){if(s.indexOf(arguments[i])>=0)return true;}return false;}
-    if(/^(hi|hello|hey|howzit|good (morning|afternoon|day)|yo|hi there)\b/.test(s)) return [T("Hi! I'm the Academy assistant. I can help you <b>find a module</b>, explain how <b>credits</b> and <b>B-BBEE</b> work, or connect you with the team. What are you after?"),CH(["Find a module","How do credits work?","B-BBEE returns","Talk to our team"])];
-    if(has("b-bbee","bbbee","bee ","scorecard","skills development","skills dev")) return [T("Every module is delivered through an accredited provider, so the spend is <b>recognised, claimable B-BBEE Skills Development</b> — properly documented for your scorecard. Each module counts, even before anyone finishes the full certificate."),CH(["Find a module","Talk to our team"])];
-    if(has("credit","stack","accumulate","ladder")) return [T("Modules are <b>credit-bearing</b>. Your people take them one at a time and build credits toward the <b>Occupational Certificate: Computer Technician (NQF 5, 282 credits)</b> — at their own pace. No need to commit to a full qualification up front."),CH(["Where do credits lead?","Find a module"])];
-    if(has("accredit","qcto","centenary","qualification","certificate","nqf","credential","where do credits lead")) return [T("The programme is delivered in association with <b>Centenary Networks</b>, a QCTO-accredited Skills Development Provider (Accreditation No. 07-QCTO/SDP180526182035). Modules ladder toward the <b>Occupational Certificate: Computer Technician</b> — a national, portable credential that's theirs to keep."),C([MODULES[5]])];
-    if(has("price","pricing","cost","fee","how much","rate","quote","afford")) return [T("Pricing is tailored to how many people you're enrolling. The quickest way is to <a href='contact.html'>talk to our team</a> for a quote, or email <a href='mailto:accounts@cn.co.za'>accounts@cn.co.za</a>."),CH(["Talk to our team"])];
-    if(has("contact","talk","human","agent","call","speak","reach","phone","email","enquire","enquiry")) return [T("You can reach the team at <a href='mailto:accounts@cn.co.za'>accounts@cn.co.za</a> or <a href='tel:0123456789'>012 345 6789</a>, or use the <a href='contact.html'>enquiry form</a> and we'll come back to you.")];
-    if(has("download","pdf","workbook","resource","slides","material","handout")) return [T("Every module comes with downloadable <b>PDF resources</b> — workbooks, slides, cheat sheets and reading lists — on each module page under “Downloadable resources.”")];
-    if(has("video","watch","stream","play")) return [T("Modules are <b>video-led</b> — short lessons you can stream on any device, at your own pace, plus downloadable resources. Open any module and press play."),CH(["Find a module"])];
-    if(has("mobile","tablet","desktop","device","laptop")) return [T("Yes — the platform works on <b>mobile, tablet and desktop</b>. Videos stream and PDFs download on any device.")];
-    if(has("how do i start","how does it work","how it works","get started","begin","enrol","enroll","sign up","how do we")) return [T("It's simple: pick a single credit-bearing <b>module</b>, your person learns at their own pace (days, not months), and the credits build toward the national certificate. Want a suggestion to start with?"),CH(["Find a module","Talk to our team"])];
-    if(has("find","recommend","suggest","browse","which","what module","learn","interested","topic","looking for","explore","study")){
-      var f1=search(s);
-      if(f1.length) return [T("Here are modules that fit:"),C(f1)];
-      return [T("Sure — what topic? For example:"),CH(["Cybersecurity","AI for managers","TinyML","AI in medicine","Computer Technician"])];
-    }
-    var f=search(s);
-    if(f.length) return [T("Here's what matches:"),C(f)];
-    return [T("I can help you <b>find a module</b>, explain <b>credits &amp; B-BBEE</b>, or connect you with the <b>team</b>. Try a topic like “cybersecurity,” “AI for managers” or “TinyML.”"),CH(["Find a module","How do credits work?","B-BBEE returns","Talk to our team"])];
-  }
-
-  var ICON_SPARK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="3"/></svg>';
-  var btn=document.createElement('button'); btn.className='aiw-btn'; btn.setAttribute('aria-label','Open assistant');
-  btn.innerHTML='<span class="dot"></span>'+ICON_SPARK+'Ask the Academy';
-  var panel=document.createElement('div'); panel.className='aiw-panel'; panel.setAttribute('role','dialog');
-  panel.innerHTML=
-   '<div class="aiw-head"><div class="av">'+ICON_SPARK+'</div><div><h4>Academy Assistant</h4><p>Find a module · credits · B-BBEE</p></div>'+
-   '<button class="x" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>'+
-   '<div class="aiw-body"></div>'+
-   '<div class="aiw-foot"><input type="text" placeholder="Ask about modules, credits, B-BBEE…" aria-label="Message"><button class="aiw-send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button></div>';
-  document.body.appendChild(btn); document.body.appendChild(panel);
-
-  var body=panel.querySelector('.aiw-body'), inp=panel.querySelector('input'), seeded=false;
-  function scroll(){body.scrollTop=body.scrollHeight;}
-  function addMsg(cls,html){var d=document.createElement('div');d.className='aiw-msg '+cls;d.innerHTML=html;body.appendChild(d);scroll();return d;}
-  function addCards(items){var w=document.createElement('div');w.className='aiw-cards';w.innerHTML=items.map(function(m){return '<a class="aiw-card" href="course.html?c='+m.slug+'"><b>'+m.t+'</b><span>'+m.cat+'</span></a>';}).join('');body.appendChild(w);scroll();}
-  function addChips(items){var w=document.createElement('div');w.className='aiw-chipset';w.innerHTML=items.map(function(c){return '<button class="aiw-chip">'+c+'</button>';}).join('');w.querySelectorAll('.aiw-chip').forEach(function(b){b.addEventListener('click',function(){send(b.textContent);});});body.appendChild(w);scroll();}
-  function botTurn(blocks){
-    var t=document.createElement('div'); t.className='aiw-msg bot aiw-typing'; t.innerHTML='<span></span><span></span><span></span>'; body.appendChild(t); scroll();
-    setTimeout(function(){ t.remove(); blocks.forEach(function(b){ if(b.k==='text')addMsg('bot',b.v); else if(b.k==='cards')addCards(b.v); else if(b.k==='chips')addChips(b.v); }); },450);
-  }
-  function send(text){ if(!text||!text.trim())return; addMsg('me',escapeHtml(text)); inp.value=''; botTurn(reply(text)); }
-
-  function open(){ panel.classList.add('open'); btn.style.display='none'; if(!seeded){ seeded=true; botTurn([T("Hi! I'm the Academy assistant. I can help you <b>find a module</b>, explain <b>credits</b> and <b>B-BBEE returns</b>, or connect you with the team."),CH(["Find a module","How do credits work?","B-BBEE returns","Talk to our team"])]); } inp.focus(); }
-  function close(){ panel.classList.remove('open'); btn.style.display=''; }
-  btn.addEventListener('click',open);
-  panel.querySelector('.x').addEventListener('click',close);
-  panel.querySelector('.aiw-send').addEventListener('click',function(){send(inp.value);});
-  inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();send(inp.value);} });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&panel.classList.contains('open'))close(); });
-})();
-</script>
+<script src="catalog.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
