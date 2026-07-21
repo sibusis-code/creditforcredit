@@ -1,60 +1,74 @@
 /* ===================================================================
-   BRAND CONFIG — the ONE file you edit to re-skin this site for another
-   company (e.g. Maziv, Inhance, Fungi Utilities).
+   BRAND CONFIG — the ONE file you edit to re-skin this platform.
 
-   Everything company-specific lives here: name, logo, colours, contact,
-   the enquiry form target, and the accreditation details. The shared nav
-   and footer are rendered from these values, so a new company launch is:
+   DEFAULT SKIN = Credit for Credit (creditforcredit.org), the public
+   learning platform. Everything else — a company portal for SPS, Maziv,
+   Fungi Utilities, Inhance — is a re-skin of this same engine:
      1. edit the values in BRAND below
      2. drop in the new logo file and point BRAND.logo at it
      3. (optional) review page HEADLINES/COPY for industry framing
    The module catalogue is separate content — see catalog.js.
+
+   TENANT MODE: set BRAND.tenant to a company name to turn this into a
+   company-branded academy ("SPS Academy, powered by Credit for Credit").
+   Leave it null for the platform itself.
    =================================================================== */
 window.BRAND = {
   /* ---- Identity ---- */
-  academyName:  "SPS Academy",
-  companyShort: "SPS",
-  companyLegal: "SPS — Sustainable Power Solutions",
-  companyFull:  "Sustainable Power Solutions",
-  industry:     "solar business",
-  tagline:      "Empowering the people who power SPS",
-  logo:         "sps-dark-logo.svg",
-  logoAlt:      "SPS — Sustainable Power Solutions",
+  academyName:  "Credit for Credit",
+  companyShort: "Credit for Credit",
+  companyLegal: "Credit for Credit",
+  companyFull:  "Credit for Credit",
+  domain:       "creditforcredit.org",
+  industry:     "growing business",
+  tagline:      "Learn while you earn credits",
+  logo:         "creditforcredit-logo.svg",
+  logoAlt:      "Credit for Credit",
   navCta:       "Talk to Our Team",
+
+  /* Set to a company name to run this instance as their branded academy. */
+  tenant:       null,
 
   /* ---- Brand colours (override the defaults in styles.css :root) ---- */
   colors: {
-    orange:     "#f37424",
-    orangeDeep: "#d55f16",
-    amber:      "#faa819",
-    green:      "#4da446",
-    greenDeep:  "#2f8f3e",
-    header:     "#e9f4ee",
-    header2:    "#dcefe4"
+    indigo:     "#4f46e5",   /* primary — buttons, links, active nav */
+    indigoDeep: "#3730a3",
+    gold:       "#f0b429",   /* "credit" accent — search, highlights */
+    teal:       "#0d9488",   /* badges, category tiles, ticks */
+    tealDeep:   "#0f766e",
+    header:     "#eceafb",   /* airy header/hero tint */
+    header2:    "#e0ddf8"
   },
 
-  /* ---- Contact ---- */
-  email:     "accounts@cn.co.za",
+  /* ---- Contact ----
+     NOTE: `email` is what the public sees. `formAction` is where enquiries
+     actually land — point it at a mailbox that exists and is FormSubmit-
+     activated, otherwise the contact form silently fails. */
+  email:     "hello@creditforcredit.org",
   phone:     "012 345 6789",
   phoneHref: "tel:0123456789",
   hours:     "Monday–Friday, 08:00–17:00 SAST",
   location:  "Online · Nationwide, South Africa",
 
   /* ---- Enquiry form (FormSubmit.co) ---- */
-  formAction:  "https://formsubmit.co/accounts@cn.co.za",
-  formNext:    "https://sibusis-code.github.io/sps.academy/thanks.html",
-  formSubject: "New enquiry from SPS Academy website",
+  formAction:  "https://formsubmit.co/hello@creditforcredit.org",
+  formNext:    "https://creditforcredit.org/thanks.html",
+  formSubject: "New enquiry from creditforcredit.org",
 
-  /* ---- Accreditation partner + legal (keep the numbers verbatim) ---- */
-  provider:      "Centenary Networks (Pty) Ltd",
-  providerShort: "Centenary Networks (QCTO)",
-  providerCred:  "QCTO-accredited Skills Development Provider",
+  /* ---- Accreditation ----
+     The delivery partner is deliberately unnamed on the public site. To
+     name an accredited provider on a tenant instance, fill `provider` and
+     `accredNo` together — the footer/About text rebuilds automatically.
+     Never publish an accreditation number without the entity it belongs to. */
+  provider:      "",
+  providerShort: "Accredited QCTO provider",
+  providerCred:  "Accredited QCTO Skills Development Provider",
   qualification: "Occupational Certificate: Computer Technician",
   nqf:           "NQF 5",
   qualId:        "101408",
   credits:       "282",
-  accredNo:      "07-QCTO/SDP180526182035",
-  accredValid:   "15 May 2026 – 14 May 2031",
+  accredNo:      "",
+  accredValid:   "",
 
   /* ---- Social + misc ---- */
   socialLinkedin: "#",
@@ -62,14 +76,27 @@ window.BRAND = {
 };
 
 /* ---- Derived strings (built from the atoms above; do not edit) ---- */
-BRAND.accredText =
-  "Modules are credit-bearing toward the " + BRAND.qualification + " (" + BRAND.nqf +
-  ", Qualification ID " + BRAND.qualId + ", " + BRAND.credits + " credits), delivered in association with " +
-  BRAND.provider + ", accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills " +
-  "Development Provider. Accreditation No. " + BRAND.accredNo + ", valid " + BRAND.accredValid + ".";
-BRAND.footerCopy =
-  "Modules are credit-bearing units toward an accredited national qualification. Content shown is " +
-  "illustrative pending final material. © " + BRAND.year + " " + BRAND.companyLegal + ". All rights reserved.";
+(function(B){
+  /* Display name: "SPS Academy, powered by Credit for Credit" in tenant mode. */
+  B.displayName = B.tenant ? (B.tenant + " Academy") : B.academyName;
+  B.poweredBy   = B.tenant ? ("Powered by " + B.academyName) : "";
+
+  var t = "Modules are credit-bearing toward the " + B.qualification + " (" + B.nqf +
+          ", Qualification ID " + B.qualId + ", " + B.credits + " credits), delivered through an " +
+          B.providerCred + ", accredited by the Quality Council for Trades and Occupations (QCTO).";
+  if (B.provider) {
+    t = "Modules are credit-bearing toward the " + B.qualification + " (" + B.nqf +
+        ", Qualification ID " + B.qualId + ", " + B.credits + " credits), delivered in association with " +
+        B.provider + ", accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills " +
+        "Development Provider." + (B.accredNo ? " Accreditation No. " + B.accredNo +
+        (B.accredValid ? ", valid " + B.accredValid : "") + "." : "");
+  }
+  B.accredText = t;
+
+  B.footerCopy =
+    "Modules are credit-bearing units toward an accredited national qualification. Content shown is " +
+    "illustrative pending final material. © " + B.year + " " + B.companyLegal + ". All rights reserved.";
+})(window.BRAND);
 
 /* ===================================================================
    SITE — applies BRAND to the page. Engine code; no per-company edits.
@@ -89,11 +116,11 @@ window.SITE = (function(){
   /* Override CSS colour tokens from BRAND.colors — safe to run in <head> */
   function applyColors(){
     var c = B.colors, s = document.documentElement.style;
-    s.setProperty("--orange", c.orange);
-    s.setProperty("--orange-deep", c.orangeDeep);
-    s.setProperty("--amber", c.amber);
-    s.setProperty("--green", c.green);
-    s.setProperty("--green-deep", c.greenDeep);
+    s.setProperty("--indigo", c.indigo);
+    s.setProperty("--indigo-deep", c.indigoDeep);
+    s.setProperty("--gold", c.gold);
+    s.setProperty("--teal", c.teal);
+    s.setProperty("--teal-deep", c.tealDeep);
     s.setProperty("--header", c.header);
     s.setProperty("--header-2", c.header2);
   }
@@ -102,7 +129,8 @@ window.SITE = (function(){
   function renderNav(){
     var el = document.getElementById("nav"); if(!el) return;
     var page = (document.body && document.body.getAttribute("data-page")) || "";
-    var links = [["about","about.html","About"],["modules","modules.html","Modules"],["contact","contact.html","Contact"]];
+    var links = [["about","about.html","About"],["modules","modules.html","Modules"],
+                 ["companies","companies.html","For Companies"],["contact","contact.html","Contact"]];
     var linksHtml = links.map(function(l){
       return '<a href="'+l[1]+'" data-nav="'+l[0]+'"'+(page===l[0]?' class="active"':'')+'>'+l[2]+'</a>';
     }).join("");
@@ -122,19 +150,22 @@ window.SITE = (function(){
   /* Render the shared footer into <footer id="siteFooter">. */
   function renderFooter(){
     var el = document.getElementById("siteFooter"); if(!el) return;
+    var line1 = B.tenant
+      ? esc(B.displayName) + ' — ' + esc(B.poweredBy)
+      : esc(B.academyName) + ' — ' + esc(B.tagline);
     el.innerHTML =
       '<div class="wrap">'+
         '<div class="foot-logo"><img src="'+esc(B.logo)+'" alt="'+esc(B.logoAlt)+'"></div>'+
         '<div class="foot-grid">'+
           '<div class="foot-addr">'+
-            esc(B.academyName)+' — in association with '+esc(B.provider)+'<br>'+
+            line1+'<br>'+
             esc(B.providerCred)+'<br>'+
             esc(B.location)+'<br>'+
-            '<a href="mailto:'+esc(B.email)+'" style="color:var(--orange);font-weight:600">'+esc(B.email)+'</a>'+
+            '<a href="mailto:'+esc(B.email)+'" style="color:var(--indigo);font-weight:600">'+esc(B.email)+'</a>'+
           '</div>'+
           '<div class="foot-col"><h4>Explore</h4>'+
             '<a href="index.html">Home</a><a href="modules.html">Modules</a>'+
-            '<a href="about.html">About</a><a href="contact.html">Contact</a>'+
+            '<a href="about.html">About</a><a href="companies.html">For Companies</a>'+
           '</div>'+
           '<div class="foot-col"><h4>Get in touch</h4>'+
             '<a href="contact.html">'+esc(B.navCta)+'</a>'+
@@ -169,7 +200,7 @@ window.SITE = (function(){
     // Document title from body[data-title]
     if(document.body){
       var t = document.body.getAttribute("data-title");
-      document.title = (t ? t + " — " : "") + B.academyName;
+      document.title = (t ? t + " — " : "") + B.displayName;
     }
   }
 

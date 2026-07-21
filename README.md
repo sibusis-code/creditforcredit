@@ -1,261 +1,206 @@
-# SPS · AI Skills Programme — Website Blueprint
+# Credit for Credit — learning platform
 
-> **Will AI replace you — or will you run it?**
-> Accredited, internationally aligned **micro-learning** that lets SPS people build credit-bearing
-> AI and technical skills in short bursts, at their own pace — laddering toward a full national
-> qualification while boosting the company's skills-development scorecard.
+> **Learn while you earn credits.**
+> Short, credit-bearing modules that stack toward a national qualification — and count as
+> recognised B-BBEE Skills Development spend for the companies that fund them.
 
-This repository is the public-facing website for the programme. This README is the **blueprint**:
-it captures the positioning and messaging spine (from the SPS one-pager) and documents how the
-site is built so anyone can maintain or extend it.
+Live at **[creditforcredit.org](https://creditforcredit.org)**.
+
+This repository is the public site for the platform, and the **engine** every company-branded
+academy is re-skinned from. This README is the blueprint: it captures the positioning and documents
+how the site is built so anyone can maintain or extend it.
 
 ---
 
 ## 1. The Spine (positioning — do not drift from this)
 
-**What we sell:** **credit-bearing modules / skills courses** that deliver **B-BBEE returns**. We do
-**not** sell full qualifications, and we do **not** position this as "AI training courses." Each
-module is a small, claimable, credit-bearing unit; the **Occupational Certificate is the *destination*
-credits ladder toward — never the thing being sold.** Lead with *modules → credits → B-BBEE returns*,
-with the qualification as the optional end-point. The whole site revolves around this spine
-(boss-approved, 28 Jun 2026):
+**What we sell:** **credit-bearing modules / skills courses**. Each module is a small, claimable,
+credit-bearing unit. The **Occupational Certificate: Computer Technician (NQF 5, ID 101408,
+282 credits) is the *destination* credits ladder toward — never the thing being sold.** Lead with
+*modules → credits → a qualification you keep*, with B-BBEE returns as the employer-side benefit.
 
-1. **Start small, no big commitment** — enrol someone in a single credit-bearing module (days, not months). No need to commit anyone to a full qualification up front.
-2. **Credits accumulate over time** — every module carries credits toward the Occupational Certificate: Computer Technician (NQF 5, 282 credits); learners build toward certification at their own pace.
-3. **Skills spend that scores** — delivered through an accredited provider, so each module supports the **B-BBEE Skills Development** scorecard — recognised training, properly documented.
-4. **A qualification that's theirs to keep** — employees earn a national, portable credential — a real reason to stay, learn, and grow with SPS.
+1. **Start small, no big commitment** — a single credit-bearing module takes days, not months.
+2. **Credits accumulate over time** — every module carries credits toward the qualification; learners build at their own pace, and nothing completed is wasted.
+3. **Skills spend that scores** — delivered through an accredited provider, so employer-funded training supports the **B-BBEE Skills Development** scorecard.
+4. **A qualification that's theirs to keep** — a national, portable credential that belongs to the learner, not the employer.
 
-**Audience:** SPS (Sustainable Power Solutions) — a **solar / energy business**. Framing is workforce
-development for an AI-disrupted sector, aimed at decision-makers (skills spend, scorecard) and the
-technicians, installers and support teams who'll learn.
+**Audience — two ways in:**
+- **Learners** — build a credit record that follows them between employers.
+- **Companies** — turn training spend into scorecard points, with the option of a branded academy.
 
-**The energy-sector line:** *"For a solar business, this means technicians, installers, and support
-teams growing recognised technical and AI capability in focused bursts — each module a step toward
-full certification, each one claimable spend, each one building the capability SPS needs as the
-sector goes digital."*
+**Primary calls to action:** `Explore Modules` · `For Companies` · `Talk to Our Team`
 
-**Primary calls to action:** `Explore Modules` · `Talk to Our Team`
+### Brand posture (important — boss directive, 21 Jul 2026)
 
-### Approved hero copy (current)
-- **Headline:** Build Toward a National Qualification — One Module at a Time
-- **Subtext:** Credit-bearing AI and technical skills modules for SPS, delivered in association with
-  Centenary Networks (QCTO-accredited Skills Development Provider). Your people choose their modules,
-  build credits at their own pace, and earn an accredited qualification that's theirs to keep — while
-  SPS earns B-BBEE Skills Development points along the way.
-- **Driver's-seat line:** AI is changing how the energy sector works — and the people who get ahead of
-  it will be the ones who shape where it goes… Not training handed down — a path they own.
+The public brand is **Credit for Credit**, and nothing else. The site is deliberately
+**company-neutral**: it is not positioned as any single company's academy. Individual companies
+(SPS, Maziv, Fungi Utilities, Inhance) are prospects and future tenants, **not** the brand.
+Centenary Networks stays a holding company and is **not named on the public site**.
+
+The delivery partner is therefore **deliberately unnamed**: copy says "delivered through an
+accredited QCTO Skills Development Provider." See §4 before changing this.
 
 ---
 
-## The Engine — One Platform, Many Companies (white-label)
+## 2. The Engine — one platform, many academies
 
-This site is the **first instance of a reusable platform ("the engine")**. The *same* platform will be
-**replicated across Newgx-invested companies** — e.g. **SPS, Maziv, Funig, Inhance** — each as its own
-website: identical engine and product model, different company brand.
+Credit for Credit is the platform *and* the default skin. Every company-branded academy is the
+**same engine re-skinned** via `brand.js`.
 
-The **product never changes** between companies: credit-bearing modules / skills courses → claimable
-**B-BBEE returns** → credits that ladder toward a national qualification.
+The commercial motion: companies see the platform → they want it under their own brand →
+we stand up a tenant instance for them. `companies.html` carries that pitch.
 
 | Changes per company (edit `brand.js`) | Stays the same (the engine) |
 |---|---|
-| Company/academy name, logo, industry line | Page structure, sections & components (the HTML) |
-| Brand colours (`BRAND.colors`) | ITU-style airy design system in `styles.css` |
-| Contact details (email, phone, hours, location) | The pillars + modules→credits→B-BBEE→qualification spine |
-| Enquiry-form target + redirect | `course.html` template + `catalog.js` content model |
-| Accreditation partner, numbers, qualification | Nav + footer (rendered from `brand.js`), CTA patterns |
+| Academy / company name, logo, `logoAlt` | Page structure and layout |
+| `colors` (indigo / gold / teal / header tints) | `styles.css`, `app.js` behaviour |
+| Contact details, `formAction`, `formNext` | The catalogue model in `catalog.js` |
+| `industry` framing, `tenant` name | The product spine (modules → credits → B-BBEE) |
+| `provider` / `accredNo`, if naming one | Nav + footer rendering |
 
-**Status: DONE (3 Jul 2026).** Every company-specific value now lives in a single **`brand.js`** config
-(`window.BRAND`). The shared **nav and footer are rendered from it**, colours override the CSS tokens,
-and page text is filled via `data-b` placeholders — so the SPS values are no longer scattered inline.
+### To launch a company academy
 
-**Launching a new company (Maziv / Inhance / Fungi Utilities):**
-1. Copy the repo.
-2. Edit the `BRAND` object in **`brand.js`** — name, colours, contact, accreditation, and the FormSubmit
-   target/redirect. Drop in the new logo file and point `BRAND.logo` at it.
-3. Edit **`catalog.js`** if the module line-up differs.
-4. **Review page headlines/copy for industry framing** — e.g. change "solar business" to "fibre /
-   telecoms" for Maziv. (Identity *names* swap automatically via `brand.js`; positioning *copy* is a
-   deliberate human step — you don't want "solar" auto-pasted into a telecoms site.)
+1. Copy the repo, edit **`brand.js`** — set `tenant: "SPS"`, plus name, colours, contact, form target.
+   Setting `tenant` switches the title to "SPS Academy" and the footer to "powered by Credit for Credit".
+2. Drop the company logo into `tenants/` and point `BRAND.logo` at it.
+3. Edit `catalog.js` if their module mix differs.
+4. Review page copy for industry framing — identity names swap automatically, but positioning
+   lines (e.g. "for a solar business") are a deliberate human edit.
+5. Update `CNAME` to their domain.
 
-**Repo model:** one repo + GitHub Pages site per company (this one is `sibusis-code/sps.academy`).
+`tenants/sps-dark-logo.svg` is kept as the first tenant asset.
 
 ---
 
-## 2. Brand & Design System
+## 3. Architecture
 
-**Layout model (boss-approved, 3 Jul 2026):** the site adopts the **ITU Academy structure and airy
-aesthetic** (light-tinted header, curved section edges, rounded cards, colourful category tiles, pill
-buttons, catalogue-with-filters, course-detail info-grid) — **recoloured to the SPS brand**. The boss
-shared the ITU Academy site as the reference layout; this supersedes the earlier monochrome direction.
+Plain static site — no build step, no dependencies. Open `index.html` and it runs.
+
+| File | Purpose |
+|---|---|
+| `brand.js` | **The one file you edit to re-skin.** `window.BRAND` config + the `SITE` engine that renders the shared nav/footer, applies colour tokens, and fills `data-b` placeholders. |
+| `styles.css` | Shared stylesheet. Colour tokens in `:root` are overridden at runtime by `BRAND.colors`. |
+| `catalog.js` | `window.MODULES` — the module catalogue (content, not brand). |
+| `app.js` | Shared behaviour: card rendering, catalogue filters/search, carousel, scroll reveals. |
+| `creditforcredit-logo.svg`, `favicon.svg` | Platform brand marks. |
+| `CNAME` | GitHub Pages custom domain. |
+
+### Pages
+
+| Page | Role |
+|---|---|
+| `index.html` | Home — hero, featured modules, categories, how it works, two audiences, trust, CTA |
+| `modules.html` | Full catalogue with filters, search and modality segments |
+| `course.html` | Module detail (`?c=slug`), rendered from `catalog.js` |
+| `about.html` | What the platform is, the spine, accreditation |
+| `companies.html` | The employer offer **and the branded-academy pitch** |
+| `contact.html` | Enquiry form (FormSubmit) |
+| `thanks.html` | Form success page (`noindex`) |
+
+### How a page wires up
+
+```html
+<body data-page="home" data-title="Learn while you earn credits">
+  <nav id="nav"></nav>                 <!-- filled by SITE.renderNav()    -->
+  <span data-b="academyName"></span>   <!-- filled by SITE.applyText()    -->
+  <footer id="siteFooter"></footer>    <!-- filled by SITE.renderFooter() -->
+```
+
+`data-page` sets the active nav link; `data-title` builds the document title.
+`data-b`, `data-b-href`, `data-b-action`, `data-b-value` etc. pull values straight from `BRAND`.
+
+### Colour tokens
 
 | Token | Value | Use |
-|-------|-------|-----|
-| **Accent — orange** | `--orange: #f37424` (`--orange-deep #d55f16`) | Primary buttons, links, active nav, modality labels |
-| **Accent — amber** | `--amber: #faa819` | Search button (ITU's yellow), highlights |
-| **Accent — green** | `--green: #4da446` (`--green-deep #2f8f3e`) | "Available" badges, category tiles, ticks, enrol box |
-| Header / hero tint | `--header: #e9f4ee` → `#dcefe4` (light solar-green) | Nav bar, hero + page-head backgrounds |
-| Ink / body | `#1f2733` / `#40474f` / `#6b7480` | Headings, body, muted text |
-| Canvas | `#ffffff` / `#f4f7f6` | Backgrounds |
+|---|---|---|
+| `--indigo` / `--indigo-deep` | `#4f46e5` / `#3730a3` | Primary buttons, links, active nav |
+| `--gold` / `--gold-deep` | `#f0b429` / `#d99a12` | The "credit" accent — search button, highlights |
+| `--teal` / `--teal-deep` | `#0d9488` / `#0f766e` | Badges, category tiles, ticks |
+| `--soft` / `--soft-hover` | `#ddd9fb` / `#cec9f8` | Soft pills, breadcrumbs, enrol box |
+| `--header` / `--header-2` | `#eceafb` / `#e0ddf8` | Nav bar, hero and page-head tints |
 
-All three accents come straight from `sps-dark-logo.svg` (its green and orange/amber gradients).
+Never hardcode a brand hex in a page — use the token, or it won't re-skin.
 
-- **Logo:** `sps-dark-logo.svg` (used as-is on the light header and footer).
-- **Type:** **Poppins** (Google Fonts) with a system fallback stack — matches the rounded ITU feel.
-- **Imagery:** real topic-matched photography (Unsplash CDN) on the hero, module cards and split
-  blocks; everything else is inline SVG, so there are almost no binary image assets to manage.
-- **Motion:** subtle scroll-reveal (`.reveal` + IntersectionObserver) and card hover-lift; respects
-  `prefers-reduced-motion`.
+- **Type:** Poppins (Google Fonts) with a system fallback stack.
+- **Imagery:** topic-matched Unsplash photography on hero/cards/splits; everything else is inline SVG.
+- **Motion:** scroll-reveal (`.reveal` + IntersectionObserver) and card hover-lift; respects `prefers-reduced-motion`.
 
 ---
 
-## 3. Site Map & Files
+## 4. Accreditation — read before editing
 
-```
-sps/
-├── index.html              # Home — ITU-style: hero+search, featured modules, category tiles,
-│                           #   "how it works" split blocks, accredited pathway, pillars, partners, CTA
-├── modules.html            # Full catalogue — ITU-style: breadcrumb, search, sidebar filters
-│                           #   (Modality / Topics / Level with live counts) + card grid
-├── course.html             # ONE data-driven MODULE template — ITU course-detail layout,
-│                           #   renders any module via ?c=<slug> (info grid, enrol box, related)
-├── about.html              # About / "Our work": what SPS Academy is, energy-sector line, accreditation
-├── contact.html            # Contact details + working enquiry form (FormSubmit.co)
-├── thanks.html             # Form submission confirmation page
-│
-├── brand.js                # THE re-skin file — window.BRAND (name, logo, colours, contact,
-│                           #   form target, accreditation) + renders the shared nav & footer
-├── styles.css              # SHARED stylesheet — ITU-style airy layout; colour tokens overridden by brand.js
-├── catalog.js              # SHARED data — the 20-module catalogue (window.MODULES) + helpers
-├── app.js                  # SHARED behaviour — nav toggle, reveal, hero search, carousel,
-│                           #   catalogue filtering, the course-detail renderer, brand text fill
-│
-├── sps-dark-logo.svg       # Brand mark
-├── resources/*.pdf         # Downloadable PDF resources (placeholders, swappable)
-├── .gitattributes          # Marks PDFs/images as binary (prevents corruption)
-└── README.md               # This blueprint
-```
+The public site references the qualification by its **public ID** (Occupational Certificate:
+Computer Technician, NQF 5, ID 101408, 282 credits) and describes delivery through an
+**unnamed** accredited QCTO Skills Development Provider.
 
-**Multi-page, shared-asset architecture** (no build step). Every page links `brand.js` (in `<head>`) +
-`styles.css` + `catalog.js` + `app.js`, so brand, design, data and behaviour each live in **one place**.
-Each page ships empty `<nav id="nav">` / `<footer id="siteFooter">` placeholders that `brand.js` fills,
-and `data-b="…"` attributes on brand-specific text; `<body data-page="…">` marks the active nav link.
-Re-skin = edit `brand.js`; re-content = edit `catalog.js`.
+`BRAND.provider` and `BRAND.accredNo` are intentionally **empty**. If you name a provider, fill
+**both** — `brand.js` rebuilds the accreditation text automatically.
 
-> **History:** the site was fully rebuilt to the ITU Academy structure on 3 Jul 2026 (boss-approved).
-> The previous monochrome build's extra files (`ai-in-action.html`, `ai-fundamentals.html`, `site.js`,
-> `cards.js`, `assistant.js`, `neural.js`, `demo.js`) were removed; a zip backup of the old site is
-> kept outside the repo.
-
-### Key pages (mirroring ITU Academy)
-- **`index.html`** — ITU home: photo hero with a "What do you want to learn?" search, a featured-module
-  row, colourful category tiles, alternating "our work" split blocks, the accredited-pathway feature,
-  the four SPS pillars, an accreditation-partner strip and a CTA band.
-- **`modules.html`** — ITU "Full catalogue of courses": breadcrumb + search page-head, a sticky
-  sidebar of checkbox filters (Modality / Training topics / Level, each with counts), an All/Online/
-  In-person segment, and a live-filtered card grid. Deep-links via `?q=<term>` from the home search
-  and category tiles.
-- **`course.html`** — ITU course-detail: breadcrumb, title/lead, a 9-cell info grid (Enrolment,
-  Delivery, Location, Training topic, Level, Language, Credits, Duration, Provider), a sticky enrol
-  box, "what you'll learn" ticks, an about section and related modules — all driven by `?c=<slug>`.
-
----
-
-## 4. Content Model
-
-All module content lives in one place: the **`window.MODULES` array** in `catalog.js`, shared by every
-page (home featured row, catalogue grid + filters, and the course-detail page).
-
-```js
-{
-  slug:     "ai-fundamentals",          // URL key → course.html?c=<slug>
-  title:    "AI Fundamentals for the Workplace",
-  topic:    "Business",                 // filter + drives "what you'll learn" defaults
-  level:    "Beginner",                 // filter (Beginner…Executive, NQF 5)
-  modality: "self-paced",               // self-paced | live | inperson | blended (filter + label)
-  credits:  8,                          // credits toward NQF 5
-  hours:    "6 hours",                  // duration shown on card + detail
-  img:      "<unsplash-id>",            // card/hero photo id (images.unsplash.com/photo-<id>)
-  lead:     "…",                        // description paragraph
-  avail:    "Coming Soon",              // optional status → grey badge
-  accred:   true                        // optional → flags the accredited destination qualification
-}
-```
-
-- **20 modules** are catalogued today. Cards everywhere auto-link to `course.html?c=<slug>`.
-- **Modality labels** live in `window.MODALITY`; the filter lists (`TOPICS`, `LEVELS`) are derived
-  from the data with live counts, so adding a module needs no filter edits.
-- **Images:** `window.imgUrl(id, width)` builds the Unsplash URL. Swap the `img` id (or point it at a
-  local file) to change a photo.
-
-> ⚠️ **Placeholder content:** credits, durations and the "what you'll learn" bullets are illustrative
-> defaults pending final SPS/Centenary material. The footers say so. Replace before any public launch.
-
-### Add / edit a module
-1. Add one object to `window.MODULES` in `catalog.js`. That's it — it appears in the catalogue, gets
-   a filterable card, and has a working detail page automatically.
-2. To feature it on the home row, add its slug to the `order` array in `app.js` (`#featuredTrack`).
-
----
-
-## 5. Tech Stack & Hosting
-
-- **Static HTML/CSS/JS** — no framework, no backend, no database, no build.
-- **Hosting:** GitHub Pages (free), served from `main` branch root.
-  - Repo: `https://github.com/sibusis-code/sps.academy`
-  - Live: **https://sibusis-code.github.io/sps.academy/**
-- **Deploy = push.** Every push to `main` triggers a Pages rebuild (~1 min).
-
-```bash
-# from the sps/ folder
-git add -A
-git commit -m "…"
-git push          # site updates automatically
-```
-
----
-
-## 6. How To… (maintenance recipes)
-
-- **Add / edit a module** → add or edit one object in `window.MODULES` in `catalog.js` (see §4). It
-  flows into the catalogue, filters and detail page automatically. To feature it on the home row, add
-  its slug to the `order` array in `app.js`.
-- **Swap a photo** → change the module's `img` id in `catalog.js`, or the hero/split `background-image`
-  URLs in the HTML.
-- **Change copy** → hero + section copy lives in each page's HTML; module copy lives in `catalog.js`.
-- **Re-skin for another company** → edit **`brand.js`** only (name, `BRAND.colors`, logo path, contact,
-  form target, accreditation), drop in the new logo, then review page copy for industry framing.
-
----
-
-## 7. Accreditation (legal — keep verbatim)
-
-> Modules are credit-bearing toward the **Occupational Certificate: Computer Technician**
-> (NQF 5, Qualification ID **101408**, 282 credits), delivered in association with **Centenary
-> Networks (Pty) Ltd**, accredited by the **Quality Council for Trades and Occupations (QCTO)** as a
-> Skills Development Provider. Accreditation No. **07-QCTO/SDP180526182035**, valid **15 May 2026 –
-> 14 May 2031**.
-
-Per the boss, this block should appear on the **credentials / about section** (it's rendered in the
-About section's accreditation note) as well as the footer.
+> **Never publish an accreditation number without the entity it belongs to.** A number floating
+> free of its holder is worse than no number at all, and a client or the QCTO can check.
 
 Non-accredited short courses must be labelled as such; only the Computer Technician pathway is the
 accredited qualification.
 
 ---
 
-## 8. Roadmap / Open Items
+## 5. Content Model
 
-- [x] **Rebuild to the ITU Academy structure** (3 Jul 2026) — ITU-style home, full-catalogue-with-filters,
-  and course-detail info-grid, recoloured to the SPS brand. Verified rendering in headless Edge.
-- [x] **Align site to the one-pager** — micro-learning/credits language, energy-sector framing, and
-  "Explore Modules / Talk to Our Team" CTAs throughout.
-- [x] **Working contact form** — wired to **FormSubmit.co → accounts@cn.co.za** (redirects to `thanks.html`); real email/phone in place. *First submission triggers a one-time activation email to accounts@cn.co.za — click it to start receiving enquiries.*
-- [ ] **Real content** — final module details (credits/durations), photography and facilitator bios from SPS/Centenary.
-- [ ] **Energy-sector imagery** — tilt hero/card photography toward the solar/energy industry (copy is already energy-framed).
-- [ ] **Optional ITU features not yet carried over** — course PDF downloads, an AI assistant widget, and per-module curriculum outlines were dropped in the rebuild; re-add if wanted.
-- [ ] **Custom domain** (e.g. `academy.sps…`) once decided.
+All module content lives in the **`window.MODULES` array** in `catalog.js`, shared by every page.
+
+```js
+{
+  slug:     "ai-fundamentals",   // URL key → course.html?c=<slug>
+  title:    "AI Fundamentals for the Workplace",
+  topic:    "Business",          // filter + drives "what you'll learn" defaults
+  level:    "Beginner",          // filter (Beginner…Executive, NQF 5)
+  modality: "self-paced",        // self-paced | live | inperson | blended
+  credits:  8,                   // credits toward NQF 5
+  hours:    "6 hours",           // duration shown on card + detail
+  img:      "<unsplash-id>",     // images.unsplash.com/photo-<id>
+  lead:     "…",                 // description paragraph
+  avail:    "Coming Soon",       // optional status → grey badge
+  accred:   true                 // optional → flags the destination qualification
+}
+```
+
+**Add a module:** add one object to `window.MODULES`. It appears in the catalogue, gets a
+filterable card, and has a working detail page automatically. To feature it on the home row,
+add its slug to the `order` array in `app.js`.
+
+Filter lists (`TOPICS`, `LEVELS`) derive from the data with live counts — no filter edits needed.
 
 ---
 
-*Project for SPS — Sustainable Power Solutions, in association with Centenary Networks (QCTO).
-Blueprint derived from the SPS AI Skills Programme one-pager.*
+## 6. Hosting & deploy
+
+- Static HTML/CSS/JS — no framework, no backend, no build.
+- GitHub Pages from `main`, repo `sibusis-code/creditforcredit`, `CNAME` → `creditforcredit.org`.
+- **Deploy = push.** Every push to `main` rebuilds Pages (~1 min).
+
+DNS for the apex domain should point at GitHub Pages:
+
+```
+A     @   185.199.108.153
+A     @   185.199.109.153
+A     @   185.199.110.153
+A     @   185.199.111.153
+CNAME www sibusis-code.github.io
+```
+
+Then enable **Enforce HTTPS** in the repo's Pages settings once the certificate is issued.
+
+---
+
+## 7. Open items
+
+- [ ] **`hello@creditforcredit.org` must exist and be FormSubmit-activated**, or the contact form
+      silently fails. The first submission triggers a one-time activation email — click it.
+- [ ] **DNS + Pages** — point creditforcredit.org at GitHub Pages and enable HTTPS.
+- [ ] **Real content** — final module details (credits, durations), photography, facilitator bios.
+      Current content is illustrative; the footer says so.
+- [ ] **Real phone number** — still a placeholder in `brand.js`.
+- [ ] **Logo** — `creditforcredit-logo.svg` is a wordmark using a font stack; loaded via `<img>` it
+      falls back to a system sans rather than Poppins. Outline the text if a designer finalises it.
+- [ ] **First tenant instance** — stand up an SPS-branded academy from this engine once a company
+      signs on (see §2).

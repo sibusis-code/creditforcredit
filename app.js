@@ -1,5 +1,5 @@
 /* ===================================================================
-   SPS Academy — shared behaviour
+   Credit for Credit — shared behaviour
    Nav, scroll-reveal, carousels, hero search, catalogue filtering,
    and the data-driven course-detail page.
    =================================================================== */
@@ -120,7 +120,7 @@
         return true;
       });
       grid.innerHTML = res.length ? res.map(card).join("")
-        : '<div class="no-res" style="grid-column:1/-1">No modules match those filters yet. <a href="modules.html" style="color:var(--orange);font-weight:600">Clear filters</a></div>';
+        : '<div class="no-res" style="grid-column:1/-1">No modules match those filters yet. <a href="modules.html" style="color:var(--indigo);font-weight:600">Clear filters</a></div>';
       $$(".reveal", grid).forEach(watch);
       var cnt = $("#catCount"); if(cnt){ cnt.textContent = res.length + (res.length===1?" module":" modules"); }
     }

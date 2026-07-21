@@ -1,5 +1,5 @@
 /* ===================================================================
-   SPS Academy — shared module catalog
+   Credit for Credit — shared module catalog
    One source of truth used by index.html, modules.html and course.html.
    Each module is a small, credit-bearing unit that ladders toward the
    Occupational Certificate: Computer Technician (NQF 5, ID 101408).
@@ -16,7 +16,7 @@ window.MODULES = [
   {slug:"new-venture", title:"AI & New Venture Creation", topic:"Computer Science", level:"Intermediate", modality:"self-paced", credits:10, hours:"8 hours", img:"1559136555-9303baea8ebd", avail:"Coming Soon",
    lead:"Explore how AI is enabling new business models and entrepreneurial opportunities across Africa's growing digital economy."},
   {slug:"computer-technician", title:"Occupational Certificate: Computer Technician", topic:"Accredited", level:"NQF 5", modality:"blended", credits:282, hours:"12–18 months", img:"1581092160562-40aa08e78837", accred:true,
-   lead:"The nationally accredited destination qualification — covering the technical foundations of computer systems, hardware, networking and support. Qualification ID 101408 · 282 credits · NQF Level 5, delivered in association with Centenary Networks (QCTO)."},
+   lead:"The nationally accredited destination qualification — covering the technical foundations of computer systems, hardware, networking and support. Qualification ID 101408 · 282 credits · NQF Level 5, delivered through an accredited QCTO Skills Development Provider."},
   {slug:"deploying-tinyml", title:"Deploying TinyML", topic:"Computer Science", level:"Advanced", modality:"self-paced", credits:12, hours:"10 hours", img:"1593376853899-fbb47a057fa0",
    lead:"Learn to program in TensorFlow Lite for microcontrollers, write the code, and deploy your model to your very own tiny microcontroller — implementing an entire TinyML application."},
   {slug:"fundamentals-tinyml", title:"Fundamentals of TinyML", topic:"Computer Science", level:"Intermediate", modality:"self-paced", credits:8, hours:"7 hours", img:"1518770660439-4636190af475",
