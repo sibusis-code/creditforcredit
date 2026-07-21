@@ -19,7 +19,7 @@ window.BRAND = {
   companyShort: "Credit for Credit",
   companyLegal: "Credit for Credit",
   companyFull:  "Credit for Credit",
-  domain:       "creditforcredit.org",
+  domain:       "creditforcredit.org",   /* target live domain — not deployed there yet */
   industry:     "growing business",
   tagline:      "Learn while you earn credits",
   logo:         "creditforcredit-logo.svg",
@@ -52,7 +52,8 @@ window.BRAND = {
 
   /* ---- Enquiry form (FormSubmit.co) ---- */
   formAction:  "https://formsubmit.co/hello@creditforcredit.org",
-  formNext:    "https://creditforcredit.org/thanks.html",
+  /* Preview host. Change to https://creditforcredit.org/thanks.html at live deploy. */
+  formNext:    "https://sibusis-code.github.io/creditforcredit/thanks.html",
   formSubject: "New enquiry from creditforcredit.org",
 
   /* ---- Accreditation ----

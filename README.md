@@ -4,7 +4,8 @@
 > Short, credit-bearing modules that stack toward a national qualification — and count as
 > recognised B-BBEE Skills Development spend for the companies that fund them.
 
-Live at **[creditforcredit.org](https://creditforcredit.org)**.
+**Preview build:** [sibusis-code.github.io/creditforcredit](https://sibusis-code.github.io/creditforcredit/)
+**Live domain (not deployed yet):** creditforcredit.org — see §6.
 
 This repository is the public site for the platform, and the **engine** every company-branded
 academy is re-skinned from. This README is the blueprint: it captures the positioning and documents
@@ -174,21 +175,24 @@ Filter lists (`TOPICS`, `LEVELS`) derive from the data with live counts — no f
 
 ## 6. Hosting & deploy
 
-- Static HTML/CSS/JS — no framework, no backend, no build.
-- GitHub Pages from `main`, repo `sibusis-code/creditforcredit`, `CNAME` → `creditforcredit.org`.
-- **Deploy = push.** Every push to `main` rebuilds Pages (~1 min).
+Static HTML/CSS/JS — no framework, no backend, no build.
 
-DNS for the apex domain should point at GitHub Pages:
+**The workflow is two-stage. Don't skip ahead.**
 
-```
-A     @   185.199.108.153
-A     @   185.199.109.153
-A     @   185.199.110.153
-A     @   185.199.111.153
-CNAME www sibusis-code.github.io
-```
+1. **Build + preview here (current stage).** GitHub Pages from `main`, repo
+   `sibusis-code/creditforcredit`, served at
+   **https://sibusis-code.github.io/creditforcredit/**. This is the client-review URL.
+   **Deploy = push** — every push to `main` rebuilds Pages (~1 min).
 
-Then enable **Enforce HTTPS** in the repo's Pages settings once the certificate is issued.
+2. **Live deploy (later, client-approved).** Once the client signs off, they provide access to
+   **Xneelo** and the site goes to **creditforcredit.org** from there.
+
+> ⚠️ **Do not point creditforcredit.org at this repo.** The domain currently serves the client's
+> reserve page and the live deploy is theirs to run. No `CNAME` file belongs in this repo, and the
+> Pages custom-domain field stays empty until the client says otherwise.
+
+At live-deploy time, remember to update `BRAND.formNext` in `brand.js` from the github.io preview
+URL to `https://creditforcredit.org/thanks.html`, or the contact form redirects to the wrong host.
 
 ---
 
@@ -196,7 +200,8 @@ Then enable **Enforce HTTPS** in the repo's Pages settings once the certificate 
 
 - [ ] **`hello@creditforcredit.org` must exist and be FormSubmit-activated**, or the contact form
       silently fails. The first submission triggers a one-time activation email — click it.
-- [ ] **DNS + Pages** — point creditforcredit.org at GitHub Pages and enable HTTPS.
+- [ ] **Client review** on the github.io preview URL, then live deploy to Xneelo (see §6).
+- [ ] **At live deploy** — update `BRAND.formNext` to the creditforcredit.org host.
 - [ ] **Real content** — final module details (credits, durations), photography, facilitator bios.
       Current content is illustrative; the footer says so.
 - [ ] **Real phone number** — still a placeholder in `brand.js`.
