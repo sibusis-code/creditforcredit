@@ -221,22 +221,58 @@ Filter lists (`TOPICS`, `LEVELS`) derive from the data with live counts — no f
 
 Static HTML/CSS/JS — no framework, no backend, no build.
 
-**The workflow is two-stage. Don't skip ahead.**
+**Two hosts, two triggers. The split is deliberate.**
 
-1. **Build + preview here (current stage).** GitHub Pages from `main`, repo
-   `sibusis-code/creditforcredit`, served at
-   **https://sibusis-code.github.io/creditforcredit/**. This is the client-review URL.
-   **Deploy = push** — every push to `main` rebuilds Pages (~1 min).
+| | Preview | Live |
+|---|---|---|
+| **URL** | https://sibusis-code.github.io/creditforcredit/ | https://creditforcredit.org |
+| **Host** | GitHub Pages | Xneelo (FTP) |
+| **Trigger** | **automatic** — every push to `main` (~1 min) | **manual** — you press a button |
+| **For** | working, and internal review | the link that gets shared publicly |
 
-2. **Live deploy (later, client-approved).** Once the client signs off, they provide access to
-   **Xneelo** and the site goes to **creditforcredit.org** from there.
+Work and push freely; only the preview moves. Going live is a separate, deliberate act, so an
+experiment can never surprise anyone on the public domain.
 
-> ⚠️ **Do not point creditforcredit.org at this repo.** The domain currently serves the client's
-> reserve page and the live deploy is theirs to run. No `CNAME` file belongs in this repo, and the
-> Pages custom-domain field stays empty until the client says otherwise.
+### Publishing to creditforcredit.org
 
-At live-deploy time, remember to update `BRAND.formNext` in `brand.js` from the github.io preview
-URL to `https://creditforcredit.org/thanks.html`, or the contact form redirects to the wrong host.
+**GitHub → Actions → “Deploy to live domain” → Run workflow.** That's the whole procedure. Nothing
+is copied by hand. Three optional inputs on the run form:
+
+| Input | Default | Use |
+|---|---|---|
+| `dry_run` | `false` | Tick it to connect and list what *would* change, uploading nothing. Good for testing after a credential or server change. |
+| `server_dir` | `public_html/` | The web root. Must end in `/`. Change if Xneelo drops the FTP user somewhere else. |
+| `protocol` | `ftps` | Encrypted. Drop to `ftps-legacy`, then `ftp`, only if the host refuses TLS — plain `ftp` sends the password in cleartext. |
+
+The workflow uploads only what changed, and **excludes** `.github/`, `.vscode/`, `docs/`, `.git*`
+and all `*.md`. That last one is load-bearing: it is a second line of defence keeping `github.md`
+(which holds the FTP credentials) off the public web server.
+
+### Credentials
+
+`github.md` holds the Xneelo FTP login and is **gitignored — this repo is public.** Never commit it.
+
+The deploy reads three **repository secrets** instead, which are write-only and never appear in
+logs:
+
+| Secret | Value |
+|---|---|
+| `FTP_SERVER` | `ftp.creditforcredit.org` |
+| `FTP_USERNAME` | Xneelo FTP user |
+| `FTP_PASSWORD` | Xneelo FTP password |
+
+Rotate one without exposing it in shell history by piping it in:
+
+```sh
+printf '%s' 'new-password-here' | gh secret set FTP_PASSWORD --repo sibusis-code/creditforcredit
+```
+
+> ⚠️ **Do not point creditforcredit.org at GitHub Pages.** The live host is Xneelo, reached over
+> FTP by the workflow. No `CNAME` file belongs in this repo and the Pages custom-domain field stays
+> empty — adding one would fight the Xneelo deploy for the same domain.
+
+`BRAND.formNext` is left empty and **derived at runtime** from whatever host is serving the page, so
+the same build works on both the preview and the live domain. Nothing to change at deploy time.
 
 ---
 
@@ -245,7 +281,9 @@ URL to `https://creditforcredit.org/thanks.html`, or the contact form redirects 
 - [ ] **`hello@creditforcredit.org` must exist and be FormSubmit-activated**, or the contact form
       silently fails. The first submission triggers a one-time activation email — click it.
 - [ ] **Client review** on the github.io preview URL, then live deploy to Xneelo (see §6).
-- [ ] **At live deploy** — update `BRAND.formNext` to the creditforcredit.org host.
+- [ ] **Rotate the FTP password.** It has been sitting in a plaintext file; change it in the Xneelo
+      control panel and update the `FTP_PASSWORD` secret (§6). The workflow is the only thing that
+      needs to know it.
 - [ ] **Real content** — final module details (credits, durations), photography, facilitator bios.
       Current content is illustrative; the footer says so.
 - [ ] **Real phone number** — still a placeholder in `brand.js`.

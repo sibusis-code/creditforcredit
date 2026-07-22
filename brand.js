@@ -62,8 +62,10 @@ window.BRAND = {
 
   /* ---- Enquiry form (FormSubmit.co) ---- */
   formAction:  "https://formsubmit.co/hello@creditforcredit.org",
-  /* Preview host. Change to https://creditforcredit.org/thanks.html at live deploy. */
-  formNext:    "https://sibusis-code.github.io/creditforcredit/thanks.html",
+  /* Leave empty and it is derived from whatever host is serving the page, so the
+     same build works on the github.io preview and on the live domain with no
+     edit at deploy time. Set an absolute URL only to force a specific host. */
+  formNext:    "",
   formSubject: "New enquiry from creditforcredit.org",
 
   /* ---- Accreditation ----
@@ -88,6 +90,13 @@ window.BRAND = {
 
 /* ---- Derived strings (built from the atoms above; do not edit) ---- */
 (function(B){
+  /* FormSubmit needs an absolute _next URL. Derive it from the directory the
+     page is served from — github.io preview lives under /creditforcredit/,
+     the live domain at the root — so neither host needs a hand edit. */
+  if(!B.formNext && typeof location !== "undefined"){
+    B.formNext = location.origin + location.pathname.replace(/[^/]*$/, "") + "thanks.html";
+  }
+
   /* Display name: "SPS Academy, powered by Credit for Credit" in tenant mode. */
   B.displayName = B.tenant ? (B.tenant + " Academy") : B.academyName;
   B.poweredBy   = B.tenant ? ("Powered by " + B.academyName) : "";

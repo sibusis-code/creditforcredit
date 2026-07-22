@@ -1,3 +1,6 @@
 .vscode/
-copy-dont-touch.html
+
+# Holds the Xneelo FTP credentials. This repo is PUBLIC — never commit it.
+# Those credentials live in GitHub repository secrets for deploys
+# (FTP_SERVER / FTP_USERNAME / FTP_PASSWORD); see .github/workflows/deploy-live.yml.
 github.md

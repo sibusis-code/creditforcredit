@@ -1,0 +1,100 @@
+# Deploy the site to creditforcredit.org (Xneelo) over FTPS.
+#
+# DELIBERATELY MANUAL. Pushing to `main` updates the GitHub Pages preview only.
+# Going live is a decision, so it is a button you press:
+#   GitHub -> Actions -> "Deploy to live domain" -> Run workflow
+#
+# Credentials live in repository secrets, never in this file:
+#   FTP_SERVER    ftp.creditforcredit.org
+#   FTP_USERNAME  the Xneelo FTP user
+#   FTP_PASSWORD  the Xneelo FTP password
+# Set or rotate them with:  gh secret set FTP_PASSWORD
+name: Deploy to live domain
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — connect and list changes without uploading anything"
+        type: boolean
+        default: false
+      server_dir:
+        description: "Web root on the server (must end with /)"
+        type: string
+        default: "public_html/"
+      protocol:
+        description: "FTPS is encrypted — only drop to plain ftp if the host refuses TLS"
+        type: choice
+        options: ["ftps", "ftps-legacy", "ftp"]
+        default: "ftps"
+
+# Never let two deploys write to the server at the same time.
+concurrency:
+  group: deploy-live
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Upload to creditforcredit.org
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Fail early if the credentials are missing
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -n "$FTP_SERVER" ]   || missing="$missing FTP_SERVER"
+          [ -n "$FTP_USERNAME" ] || missing="$missing FTP_USERNAME"
+          [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secret(s):$missing"
+            echo "Set them with: gh secret set <NAME>"
+            exit 1
+          fi
+          echo "All three FTP secrets are present."
+
+      - name: Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ inputs.protocol }}
+          server-dir: ${{ inputs.server_dir }}
+          dry-run: ${{ inputs.dry_run }}
+          # Repo housekeeping does not belong on a public web server.
+          # `**/*.md` also stops github.md reaching the live site if it is
+          # ever un-ignored — that file holds the FTP credentials.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.vscode/**
+            **/*.md
+            **/docs/**
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Deploy to creditforcredit.org"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Protocol | ${{ inputs.protocol }} |"
+            echo "| Server directory | \`${{ inputs.server_dir }}\` |"
+            echo "| Dry run | ${{ inputs.dry_run }} |"
+            echo "| Result | ${{ job.status }} |"
+            echo ""
+            if [ "${{ inputs.dry_run }}" = "true" ]; then
+              echo "Dry run — nothing was uploaded."
+            else
+              echo "Live at <https://creditforcredit.org/>"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
