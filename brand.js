@@ -60,8 +60,13 @@ window.BRAND = {
   hours:     "Monday–Friday, 08:00–17:00 SAST",
   location:  "Online · Nationwide, South Africa",
 
-  /* ---- Enquiry form (FormSubmit.co) ---- */
-  formAction:  "https://formsubmit.co/hello@creditforcredit.org",
+  /* ---- Enquiry form ----
+     Live runs our own contact.php so enquiry data never leaves our server.
+     GitHub Pages cannot execute PHP, so the preview falls back to FormSubmit
+     and the form stays testable there. `formAction` is derived below. */
+  formActionLive:    "contact.php",
+  formActionPreview: "https://formsubmit.co/hello@creditforcredit.org",
+  formAction:        "",
   /* Leave empty and it is derived from whatever host is serving the page, so the
      same build works on the github.io preview and on the live domain with no
      edit at deploy time. Set an absolute URL only to force a specific host. */
@@ -95,6 +100,13 @@ window.BRAND = {
      the live domain at the root — so neither host needs a hand edit. */
   if(!B.formNext && typeof location !== "undefined"){
     B.formNext = location.origin + location.pathname.replace(/[^/]*$/, "") + "thanks";
+  }
+
+  /* Pick the form endpoint by host: only a real web server can run contact.php,
+     so github.io (and opening the files directly) fall back to FormSubmit. */
+  if(!B.formAction && typeof location !== "undefined"){
+    var noPhp = /(^|\.)github\.io$/i.test(location.hostname) || location.protocol === "file:";
+    B.formAction = noPhp ? B.formActionPreview : B.formActionLive;
   }
 
   /* Ready-made mailto:. Binding an href straight to `email` drops the scheme

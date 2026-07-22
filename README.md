@@ -143,7 +143,8 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `record.html` | **The Learner Credit Record** — what's on it, how it builds, who sees it |
 | `about.html` | What the platform is, the spine, accreditation |
 | `companies.html` | The employer offer **and the branded-academy pitch** |
-| `contact.html` | Enquiry form (FormSubmit) |
+| `contact.html` | Enquiry form (posts to `contact.php` live, FormSubmit on the preview) |
+| `contact.php` | Enquiry handler — validation, anti-spam, logging, mail. Live host only |
 | `thanks.html` | Form success page (`noindex`) |
 
 ### URLs are extensionless
@@ -239,6 +240,44 @@ Filter lists (`TOPICS`, `LEVELS`) derive from the data with live counts — no f
 
 ---
 
+## 5b. The enquiry form
+
+Enquiries are handled by **our own `contact.php`**, not a third-party service. That is a POPIA
+decision as much as a technical one: names, emails and phone numbers no longer pass through an
+external processor, which is what `record.html` promises learners.
+
+**`brand.js` picks the endpoint by host** — the preview cannot execute PHP:
+
+| Host | `formAction` |
+|---|---|
+| creditforcredit.org | `contact.php` |
+| \*.github.io, `file://` | `formActionPreview` (FormSubmit) |
+
+### Rules that must not be "simplified" away
+
+- **`From:` is our own mailbox; the visitor goes in `Reply-To:`.** Putting the visitor in `From`
+  fails SPF — this server is not authorised to send as gmail.com — and the mail lands in spam or is
+  rejected. This is the single most common way a PHP contact form silently stops working.
+- **All header input passes through `header_safe()`**, which strips CR/LF. Without it, a newline in
+  the name field lets an attacker append `Bcc:` and turn the form into a spam relay.
+- **`safe_redirect()` only redirects within our own host.** `_next` comes from the page, so an open
+  redirect would otherwise make our domain a phishing stepping-stone. Protocol-relative (`//evil`)
+  is rejected too.
+- **The enquiry is logged *before* mail is attempted**, to `../enquiries.log` — one directory
+  **above** the web root, so it is never publicly readable. Mail delivery fails more often than
+  people expect; the log means a lead is never lost.
+
+### Form fields are single words
+
+`name`, `email`, `company`, `phone`, `enquiry_type`, `staff_count`, `message`. **PHP converts spaces
+in POST keys to underscores**, so a field named `"Enquiry type"` arrives as `Enquiry_type` and
+quietly goes missing. `contact.php` maps these to friendly labels for the email body.
+
+Anti-spam is a hidden `_honey` field (must stay empty) plus `_ts`, the page-load time — a submission
+under three seconds old is a script. Both fail silently, so a bot learns nothing.
+
+---
+
 ## 6. Hosting & deploy
 
 Static HTML/CSS/JS — no framework, no backend, no build.
@@ -319,8 +358,9 @@ the same build works on both the preview and the live domain. Nothing to change 
 
 ## 7. Open items
 
-- [ ] **`hello@creditforcredit.org` must exist and be FormSubmit-activated**, or the contact form
-      silently fails. The first submission triggers a one-time activation email — click it.
+- [ ] **Watch `enquiries.log` after go-live.** Every enquiry is written there (see §5b) before mail
+      is attempted, so if delivery ever breaks, the leads are still recoverable. Check it matches
+      what actually arrives in the inbox.
 - [ ] **Client review** on the github.io preview URL, then live deploy to Xneelo (see §6).
 - [ ] **Rotate the FTP password.** It has been sitting in a plaintext file; change it in the Xneelo
       control panel and update the `FTP_PASSWORD` secret (§6). The workflow is the only thing that

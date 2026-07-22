@@ -36,29 +36,36 @@
         <p><span class="lbl">Office hours</span><span style="color:var(--body);font-weight:500" data-b="hours">Monday–Friday, 08:00–17:00 SAST</span></p>
         <p><span class="lbl">Delivery</span><span style="color:var(--body);font-weight:500" data-b="location">Online · Nationwide, South Africa</span></p>
       </div>
-      <form class="form reveal" id="enquiryForm" action="https://formsubmit.co/hello@creditforcredit.org" method="POST" data-b-action="formAction">
+      <!-- Field names are single words on purpose: PHP turns spaces in POST keys
+           into underscores, so "Enquiry type" would arrive as "Enquiry_type".
+           contact.php maps these to friendly labels for the email. -->
+      <form class="form reveal" id="enquiryForm" action="contact.php" method="POST" data-b-action="formAction">
         <input type="hidden" name="_subject" value="New enquiry" data-b-value="formSubject">
         <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="thanks.html" data-b-value="formNext">
+        <input type="hidden" name="_next" value="thanks" data-b-value="formNext">
         <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" style="display:none">
+        <!-- Honeypot: hidden from people, irresistible to bots. Must stay empty. -->
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <!-- Page-load time. A submission under a few seconds old is a script. -->
+        <input type="hidden" name="_ts" id="formTs">
         <div class="two">
-          <div class="field"><label>Full name</label><input type="text" name="Name" placeholder="Your name" required></div>
-          <div class="field"><label>Company / organisation</label><input type="text" name="Company" placeholder="Organisation"></div>
+          <div class="field"><label>Full name</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="field"><label>Company / organisation</label><input type="text" name="company" placeholder="Organisation"></div>
         </div>
         <div class="two">
-          <div class="field"><label>Email address</label><input type="email" name="Email" placeholder="you@company.co.za" required></div>
-          <div class="field"><label>Phone number</label><input type="tel" name="Phone" placeholder="+27"></div>
+          <div class="field"><label>Email address</label><input type="email" name="email" placeholder="you@company.co.za" required></div>
+          <div class="field"><label>Phone number</label><input type="tel" name="phone" placeholder="+27"></div>
         </div>
         <div class="field"><label>What are you enquiring about?</label>
-          <select name="Enquiry type" style="width:100%;border:1.6px solid var(--line);border-radius:14px;padding:13px 16px;font-size:15px;font-family:var(--font);color:var(--ink);background:#fcfcfe">
+          <select name="enquiry_type" style="width:100%;border:1.6px solid var(--line);border-radius:14px;padding:13px 16px;font-size:15px;font-family:var(--font);color:var(--ink);background:#fcfcfe">
             <option>Enrolling myself on a module</option>
             <option>Putting a team on modules</option>
             <option>A branded academy for my company</option>
+            <option>A credit refund</option>
             <option>Something else</option>
           </select></div>
-        <div class="field"><label>Number of staff to train (optional)</label><input type="text" name="Staff to train" placeholder="e.g. 12"></div>
-        <div class="field"><label>Message</label><textarea name="Message" rows="4" placeholder="Tell us what you're looking for"></textarea></div>
+        <div class="field"><label>Number of staff to train (optional)</label><input type="text" name="staff_count" placeholder="e.g. 12"></div>
+        <div class="field"><label>Message</label><textarea name="message" rows="4" placeholder="Tell us what you're looking for"></textarea></div>
         <button type="submit" class="btn btn-primary" style="width:100%">Talk to our team</button>
       </form>
     </div>
@@ -67,6 +74,20 @@
 
 <footer id="siteFooter"></footer>
 <script>SITE.renderFooter()</script>
+<script>
+  document.getElementById("formTs").value = Date.now();
+  // Surface validation bounced back by contact.php (?error=email etc.)
+  (function(){
+    var e = new URLSearchParams(location.search).get("error");
+    if(!e) return;
+    var f = document.getElementById("enquiryForm");
+    var m = document.createElement("p");
+    m.setAttribute("role","alert");
+    m.style.cssText = "background:#fdecec;border-left:4px solid #c0392b;color:#7d241a;padding:14px 16px;border-radius:12px;margin-bottom:18px;font-size:15px";
+    m.textContent = "Please check your " + e.split(",").join(" and ") + ", then send again.";
+    f.insertBefore(m, f.firstChild);
+  })();
+</script>
 
 <script src="catalog.js"></script>
 <script src="app.js"></script>
