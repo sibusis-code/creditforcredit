@@ -31,7 +31,7 @@ window.BRAND = {
      URL the day a funded bursary pool exists. Until then this must not
      promise an application we cannot honour — see README §1. */
   refundCta:    "Register your interest",
-  refundCtaUrl: "contact.html",
+  refundCtaUrl: "contact",
   logo:         "creditforcredit-logo.svg",
   logoAlt:      "Credit for Credit",
   navCta:       "Talk to Our Team",
@@ -94,7 +94,7 @@ window.BRAND = {
      page is served from — github.io preview lives under /creditforcredit/,
      the live domain at the root — so neither host needs a hand edit. */
   if(!B.formNext && typeof location !== "undefined"){
-    B.formNext = location.origin + location.pathname.replace(/[^/]*$/, "") + "thanks.html";
+    B.formNext = location.origin + location.pathname.replace(/[^/]*$/, "") + "thanks";
   }
 
   /* Display name: "SPS Academy, powered by Credit for Credit" in tenant mode. */
@@ -149,20 +149,20 @@ window.SITE = (function(){
   function renderNav(){
     var el = document.getElementById("nav"); if(!el) return;
     var page = (document.body && document.body.getAttribute("data-page")) || "";
-    var links = [["about","about.html","About"],["modules","modules.html","Modules"],
-                 ["record","record.html","Your Record"],
-                 ["companies","companies.html","For Companies"],["contact","contact.html","Contact"]];
+    var links = [["about","about","About"],["modules","modules","Modules"],
+                 ["record","record","Your Record"],
+                 ["companies","companies","For Companies"],["contact","contact","Contact"]];
     var linksHtml = links.map(function(l){
       return '<a href="'+l[1]+'" data-nav="'+l[0]+'"'+(page===l[0]?' class="active"':'')+'>'+l[2]+'</a>';
     }).join("");
     el.innerHTML =
       '<div class="nav-inner">'+
-        '<a href="index.html" class="brand"><img src="'+esc(B.logo)+'" alt="'+esc(B.logoAlt)+'"></a>'+
+        '<a href="./" class="brand"><img src="'+esc(B.logo)+'" alt="'+esc(B.logoAlt)+'"></a>'+
         '<div class="nav-links" id="navLinks">'+ linksHtml +
-          '<a href="contact.html" class="nav-cta">'+esc(B.navCta)+'</a>'+
+          '<a href="contact" class="nav-cta">'+esc(B.navCta)+'</a>'+
         '</div>'+
         '<div class="nav-icons">'+
-          '<a href="modules.html" aria-label="Search modules">'+ic.search+'</a>'+
+          '<a href="modules" aria-label="Search modules">'+ic.search+'</a>'+
           '<button class="nav-toggle" id="navToggle" aria-label="Menu">'+ic.menu+'</button>'+
         '</div>'+
       '</div>';
@@ -185,12 +185,12 @@ window.SITE = (function(){
             '<a href="mailto:'+esc(B.email)+'" style="color:var(--indigo);font-weight:600">'+esc(B.email)+'</a>'+
           '</div>'+
           '<div class="foot-col"><h4>Explore</h4>'+
-            '<a href="index.html">Home</a><a href="modules.html">Modules</a>'+
-            '<a href="record.html">Your Record</a>'+
-            '<a href="about.html">About</a><a href="companies.html">For Companies</a>'+
+            '<a href="./">Home</a><a href="modules">Modules</a>'+
+            '<a href="record">Your Record</a>'+
+            '<a href="about">About</a><a href="companies">For Companies</a>'+
           '</div>'+
           '<div class="foot-col"><h4>Get in touch</h4>'+
-            '<a href="contact.html">'+esc(B.navCta)+'</a>'+
+            '<a href="contact">'+esc(B.navCta)+'</a>'+
             '<a href="mailto:'+esc(B.email)+'">'+esc(B.email)+'</a>'+
             '<a href="'+esc(B.phoneHref)+'">'+esc(B.phone)+'</a>'+
             '<div class="foot-social">'+

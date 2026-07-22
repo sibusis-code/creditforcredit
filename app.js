@@ -32,7 +32,7 @@
     f.addEventListener("submit", function(e){
       e.preventDefault();
       var q = (f.querySelector("input").value || "").trim();
-      window.location.href = "modules.html" + (q ? ("?q=" + encodeURIComponent(q)) : "");
+      window.location.href = "modules" + (q ? ("?q=" + encodeURIComponent(q)) : "");
     });
   });
 
@@ -45,7 +45,7 @@
   var tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>';
   var creditSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg>';
   function card(m){
-    var url = "course.html?c=" + m.slug;
+    var url = "course?c=" + m.slug;
     return ''+
     '<article class="mcard reveal">'+
       '<a href="'+url+'" aria-label="'+m.title+'"><div class="mcard-img" style="background-image:url('+window.imgUrl(m.img,700)+')">'+
@@ -120,7 +120,7 @@
         return true;
       });
       grid.innerHTML = res.length ? res.map(card).join("")
-        : '<div class="no-res" style="grid-column:1/-1">No modules match those filters yet. <a href="modules.html" style="color:var(--indigo);font-weight:600">Clear filters</a></div>';
+        : '<div class="no-res" style="grid-column:1/-1">No modules match those filters yet. <a href="modules" style="color:var(--indigo);font-weight:600">Clear filters</a></div>';
       $$(".reveal", grid).forEach(watch);
       var cnt = $("#catCount"); if(cnt){ cnt.textContent = res.length + (res.length===1?" module":" modules"); }
     }

@@ -1,0 +1,82 @@
+# =====================================================================
+# creditforcredit.org — Apache config for the live (Xneelo) host.
+#
+# GitHub Pages ignores this file entirely; it already serves extensionless
+# URLs natively, which is why internal links can be extensionless on BOTH
+# hosts. This file makes Apache behave the same way.
+# =====================================================================
+
+Options -MultiViews
+DirectoryIndex index.html
+
+RewriteEngine On
+
+# --- 1. Force HTTPS -------------------------------------------------
+# The contact form collects personal details; it must not travel in the clear.
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# --- 2. /index and /index.html both collapse to / --------------------
+RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# --- 3. /page.html -> /page ------------------------------------------
+# One canonical URL per page. Old .html links (and anything already shared
+# or indexed) keep working via this redirect rather than 404ing.
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# --- 4. Strip trailing slashes ---------------------------------------
+# /about/ would otherwise serve about.html with the browser resolving
+# relative links against /about/, breaking every link on the page.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# --- 5. Serve /page from page.html -----------------------------------
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# --- 6. Friendly error page ------------------------------------------
+ErrorDocument 404 /404.html
+
+# --- 7. Never serve repo housekeeping --------------------------------
+# These are already excluded from the deploy; this is the second lock.
+<FilesMatch "\.(md|lftp|yml|json)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# --- 8. Compression ---------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --- 9. Caching -------------------------------------------------------
+# CSS/JS are deliberately SHORT: filenames are not content-hashed, so a long
+# cache means returning visitors see a stale site after a deploy. Ten minutes
+# keeps repeat views fast without anyone being told "I don't see the change".
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                      "access plus 1 hour"
+  ExpiresByType text/html             "access plus 0 seconds"
+  ExpiresByType text/css              "access plus 10 minutes"
+  ExpiresByType application/javascript "access plus 10 minutes"
+  ExpiresByType image/svg+xml         "access plus 7 days"
+  ExpiresByType image/png             "access plus 7 days"
+  ExpiresByType image/jpeg            "access plus 7 days"
+</IfModule>
+
+# --- 10. Baseline security headers ------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
