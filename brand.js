@@ -117,21 +117,27 @@ window.BRAND = {
   B.displayName = B.tenant ? (B.tenant + " Academy") : B.academyName;
   B.poweredBy   = B.tenant ? ("Powered by " + B.academyName) : "";
 
-  var t = "Modules are credit-bearing toward the " + B.qualification + " (" + B.nqf +
+  /* "Credit-bearing modules", not "Modules" — the catalogue also carries partner
+     CPD courses that earn a certificate and no NQF credits. A blanket claim here
+     would contradict those pages, since this footer renders on every one. */
+  var t = "Credit-bearing modules carry credits toward the " + B.qualification + " (" + B.nqf +
           ", Qualification ID " + B.qualId + ", " + B.credits + " credits), delivered through an " +
           B.providerCred + ", accredited by the Quality Council for Trades and Occupations (QCTO).";
   if (B.provider) {
-    t = "Modules are credit-bearing toward the " + B.qualification + " (" + B.nqf +
+    t = "Credit-bearing modules carry credits toward the " + B.qualification + " (" + B.nqf +
         ", Qualification ID " + B.qualId + ", " + B.credits + " credits), delivered in association with " +
         B.provider + ", accredited by the Quality Council for Trades and Occupations (QCTO) as a Skills " +
         "Development Provider." + (B.accredNo ? " Accreditation No. " + B.accredNo +
         (B.accredValid ? ", valid " + B.accredValid : "") + "." : "");
   }
+  t += " Partner professional-development courses, including the workplace wellness programme, " +
+       "earn a certificate of completion and do not carry NQF credits.";
   B.accredText = t;
 
   B.footerCopy =
-    "Modules are credit-bearing units toward an accredited national qualification. Content shown is " +
-    "illustrative pending final material. © " + B.year + " " + B.companyLegal + ". All rights reserved.";
+    "Credit-bearing modules are units toward an accredited national qualification; partner CPD " +
+    "courses earn a certificate of completion. Content shown is illustrative pending final " +
+    "material. © " + B.year + " " + B.companyLegal + ". All rights reserved.";
 })(window.BRAND);
 
 /* ===================================================================
@@ -202,6 +208,7 @@ window.SITE = (function(){
           '</div>'+
           '<div class="foot-col"><h4>Explore</h4>'+
             '<a href="./">Home</a><a href="modules">Modules</a>'+
+            '<a href="wellness">Workplace Wellness</a>'+
             '<a href="record">Your Record</a>'+
             '<a href="about">About</a><a href="companies">For Companies</a>'+
           '</div>'+

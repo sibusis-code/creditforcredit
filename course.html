@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Module</title>
-<meta name="description" content="A credit-bearing module. Every module carries credits toward an accredited national qualification and supports the funding employer's B-BBEE Skills Development scorecard.">
+<meta name="description" content="Module detail — what you'll learn, how it's delivered, and what it counts toward. Credit-bearing modules ladder to an accredited national qualification; partner CPD courses earn a certificate of completion.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,8 @@
         <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--body);margin-bottom:14px" id="enrolLabel">Open — enrol anytime</div>
         <div class="price"><span id="priceMain">Enquire</span><small id="priceSub">Talk to us for pricing</small></div>
         <a href="contact" class="btn btn-primary">Talk to our team</a>
-        <p class="note">Credit-bearing toward the <span data-b="qualification">Occupational Certificate: Computer Technician</span> (<span data-b="nqf">NQF 5</span>) · scorecard-ready skills spend.</p>
+        <!-- Set per course type by app.js — CPD courses must not carry a credit claim. -->
+        <p class="note" id="enrolNote"></p>
       </aside>
     </div>
   </div>

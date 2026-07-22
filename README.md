@@ -141,6 +141,7 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `404.html` | Branded not-found page (Apache `ErrorDocument`) — **absolute** asset paths |
 | `404.html` | Branded not-found page (Apache `ErrorDocument`); absolute asset paths |
 | `record.html` | **The Learner Credit Record** — what's on it, how it builds, who sees it |
+| `wellness.html` | **Workplace Wellness** — the Taryn McCormick partner programme (CPD, not credits) |
 | `about.html` | What the platform is, the spine, accreditation |
 | `companies.html` | The employer offer **and the branded-academy pitch** |
 | `contact.html` | Enquiry form (posts to `contact.php` live, FormSubmit on the preview) |
@@ -235,6 +236,33 @@ All module content lives in the **`window.MODULES` array** in `catalog.js`, shar
 **Add a module:** add one object to `window.MODULES`. It appears in the catalogue, gets a
 filterable card, and has a working detail page automatically. To feature it on the home row,
 add its slug to the `order` array in `app.js`.
+
+### Two course types — get this right or we publish a false claim
+
+| | Credit-bearing (default) | `type:"cpd"` |
+|---|---|---|
+| Set by | no `type` field | `type:"cpd"`, `credits:0` |
+| Earns | credits toward the NQF 5 qualification | certificate of completion |
+| B-BBEE | claimable Skills Development spend | **not** claimable |
+| Delivered by | accredited QCTO provider | a named `partner` |
+| Example | AI Fundamentals | the Workplace Wellness programme |
+
+Before this existed, the site asserted credits for **every** course — `app.js` rendered
+*"N credits toward NQF 5"* and *"supports your B-BBEE Skills Development scorecard"* regardless.
+Dropping a partner's wellness course in would have published that it laddered toward the
+Occupational Certificate: Computer Technician. `app.js` now branches on `type` in four places
+(card meta, the Recognition/Credits info item, the Delivered-by item, and the about-this-module
+paragraph), and `course.html`'s enrol note is set from JS rather than hardcoded.
+
+> ⚠️ **A partner being accredited is not the same as their course being accredited.** Practitioner
+> registration says nothing about NQF credits. Never add a credit or scorecard claim to a `cpd`
+> course without the accreditation number and the qualification it maps to.
+
+Optional fields for partner courses: `partner` (attribution), `track` (grouping), `outcomes`
+(per-module "what you'll learn" — **overrides the topic map**, which otherwise falls back to the
+Business/AI bullets for any unmapped topic), and `asset` (the template a learner keeps).
+
+See `docs/wellness-track.md` for the first partner programme and what is still outstanding from it.
 
 Filter lists (`TOPICS`, `LEVELS`) derive from the data with live counts — no filter edits needed.
 

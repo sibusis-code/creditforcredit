@@ -44,6 +44,8 @@
   }
   var tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>';
   var creditSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg>';
+  /* Rosette, not the credits stack — CPD courses earn a certificate, not credits. */
+  var certSvg   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>';
   function card(m){
     var url = "course?c=" + m.slug;
     return ''+
@@ -56,7 +58,9 @@
         '<div class="mcard-mode">'+window.MODALITY[m.modality]+'</div>'+
         '<h3><a href="'+url+'">'+m.title+'</a></h3>'+
         '<p class="mcard-desc">'+m.lead+'</p>'+
-        '<div class="mcard-meta">'+creditSvg+' '+m.credits+' credits · '+m.hours+'</div>'+
+        '<div class="mcard-meta">'+(m.type==="cpd"
+            ? certSvg+' Certificate · '+m.hours
+            : creditSvg+' '+m.credits+' credits · '+m.hours)+'</div>'+
       '</div>'+
     '</article>';
   }
@@ -152,7 +156,10 @@
       "Social Sciences":["Connect policy, strategy and technology","Assess risk across emerging technologies","Weigh ethical and societal implications","Translate insight into organisational strategy"],
       "Accredited":["Build the technical foundations of computer systems","Diagnose, repair and support hardware and networks","Meet the outcomes of a national "+(B.nqf||"NQF 5")+" qualification","Earn "+(B.credits||"282")+" credits toward a portable credential"]
     };
-    var learn = learnByTopic[m.topic] || learnByTopic["Business"];
+    /* Per-module outcomes win. Without this, an unmapped topic silently falls
+       back to the Business/AI bullets — wrong for anything non-technical. */
+    var learn = m.outcomes || learnByTopic[m.topic] || learnByTopic["Business"];
+    var isCpd = m.type === "cpd";
 
     var enrolLabel = m.accred ? "Rolling intake" : (m.avail==="Coming Soon" ? "Opening soon" : "Open — enrol anytime");
     var price = "Enquire";
@@ -178,14 +185,33 @@
       item(i_topic,"g","Training topic", m.topic) +
       item(i_lvl,"o","Level", m.level) +
       item(i_lang,"","Language", "English") +
-      item(i_cred,"g","Credits", m.credits + " credits toward " + (B.nqf||"NQF 5")) +
+      item(i_cred,"g", isCpd ? "Recognition" : "Credits",
+           isCpd ? "Certificate of completion — not NQF credit-bearing"
+                 : m.credits + " credits toward " + (B.nqf||"NQF 5")) +
       item(i_dur,"o","Duration", m.hours) +
-      item(i_reg,"","Provider", "In association with " + (B.providerShort||"an accredited provider"));
+      item(i_reg,"", isCpd ? "Delivered by" : "Provider",
+           isCpd ? (m.partner || "a specialist partner")
+                 : "In association with " + (B.providerShort||"an accredited provider"));
 
     var qual = B.qualification || "Occupational Certificate: Computer Technician";
-    var accredLine = m.accred
-      ? '<p>This is the accredited destination qualification the shorter modules ladder toward — the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', Qualification ID '+(B.qualId||"101408")+', '+(B.credits||"282")+' credits), delivered in association with '+(B.provider||"an accredited Skills Development Provider")+', accredited by the QCTO as a Skills Development Provider.</p>'
-      : '<p>This module is a small, credit-bearing unit. Each one your people complete carries credits toward the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', '+(B.credits||"282")+' credits) — and, delivered through an accredited provider, supports your <strong>B-BBEE Skills Development</strong> scorecard.</p>';
+    var accredLine;
+    if (isCpd) {
+      /* NEVER add a credit or B-BBEE claim to this branch. These courses are
+         professional development, not units of a national qualification. */
+      accredLine =
+        '<p>This is a <strong>continuing professional development</strong> course'+
+        (m.partner ? ' delivered by <strong>'+m.partner+'</strong>' : '')+
+        '. You earn a certificate of completion, and it is recorded on your '+
+        '<a href="record">credit record</a> alongside everything else you have done.</p>'+
+        '<p>It does <strong>not</strong> carry credits toward the '+qual+', and employer spend on it '+
+        'is <strong>not</strong> claimable as B-BBEE Skills Development. It is worth doing for what it '+
+        'changes at work, not for a scorecard.</p>'+
+        (m.asset ? '<p>You keep a practical takeaway: <strong>'+m.asset+'</strong>.</p>' : '');
+    } else if (m.accred) {
+      accredLine = '<p>This is the accredited destination qualification the shorter modules ladder toward — the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', Qualification ID '+(B.qualId||"101408")+', '+(B.credits||"282")+' credits), delivered in association with '+(B.provider||"an accredited Skills Development Provider")+', accredited by the QCTO as a Skills Development Provider.</p>';
+    } else {
+      accredLine = '<p>This module is a small, credit-bearing unit. Each one your people complete carries credits toward the <strong>'+qual+'</strong> ('+(B.nqf||"NQF 5")+', '+(B.credits||"282")+' credits) — and, delivered through an accredited provider, supports your <strong>B-BBEE Skills Development</strong> scorecard.</p>';
+    }
 
     detail.querySelector("#crumbCur").textContent = m.title;
     detail.querySelector("#courseTitle").textContent = m.title;
@@ -194,6 +220,9 @@
     detail.querySelector("#enrolLabel").textContent = enrolLabel;
     detail.querySelector("#priceMain").textContent = price;
     detail.querySelector("#priceSub").textContent = priceSub;
+    detail.querySelector("#enrolNote").innerHTML = isCpd
+      ? 'Certificate of completion, recorded on your credit record. Not NQF credit-bearing and not B-BBEE skills spend.'
+      : 'Credit-bearing toward the <span>'+qual+'</span> ('+(B.nqf||"NQF 5")+') · scorecard-ready skills spend.';
     detail.querySelector("#learnList").innerHTML = learn.map(function(l){ return '<li>'+tickSvg+'<span>'+l+'</span></li>'; }).join("");
     detail.querySelector("#courseProse").innerHTML = '<p>'+m.lead+'</p>' + accredLine;
 
