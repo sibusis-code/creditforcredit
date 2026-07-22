@@ -97,6 +97,10 @@ window.BRAND = {
     B.formNext = location.origin + location.pathname.replace(/[^/]*$/, "") + "thanks";
   }
 
+  /* Ready-made mailto:. Binding an href straight to `email` drops the scheme
+     and turns the link into a dead relative URL — use emailHref for hrefs. */
+  B.emailHref = "mailto:" + B.email;
+
   /* Display name: "SPS Academy, powered by Credit for Credit" in tenant mode. */
   B.displayName = B.tenant ? (B.tenant + " Academy") : B.academyName;
   B.poweredBy   = B.tenant ? ("Powered by " + B.academyName) : "";
