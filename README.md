@@ -44,7 +44,26 @@ not separate products. Two rules that came out of that decision and should not b
   recruiter- or funder-facing is a **consented introduction**, never a data feed. This is stated
   publicly on `record.html` and is the POPIA posture, not just copy.
 
-**Not on the public site yet:** recruiters, banks, funding products, or global-expansion claims.
+### The Credit Refund — the mechanism (boss directive, 22 Jul 2026)
+
+The hero leads on the **Credit Refund**: *apply the school credits you already hold toward the cost
+of going further.* Mrs Kgomotso's framing — **"changing the game in how learner bursaries are
+awarded and democratising access to education"** — bursaries awarded on credits already earned
+rather than on need, paperwork or connections.
+
+This is the concrete mechanism behind `BRAND.promise`, and it is the same idea as "rewarding
+students for doing well" stated as a product. It runs on `index.html#refund`.
+
+> ⚠️ **The refund is not open for applications and must not be advertised as if it were.**
+> "Apply for a credit refund" implies a funded pool, an application process and a payout. None of
+> those exist yet. Advertising a bursary that cannot be claimed is a consumer-protection exposure
+> and — worse — burns trust with exactly the learners this is for.
+>
+> The CTA therefore reads **`BRAND.refundCta` = "Register your interest"** → `contact.html`.
+> **The day a funded pool exists, flip `refundCta` and `refundCtaUrl` in `brand.js`** and update the
+> status card in the `#refund` section. Both are one-line changes; that is deliberate.
+
+**Not on the public site yet:** recruiters, banks, credit products, or global-expansion claims.
 That infrastructure does not exist, and promising it early is both a compliance and a credibility
 exposure. See §7.
 

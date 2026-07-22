@@ -26,6 +26,12 @@ window.BRAND = {
      narrative one — used on the record and about pages. */
   promise:      "Academic credit becomes financial credit",
   recordName:   "Credit Record",
+  refundName:   "Credit Refund",
+  /* CTA for the refund. Flip to "Apply for a credit refund" + an application
+     URL the day a funded bursary pool exists. Until then this must not
+     promise an application we cannot honour — see README §1. */
+  refundCta:    "Register your interest",
+  refundCtaUrl: "contact.html",
   logo:         "creditforcredit-logo.svg",
   logoAlt:      "Credit for Credit",
   navCta:       "Talk to Our Team",
