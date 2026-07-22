@@ -78,7 +78,7 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         run: |
           set -euo pipefail
-          cat > inspect.lftp <<EOF
+          cat > "$RUNNER_TEMP/inspect.lftp" <<EOF
           set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
           set net:max-retries 2
           set net:timeout 20
@@ -89,7 +89,7 @@ jobs:
           cls -l "${{ inputs.server_dir }}" || echo "(does not exist yet)"
           bye
           EOF
-          lftp -f inspect.lftp
+          lftp -f "$RUNNER_TEMP/inspect.lftp"
 
       - name: Deploy
         env:
@@ -109,7 +109,7 @@ jobs:
           # Repo housekeeping does not belong on a public web server.
           # '*.md' also keeps github.md — which holds these credentials — off
           # the live site if it is ever un-ignored.
-          cat > deploy.lftp <<EOF
+          cat > "$RUNNER_TEMP/deploy.lftp" <<EOF
           set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
           set net:max-retries 2
           set net:timeout 20
@@ -121,7 +121,7 @@ jobs:
             ./ "${{ inputs.server_dir }}"
           bye
           EOF
-          lftp -f deploy.lftp
+          lftp -f "$RUNNER_TEMP/deploy.lftp"
 
       - name: Summary
         if: always()
