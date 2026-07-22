@@ -22,6 +22,10 @@ window.BRAND = {
   domain:       "creditforcredit.org",   /* target live domain — not deployed there yet */
   industry:     "growing business",
   tagline:      "Learn while you earn credits",
+  /* The spine line. `tagline` is the friendly hero line; `promise` is the
+     narrative one — used on the record and about pages. */
+  promise:      "Academic credit becomes financial credit",
+  recordName:   "Credit Record",
   logo:         "creditforcredit-logo.svg",
   logoAlt:      "Credit for Credit",
   navCta:       "Talk to Our Team",
@@ -131,6 +135,7 @@ window.SITE = (function(){
     var el = document.getElementById("nav"); if(!el) return;
     var page = (document.body && document.body.getAttribute("data-page")) || "";
     var links = [["about","about.html","About"],["modules","modules.html","Modules"],
+                 ["record","record.html","Your Record"],
                  ["companies","companies.html","For Companies"],["contact","contact.html","Contact"]];
     var linksHtml = links.map(function(l){
       return '<a href="'+l[1]+'" data-nav="'+l[0]+'"'+(page===l[0]?' class="active"':'')+'>'+l[2]+'</a>';
@@ -166,6 +171,7 @@ window.SITE = (function(){
           '</div>'+
           '<div class="foot-col"><h4>Explore</h4>'+
             '<a href="index.html">Home</a><a href="modules.html">Modules</a>'+
+            '<a href="record.html">Your Record</a>'+
             '<a href="about.html">About</a><a href="companies.html">For Companies</a>'+
           '</div>'+
           '<div class="foot-col"><h4>Get in touch</h4>'+

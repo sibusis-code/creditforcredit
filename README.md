@@ -18,12 +18,35 @@ how the site is built so anyone can maintain or extend it.
 **What we sell:** **credit-bearing modules / skills courses**. Each module is a small, claimable,
 credit-bearing unit. The **Occupational Certificate: Computer Technician (NQF 5, ID 101408,
 282 credits) is the *destination* credits ladder toward — never the thing being sold.** Lead with
-*modules → credits → a qualification you keep*, with B-BBEE returns as the employer-side benefit.
+*modules → credits → a record → a qualification you keep*, with B-BBEE returns as the employer-side
+benefit.
 
 1. **Start small, no big commitment** — a single credit-bearing module takes days, not months.
 2. **Credits accumulate over time** — every module carries credits toward the qualification; learners build at their own pace, and nothing completed is wasted.
 3. **Skills spend that scores** — delivered through an accredited provider, so employer-funded training supports the **B-BBEE Skills Development** scorecard.
-4. **A qualification that's theirs to keep** — a national, portable credential that belongs to the learner, not the employer.
+4. **A record that's theirs to keep** — credits and results bank onto the learner's own credit record, alongside a national, portable qualification that belongs to them, not the employer.
+
+### The spine line — `BRAND.promise`
+
+> **Academic credit becomes financial credit.**
+> Do well, earn credits, and build one record that pays you back — in a qualification you keep,
+> and in what you can prove to anyone who asks.
+
+This is the sentence everything else hangs off, and it exists to stop the product drifting. The
+**Learner Credit Record** is the one asset; future work (employer-recommended certificates, guidance,
+recruiter and funding introductions, B-BBEE and ESG reporting) are all *consumers* of that record,
+not separate products. Two rules that came out of that decision and should not be quietly reversed:
+
+- **Guidance is never a headline.** Any advisory/AI feature is billed as a quiet assistant *inside*
+  the record — "your record can suggest what's next; you decide". Leading with robot career advice
+  undercuts the actual message, which is that doing well is rewarded.
+- **The learner owns the record and grants access.** We do not sell learner data. Anything
+  recruiter- or funder-facing is a **consented introduction**, never a data feed. This is stated
+  publicly on `record.html` and is the POPIA posture, not just copy.
+
+**Not on the public site yet:** recruiters, banks, funding products, or global-expansion claims.
+That infrastructure does not exist, and promising it early is both a compliance and a credibility
+exposure. See §7.
 
 **Audience — two ways in:**
 - **Learners** — build a credit record that follows them between employers.
@@ -83,6 +106,7 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `styles.css` | Shared stylesheet. Colour tokens in `:root` are overridden at runtime by `BRAND.colors`. |
 | `catalog.js` | `window.MODULES` — the module catalogue (content, not brand). |
 | `app.js` | Shared behaviour: card rendering, catalogue filters/search, carousel, scroll reveals. |
+| `docs/bee-skills-spec.md` | B-BBEE Skills Development data spec + the question list for the Empowered App walkthrough. |
 | `creditforcredit-logo.svg`, `favicon.svg` | Platform brand marks. |
 | `CNAME` | GitHub Pages custom domain. |
 
@@ -93,6 +117,7 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `index.html` | Home — hero, featured modules, categories, how it works, two audiences, trust, CTA |
 | `modules.html` | Full catalogue with filters, search and modality segments |
 | `course.html` | Module detail (`?c=slug`), rendered from `catalog.js` |
+| `record.html` | **The Learner Credit Record** — what's on it, how it builds, who sees it |
 | `about.html` | What the platform is, the spine, accreditation |
 | `companies.html` | The employer offer **and the branded-academy pitch** |
 | `contact.html` | Enquiry form (FormSubmit) |
@@ -209,3 +234,18 @@ URL to `https://creditforcredit.org/thanks.html`, or the contact form redirects 
       falls back to a system sans rather than Poppins. Outline the text if a designer finalises it.
 - [ ] **First tenant instance** — stand up an SPS-branded academy from this engine once a company
       signs on (see §2).
+
+### Beyond the site
+
+- [ ] **Name protection is SA-only.** `creditforcredit.org` is registered and the name is reserved
+      at **CIPC** — which does not protect it outside South Africa. For an international play, run a
+      trademark check and take a defensive `.com` **before** the idea is public.
+- [ ] **Empowered App logins from Thato** — the only hard blocker on the B-BBEE stream. Walk the
+      demo against the question list in `docs/bee-skills-spec.md` §6.
+- [ ] **Programme category** — settle whether a single module is recognised on its own or only the
+      full pathway scores (`docs/bee-skills-spec.md` §5). This can change the employer pitch.
+- [ ] **The record needs a backend.** `record.html` describes the model honestly as in build.
+      Accounts, a real learner record and consented sharing are the next real engineering step —
+      and the point at which POPIA obligations become live (`docs/bee-skills-spec.md` §4).
+- [ ] **ESG stream** — review esgacademy.education and decide whether ESG is a module category, a
+      second reporting stream off the same record, or both.

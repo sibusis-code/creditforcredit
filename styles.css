@@ -42,6 +42,9 @@ body{font-family:var(--font);color:var(--body);background:var(--bg);line-height:
 img,svg{max-width:100%;display:block}
 h1,h2,h3,h4{font-weight:700;line-height:1.14;letter-spacing:-.02em;color:var(--ink)}
 a{color:inherit;text-decoration:none}
+/* Inline links inside body copy — base `a` inherits, so they need a token colour */
+.prose a,.pillar p a,.split p a{color:var(--indigo);font-weight:600}
+.prose a:hover,.pillar p a:hover,.split p a:hover{text-decoration:underline}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 26px}
 .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:var(--indigo)}
 
@@ -50,7 +53,7 @@ nav{position:sticky;top:0;z-index:120;background:var(--header);backdrop-filter:b
 nav.scrolled{box-shadow:0 6px 26px -18px rgba(35,32,70,.5)}
 .nav-inner{max-width:var(--max);margin:0 auto;padding:14px 26px;display:flex;align-items:center;gap:20px}
 .brand img{height:46px}
-.nav-links{display:flex;gap:30px;align-items:center;margin-left:auto}
+.nav-links{display:flex;gap:24px;align-items:center;margin-left:auto}
 .nav-links a{color:var(--ink);font-size:16px;font-weight:600;transition:color .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--indigo)}
 .nav-icons{display:flex;align-items:center;gap:18px}
