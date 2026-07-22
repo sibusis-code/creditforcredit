@@ -1,32 +1,37 @@
-# Deploy the site to creditforcredit.org (Xneelo) over FTPS.
+# Deploy the site to creditforcredit.org (Xneelo) over SFTP.
 #
 # DELIBERATELY MANUAL. Pushing to `main` updates the GitHub Pages preview only.
 # Going live is a decision, so it is a button you press:
 #   GitHub -> Actions -> "Deploy to live domain" -> Run workflow
 #
+# TRANSPORT: SFTP on port 22, not FTP. Xneelo answers port 22 with
+# "SSH-2.0-FTP Service" and refuses FTPS on 21 ("500 AUTH not understood"),
+# so SFTP is both what the host offers and the only encrypted option.
+# The host key is pinned in .github/known_hosts with StrictHostKeyChecking=yes,
+# so a substituted server aborts the deploy instead of receiving the password.
+#
 # Credentials live in repository secrets, never in this file:
 #   FTP_SERVER    ftp.creditforcredit.org
-#   FTP_USERNAME  the Xneelo FTP user
-#   FTP_PASSWORD  the Xneelo FTP password
-# Set or rotate them with:  gh secret set FTP_PASSWORD
+#   FTP_USERNAME  the Xneelo SFTP user
+#   FTP_PASSWORD  the Xneelo SFTP password
+# Rotate with:  printf '%s' 'new-pass' | gh secret set FTP_PASSWORD
 name: Deploy to live domain
 
 on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run — connect and list changes without uploading anything"
+        description: "Dry run — list what would change, upload nothing"
         type: boolean
         default: false
       server_dir:
-        description: "Web root on the server (must end with /)"
+        description: "Web root on the server, relative to the SFTP login directory"
         type: string
-        default: "public_html/"
-      protocol:
-        description: "FTPS is encrypted — only drop to plain ftp if the host refuses TLS"
-        type: choice
-        options: ["ftps", "ftps-legacy", "ftp"]
-        default: "ftps"
+        default: "public_html"
+      delete_removed:
+        description: "Delete server files that no longer exist in the repo (destructive — leave off unless you mean it)"
+        type: boolean
+        default: false
 
 # Never let two deploys write to the server at the same time.
 concurrency:
@@ -53,30 +58,70 @@ jobs:
           [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
           if [ -n "$missing" ]; then
             echo "::error::Missing repository secret(s):$missing"
-            echo "Set them with: gh secret set <NAME>"
+            echo "Set them with: printf '%s' '<value>' | gh secret set <NAME>"
             exit 1
           fi
-          echo "All three FTP secrets are present."
+          test -s .github/known_hosts || {
+            echo "::error::.github/known_hosts is missing — refusing to connect without a pinned host key."
+            echo "Regenerate with: ssh-keyscan ftp.creditforcredit.org > .github/known_hosts"
+            exit 1
+          }
+          echo "Secrets present, host key pinned."
+
+      - name: Install lftp and sshpass
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp sshpass
+
+      - name: Show what is on the server now
+        env:
+          SSHPASS: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        run: |
+          set -euo pipefail
+          cat > inspect.lftp <<EOF
+          set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
+          set net:max-retries 2
+          set net:timeout 20
+          open -u "$FTP_USERNAME","" sftp://$FTP_SERVER
+          echo "--- login directory ---"
+          cls -l .
+          echo "--- ${{ inputs.server_dir }} ---"
+          cls -l "${{ inputs.server_dir }}" || echo "(does not exist yet)"
+          bye
+          EOF
+          lftp -f inspect.lftp
 
       - name: Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ${{ inputs.protocol }}
-          server-dir: ${{ inputs.server_dir }}
-          dry-run: ${{ inputs.dry_run }}
+        env:
+          SSHPASS: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        run: |
+          set -euo pipefail
+          FLAGS="--reverse --verbose --no-perms"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            FLAGS="$FLAGS --dry-run"
+          fi
+          if [ "${{ inputs.delete_removed }}" = "true" ]; then
+            FLAGS="$FLAGS --delete"
+          fi
+
           # Repo housekeeping does not belong on a public web server.
-          # `**/*.md` also stops github.md reaching the live site if it is
-          # ever un-ignored — that file holds the FTP credentials.
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/.vscode/**
-            **/*.md
-            **/docs/**
+          # '*.md' also keeps github.md — which holds these credentials — off
+          # the live site if it is ever un-ignored.
+          cat > deploy.lftp <<EOF
+          set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
+          set net:max-retries 2
+          set net:timeout 20
+          open -u "$FTP_USERNAME","" sftp://$FTP_SERVER
+          mirror $FLAGS \
+            -X '.git*' -X '.git*/' \
+            -X '.github/' -X '.vscode/' -X 'docs/' \
+            -X '*.md' \
+            ./ "${{ inputs.server_dir }}"
+          bye
+          EOF
+          lftp -f deploy.lftp
 
       - name: Summary
         if: always()
@@ -87,9 +132,10 @@ jobs:
             echo "| | |"
             echo "|---|---|"
             echo "| Commit | \`${{ github.sha }}\` |"
-            echo "| Protocol | ${{ inputs.protocol }} |"
+            echo "| Transport | SFTP (host key pinned) |"
             echo "| Server directory | \`${{ inputs.server_dir }}\` |"
             echo "| Dry run | ${{ inputs.dry_run }} |"
+            echo "| Delete removed files | ${{ inputs.delete_removed }} |"
             echo "| Result | ${{ job.status }} |"
             echo ""
             if [ "${{ inputs.dry_run }}" = "true" ]; then

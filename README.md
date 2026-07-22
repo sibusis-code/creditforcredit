@@ -241,12 +241,31 @@ is copied by hand. Three optional inputs on the run form:
 | Input | Default | Use |
 |---|---|---|
 | `dry_run` | `false` | Tick it to connect and list what *would* change, uploading nothing. Good for testing after a credential or server change. |
-| `server_dir` | `public_html/` | The web root. Must end in `/`. Change if Xneelo drops the FTP user somewhere else. |
-| `protocol` | `ftps` | Encrypted. Drop to `ftps-legacy`, then `ftp`, only if the host refuses TLS — plain `ftp` sends the password in cleartext. |
+| `server_dir` | `public_html` | The web root, relative to the SFTP login directory. |
+| `delete_removed` | `false` | **Destructive.** Off by default, so a deploy only adds and updates and can never wipe something already on the server. Tick it deliberately when you want the live site to exactly match the repo and stale files cleared out. |
+
+Every run first prints a listing of the login directory and the web root, so you can see what is
+actually on the server before trusting `server_dir`.
 
 The workflow uploads only what changed, and **excludes** `.github/`, `.vscode/`, `docs/`, `.git*`
 and all `*.md`. That last one is load-bearing: it is a second line of defence keeping `github.md`
-(which holds the FTP credentials) off the public web server.
+(which holds the credentials) off the public web server.
+
+### Transport — SFTP, not FTP
+
+Xneelo answers port 22 with `SSH-2.0-FTP Service` and **refuses FTPS on port 21**
+(`500 AUTH not understood`), so the deploy uses **SFTP**. This is not a detail to "simplify" later:
+plain FTP would send the password in cleartext on every single deploy, and this site is heading
+toward learner records and payments.
+
+The server's host key is pinned in **`.github/known_hosts`** and checked with
+`StrictHostKeyChecking=yes`, so if the server is ever impersonated the deploy aborts instead of
+handing over the password. If Xneelo legitimately rebuilds the server the key changes and the
+deploy will fail loudly — **verify the change is expected**, then re-pin:
+
+```sh
+ssh-keyscan ftp.creditforcredit.org > .github/known_hosts
+```
 
 ### Credentials
 
@@ -258,8 +277,8 @@ logs:
 | Secret | Value |
 |---|---|
 | `FTP_SERVER` | `ftp.creditforcredit.org` |
-| `FTP_USERNAME` | Xneelo FTP user |
-| `FTP_PASSWORD` | Xneelo FTP password |
+| `FTP_USERNAME` | Xneelo SFTP user |
+| `FTP_PASSWORD` | Xneelo SFTP password |
 
 Rotate one without exposing it in shell history by piping it in:
 
