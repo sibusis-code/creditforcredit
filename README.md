@@ -4,8 +4,8 @@
 > Short, credit-bearing modules that stack toward a national qualification — and count as
 > recognised B-BBEE Skills Development spend for the companies that fund them.
 
-**Preview build:** [sibusis-code.github.io/creditforcredit](https://sibusis-code.github.io/creditforcredit/)
-**Live domain (not deployed yet):** creditforcredit.org — see §6.
+**Live:** [creditforcredit.org](https://creditforcredit.org) · **Preview:**
+[sibusis-code.github.io/creditforcredit](https://sibusis-code.github.io/creditforcredit/) — see §6.
 
 This repository is the public site for the platform, and the **engine** every company-branded
 academy is re-skinned from. This README is the blueprint: it captures the positioning and documents
@@ -109,7 +109,8 @@ we stand up a tenant instance for them. `companies.html` carries that pitch.
 3. Edit `catalog.js` if their module mix differs.
 4. Review page copy for industry framing — identity names swap automatically, but positioning
    lines (e.g. "for a solar business") are a deliberate human edit.
-5. Update `CNAME` to their domain.
+5. Point the deploy at their host — new `FTP_*` secrets and a re-pinned
+   `.github/known_hosts` (§6). Do **not** add a `CNAME`.
 
 `tenants/sps-dark-logo.svg` is kept as the first tenant asset.
 
@@ -127,7 +128,8 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `app.js` | Shared behaviour: card rendering, catalogue filters/search, carousel, scroll reveals. |
 | `docs/bee-skills-spec.md` | B-BBEE Skills Development data spec + the question list for the Empowered App walkthrough. |
 | `creditforcredit-logo.svg`, `favicon.svg` | Platform brand marks. |
-| `CNAME` | GitHub Pages custom domain. |
+| `.htaccess` | Live-host Apache rules: clean URLs, forced HTTPS, caching, security headers. GitHub Pages ignores it. |
+| `.github/workflows/deploy-live.yml` | The one-click live deploy (§6). |
 
 ### Pages
 
@@ -136,11 +138,31 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `index.html` | Home — hero, featured modules, categories, how it works, two audiences, trust, CTA |
 | `modules.html` | Full catalogue with filters, search and modality segments |
 | `course.html` | Module detail (`?c=slug`), rendered from `catalog.js` |
+| `404.html` | Branded not-found page (Apache `ErrorDocument`) — **absolute** asset paths |
+| `404.html` | Branded not-found page (Apache `ErrorDocument`); absolute asset paths |
 | `record.html` | **The Learner Credit Record** — what's on it, how it builds, who sees it |
 | `about.html` | What the platform is, the spine, accreditation |
 | `companies.html` | The employer offer **and the branded-academy pitch** |
 | `contact.html` | Enquiry form (FormSubmit) |
 | `thanks.html` | Form success page (`noindex`) |
+
+### URLs are extensionless
+
+Links are written **without `.html`** (`href="about"`, `href="course?c=slug"`, `href="./"` for home).
+This works unchanged on both hosts: **GitHub Pages serves extensionless URLs natively**, and
+`.htaccess` makes Apache do the same on the live domain.
+
+- Home is `href="./"`, never `/` — the preview lives under `/creditforcredit/`, so a root-absolute
+  link would escape the project.
+- `.htaccess` **301s `/page.html` → `/page`**, so links shared or indexed before this change keep
+  working, and each page has exactly one canonical URL.
+- Trailing slashes are stripped (`/about/` → `/about`); without that, relative links on the page
+  resolve against `/about/` and every one of them breaks.
+- Bind hrefs to **`emailHref`**, not `email` — `data-b-href="email"` writes the bare address and
+  silently drops the `mailto:` scheme.
+
+`404.html` uses **absolute** asset paths (`/styles.css`), because Apache serves it from any URL and
+relative paths would resolve against the bad one.
 
 ### How a page wires up
 
