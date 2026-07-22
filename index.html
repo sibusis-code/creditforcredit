@@ -8,7 +8,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Every photo on the site comes from Unsplash; open the connection early. -->
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- The hero photo is a CSS background, so the browser finds it late. Preloading
+     it is the single biggest win on how quickly the page looks finished. -->
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1800&q=80" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script src="brand.js"></script>
 </head>
@@ -23,7 +28,7 @@
   <div class="hero-photo" style="background-image:url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1800&q=80)"></div>
   <div class="hero-inner">
     <h1>Get credit for the credits you've earned</h1>
-    <p class="lead">Apply the school credits you already hold toward the cost of going further. We're changing how learner bursaries are awarded — funded on the work you've already done, not on who you know.</p>
+    <p class="lead">Apply the school credits you already hold toward the cost of going further — a new way of awarding bursaries, funded on the work you've already done.</p>
     <form class="hero-search" data-search-form>
       <input type="text" placeholder="What do you want to learn?" aria-label="Search modules">
       <button class="go" type="submit" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>

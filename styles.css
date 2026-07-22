@@ -62,7 +62,9 @@ nav.scrolled{box-shadow:0 6px 26px -18px rgba(35,32,70,.5)}
 .nav-icons a:hover,.nav-icons button:hover{color:var(--indigo)}
 .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--indigo);color:#fff!important;padding:11px 22px;border-radius:30px;font-weight:600;font-size:15px;box-shadow:0 12px 26px -14px rgba(79,70,229,.8);transition:background .2s,transform .2s}
 .nav-cta:hover{background:var(--indigo-deep);transform:translateY(-2px)}
-.nav-toggle{display:none;background:none;border:1.5px solid var(--ink);border-radius:30px;padding:8px 12px;color:var(--ink);cursor:pointer;line-height:0}
+/* Must out-specify `.nav-icons button` (0-1-1) or display:none never applies
+   and the burger shows on desktop. Keep the .nav-icons prefix on both rules. */
+.nav-icons .nav-toggle{display:none;background:none;border:1.5px solid var(--ink);border-radius:30px;padding:8px 12px;color:var(--ink);cursor:pointer;line-height:0}
 .nav-toggle svg{width:24px;height:24px}
 
 /* ---------- BUTTONS ---------- */
@@ -91,16 +93,19 @@ section{padding:76px 0}
 .hero{position:relative;background:linear-gradient(180deg,var(--header) 0%,var(--header-2) 100%);overflow:hidden}
 .hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.9}
 .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(26,22,66,.88) 0%,rgba(26,22,66,.6) 45%,rgba(26,22,66,.18) 100%)}
-.hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:96px 26px 150px;color:#fff}
-.hero h1{color:#fff;font-size:clamp(38px,6vw,72px);font-weight:800;letter-spacing:-.03em;margin:0 0 16px;max-width:15ch}
-.hero .lead{color:rgba(255,255,255,.94);font-size:clamp(19px,2.4vw,27px);font-weight:400;max-width:30ch;margin-bottom:38px;line-height:1.32}
+/* Vertical rhythm is tuned so the headline, lead, search box AND buttons all
+   land above the fold on a ~768px-tall laptop. Padding scales with viewport
+   HEIGHT (vh), not width, because height is what pushes the CTAs off-screen. */
+.hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:clamp(40px,6vh,72px) 26px clamp(88px,11vh,124px);color:#fff}
+.hero h1{color:#fff;font-size:clamp(31px,4.2vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1.06;margin:0 0 14px;max-width:19ch}
+.hero .lead{color:rgba(255,255,255,.94);font-size:clamp(16px,1.45vw,20px);font-weight:400;max-width:54ch;margin-bottom:24px;line-height:1.45}
 .hero-search{display:flex;background:#fff;border-radius:50px;padding:8px 8px 8px 26px;max-width:660px;box-shadow:var(--shadow-lg);align-items:center;gap:10px}
 .hero-search input{flex:1;border:0;outline:0;font-size:18px;font-family:var(--font);color:var(--ink);background:none;min-width:0}
 .hero-search input::placeholder{color:#9aa1a8}
 .hero-search .go{flex:0 0 auto;background:var(--gold);border:0;border-radius:50px;width:60px;height:56px;display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:background .2s}
 .hero-search .go:hover{background:var(--gold-deep)}
 .hero-search .go svg{width:26px;height:26px}
-.hero-cta{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap}
+.hero-cta{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap}
 /* curved bottom edge, ITU-style */
 .hero-curve{position:absolute;left:0;right:0;bottom:-1px;z-index:2;line-height:0}
 .hero-curve svg{width:100%;height:70px}
@@ -298,13 +303,17 @@ footer .foot-logo img{height:52px;margin-bottom:22px}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.carousel-track{scroll-behavior:auto}}
 
 /* ---------- RESPONSIVE NAV ---------- */
-@media(max-width:900px){
+/* Five links + CTA + icons stop fitting the bar below ~1020px, so the menu
+   collapses at 1024 — not 900, where it used to overlap the logo. */
+@media(max-width:1024px){
   .nav-links{position:fixed;inset:72px 0 auto 0;background:var(--header);flex-direction:column;gap:0;padding:10px 26px 26px;margin:0;box-shadow:0 22px 40px -22px rgba(0,0,0,.3);transform:translateY(-140%);transition:transform .3s;align-items:stretch}
   .nav-links.open{transform:none}
   .nav-links a{padding:15px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:17px}
   .nav-cta{margin-top:12px;justify-content:center}
-  .nav-toggle{display:inline-flex;margin-left:auto}
-  .nav-icons{margin-left:0}
+  .nav-icons{margin-left:auto}
+  .nav-icons .nav-toggle{display:inline-flex}
+}
+@media(max-width:900px){
   .pillars{grid-template-columns:repeat(2,1fr)}
   .grid-cards{grid-template-columns:1fr!important}
 }
@@ -312,5 +321,19 @@ footer .foot-logo img{height:52px;margin-bottom:22px}
   .pillars{grid-template-columns:1fr}
   .info-grid{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr;gap:28px}
+  .hero-search{padding:6px 6px 6px 18px}
+  .hero-search input{font-size:16px}
   .hero-search .go{width:52px;height:50px}
+  /* Stack the hero buttons full-width — side by side they wrap into a mess
+     and each becomes too small a tap target. */
+  .hero-cta{gap:10px}
+  .hero-cta .btn{flex:1 1 100%}
+  .btn{padding:14px 24px}
+}
+/* Short landscape screens (laptops at 1366x768, phones on their side) have no
+   vertical room to spare — pull the hero in further so the CTAs still show. */
+@media(max-height:760px) and (min-width:1025px){
+  .hero h1{font-size:clamp(30px,3.4vw,46px)}
+  .hero .lead{font-size:17px;margin-bottom:20px}
+  .hero-inner{padding-top:36px;padding-bottom:84px}
 }
