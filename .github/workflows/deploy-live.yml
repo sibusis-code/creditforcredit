@@ -80,8 +80,14 @@ jobs:
           set -euo pipefail
           cat > "$RUNNER_TEMP/inspect.lftp" <<EOF
           set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
-          set net:max-retries 2
-          set net:timeout 20
+          set net:max-retries 5
+          set net:timeout 60
+          set net:reconnect-interval-base 5
+          set net:reconnect-interval-multiplier 1.5
+          # Shared hosting throttles concurrent SFTP channels; one at a time is
+          # slower but survives. A 2-retry/20s budget failed once the file
+          # count grew past ~30.
+          set mirror:parallel-transfer-count 1
           open -u "$FTP_USERNAME","" sftp://$FTP_SERVER
           echo "--- login directory ---"
           cls -l .
@@ -111,8 +117,14 @@ jobs:
           # the live site if it is ever un-ignored.
           cat > "$RUNNER_TEMP/deploy.lftp" <<EOF
           set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$GITHUB_WORKSPACE/.github/known_hosts"
-          set net:max-retries 2
-          set net:timeout 20
+          set net:max-retries 5
+          set net:timeout 60
+          set net:reconnect-interval-base 5
+          set net:reconnect-interval-multiplier 1.5
+          # Shared hosting throttles concurrent SFTP channels; one at a time is
+          # slower but survives. A 2-retry/20s budget failed once the file
+          # count grew past ~30.
+          set mirror:parallel-transfer-count 1
           open -u "$FTP_USERNAME","" sftp://$FTP_SERVER
           mirror $FLAGS \
             -X '.git*' -X '.git*/' \
