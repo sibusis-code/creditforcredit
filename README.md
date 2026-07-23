@@ -125,6 +125,7 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `brand.js` | **The one file you edit to re-skin.** `window.BRAND` config + the `SITE` engine that renders the shared nav/footer, applies colour tokens, and fills `data-b` placeholders. |
 | `styles.css` | Shared stylesheet. Colour tokens in `:root` are overridden at runtime by `BRAND.colors`. |
 | `catalog.js` | `window.MODULES` — the module catalogue (content, not brand). |
+| `packs.js` | `window.PACKS` — corporate packs. A pack is a list of catalogue slugs, so it never drifts. |
 | `app.js` | Shared behaviour: card rendering, catalogue filters/search, carousel, scroll reveals. |
 | `docs/bee-skills-spec.md` | B-BBEE Skills Development data spec + the question list for the Empowered App walkthrough. |
 | `creditforcredit-logo.svg`, `favicon.svg` | Platform brand marks. |
@@ -138,6 +139,7 @@ Plain static site — no build step, no dependencies. Open `index.html` and it r
 | `index.html` | Home — hero, featured modules, categories, how it works, two audiences, trust, CTA |
 | `modules.html` | Full catalogue with filters, search and modality segments |
 | `course.html` | Module detail (`?c=slug`), rendered from `catalog.js` |
+| `pack.html` | Corporate pack (`?p=slug`) — **noindex, unlisted**, shared by link like a proposal |
 | `404.html` | Branded not-found page (Apache `ErrorDocument`) — **absolute** asset paths |
 | `404.html` | Branded not-found page (Apache `ErrorDocument`); absolute asset paths |
 | `record.html` | **The Learner Credit Record** — what's on it, how it builds, who sees it |
@@ -237,15 +239,23 @@ All module content lives in the **`window.MODULES` array** in `catalog.js`, shar
 filterable card, and has a working detail page automatically. To feature it on the home row,
 add its slug to the `order` array in `app.js`.
 
-### Two course types — get this right or we publish a false claim
+### Three course types — get this right or we publish a false claim
 
-| | Credit-bearing (default) | `type:"cpd"` |
-|---|---|---|
-| Set by | no `type` field | `type:"cpd"`, `credits:0` |
-| Earns | credits toward the NQF 5 qualification | certificate of completion |
-| B-BBEE | claimable Skills Development spend | **not** claimable |
-| Delivered by | accredited QCTO provider | a named `partner` |
-| Example | AI Fundamentals | the Workplace Wellness programme |
+| | Credit-bearing (default) | `type:"cpd"` | `type:"brokered"` |
+|---|---|---|---|
+| Set by | no `type` field | `type:"cpd"`, `credits:0` | `type:"brokered"`, `credits:0` |
+| Who teaches | us, via an accredited SDP | a `partner`, through us | a third party, on **their** platform |
+| Earns | credits toward the NQF 5 qualification | certificate of completion | **the provider's** certificate |
+| B-BBEE | claimable Skills Development spend | **not** claimable | **not** claimable |
+| Example | AI Fundamentals | Workplace Wellness | HarvardX, ESG Academy |
+
+**Brokered** is the "we buy the seat on their behalf" model: we do not deliver the course, so
+`app.js` names the provider, links `providerUrl`, and prints an explicit **non-affiliation line**.
+Required fields: `provider`, `providerUrl`, `certificate`.
+
+> ⚠️ **Never guess a provider.** Every brokered attribution needs a verified source URL recorded in
+> `docs/brokered-courses.md`. A wrong attribution replaces one false claim with another — and use
+> our own descriptions, never the provider's marketing copy.
 
 Before this existed, the site asserted credits for **every** course — `app.js` rendered
 *"N credits toward NQF 5"* and *"supports your B-BBEE Skills Development scorecard"* regardless.

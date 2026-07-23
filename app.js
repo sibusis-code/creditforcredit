@@ -8,7 +8,12 @@
   var $  = function(s,c){return (c||document).querySelector(s);};
   var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
   var M  = window.MODULES || [];
+  var P  = window.PACKS || [];
   var B  = window.BRAND || {};
+  /* Provider names carry ampersands ("Harvard Professional & Executive
+     Development"), so anything interpolated into markup gets escaped. */
+  var esc = function(s){ return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
 
   /* Fill brand placeholders (nav/footer are rendered inline per page) */
   if(window.SITE){ window.SITE.applyText(); }
@@ -58,9 +63,11 @@
         '<div class="mcard-mode">'+window.MODALITY[m.modality]+'</div>'+
         '<h3><a href="'+url+'">'+m.title+'</a></h3>'+
         '<p class="mcard-desc">'+m.lead+'</p>'+
-        '<div class="mcard-meta">'+(m.type==="cpd"
-            ? certSvg+' Certificate · '+m.hours
-            : creditSvg+' '+m.credits+' credits · '+m.hours)+'</div>'+
+        '<div class="mcard-meta">'+(m.type==="brokered"
+            ? certSvg+' '+esc(m.provider)+' · '+m.hours
+            : m.type==="cpd"
+              ? certSvg+' Certificate · '+m.hours
+              : creditSvg+' '+m.credits+' credits · '+m.hours)+'</div>'+
       '</div>'+
     '</article>';
   }
@@ -140,6 +147,54 @@
     render();
   }
 
+  /* ---------- CORPORATE PACK (pack.html?p=slug) ---------- */
+  var packEl = $("#packDetail");
+  if(packEl){
+    var pslug = new URLSearchParams(location.search).get("p") || "";
+    var pk = P.filter(function(x){ return x.slug === pslug; })[0];
+
+    if(!pk){
+      /* Unknown or missing ?p= — say so rather than rendering an empty shell. */
+      $("#packTitle").textContent = "Pack not found";
+      $("#packIntro").textContent = pslug
+        ? 'There is no pack called "' + pslug + '". Check the link, or talk to us and we will put one together.'
+        : "No pack was specified in the link.";
+      $("#packGroups").innerHTML =
+        '<section><div class="wrap"><a href="companies" class="btn btn-primary">See the company offer</a></div></section>';
+    } else {
+      document.title = pk.company + " Pack — " + (B.displayName || B.academyName || "Credit for Credit");
+      $("#packCrumb").textContent = pk.company + " Pack";
+      $("#packTitle").textContent = "A learning pack for " + pk.company;
+      $("#packIntro").textContent = pk.intro || "";
+      $("#packAudience").textContent = pk.audience ? "For: " + pk.audience : "";
+
+      /* Reuses card() — a pack is a list of slugs, so it never drifts from the catalogue. */
+      var missing = [];
+      $("#packGroups").innerHTML = (pk.groups || []).map(function(g, i){
+        var mods = (g.slugs || []).map(function(s){
+          var found = M.filter(function(x){ return x.slug === s; })[0];
+          if(!found){ missing.push(s); }
+          return found;
+        }).filter(Boolean);
+        if(!mods.length) return "";
+        return '<section'+(i%2 ? ' class="section-soft"' : '')+'>'+
+          '<div class="wrap">'+
+            '<div class="sec-head reveal">'+
+              '<span class="eyebrow">'+esc(pk.company)+' pack</span>'+
+              '<h2>'+esc(g.title)+'</h2>'+
+              (g.note ? '<p>'+esc(g.note)+'</p>' : '')+
+            '</div>'+
+            '<div class="grid-cards">'+ mods.map(card).join("") +'</div>'+
+          '</div></section>';
+      }).join("");
+
+      if(missing.length && window.console){
+        console.warn("packs.js references slugs missing from catalog.js:", missing);
+      }
+      $$(".reveal", packEl).forEach(watch);
+    }
+  }
+
   /* ---------- COURSE DETAIL (course.html) ---------- */
   var detail = $("#courseDetail");
   if(detail){
@@ -159,7 +214,9 @@
     /* Per-module outcomes win. Without this, an unmapped topic silently falls
        back to the Business/AI bullets — wrong for anything non-technical. */
     var learn = m.outcomes || learnByTopic[m.topic] || learnByTopic["Business"];
-    var isCpd = m.type === "cpd";
+    var isCpd  = m.type === "cpd";
+    var isBrok = m.type === "brokered";
+    var noCred = isCpd || isBrok;   /* neither carries NQF credits */
 
     var enrolLabel = m.accred ? "Rolling intake" : (m.avail==="Coming Soon" ? "Opening soon" : "Open — enrol anytime");
     var price = "Enquire";
@@ -185,17 +242,38 @@
       item(i_topic,"g","Training topic", m.topic) +
       item(i_lvl,"o","Level", m.level) +
       item(i_lang,"","Language", "English") +
-      item(i_cred,"g", isCpd ? "Recognition" : "Credits",
-           isCpd ? "Certificate of completion — not NQF credit-bearing"
-                 : m.credits + " credits toward " + (B.nqf||"NQF 5")) +
+      item(i_cred,"g", noCred ? "Recognition" : "Credits",
+           isBrok ? esc(m.certificate || "Provider certificate") + " — not NQF credit-bearing"
+                  : isCpd ? "Certificate of completion — not NQF credit-bearing"
+                          : m.credits + " credits toward " + (B.nqf||"NQF 5")) +
       item(i_dur,"o","Duration", m.hours) +
-      item(i_reg,"", isCpd ? "Delivered by" : "Provider",
-           isCpd ? (m.partner || "a specialist partner")
-                 : "In association with " + (B.providerShort||"an accredited provider"));
+      item(i_reg,"", noCred ? "Delivered by" : "Provider",
+           isBrok ? (m.providerUrl
+                      ? '<a href="'+esc(m.providerUrl)+'" target="_blank" rel="noopener nofollow">'+esc(m.provider)+'</a>'
+                      : esc(m.provider))
+                  : isCpd ? esc(m.partner || "a specialist partner")
+                          : "In association with " + (B.providerShort||"an accredited provider"));
 
     var qual = B.qualification || "Occupational Certificate: Computer Technician";
     var accredLine;
-    if (isCpd) {
+    if (isBrok) {
+      /* We do not teach this. Say so plainly, name the provider, and make the
+         non-affiliation explicit — the "Worth is not part of Discovery Bank"
+         pattern. NEVER add a credit or B-BBEE claim to this branch. */
+      var prov = esc(m.provider || "the provider");
+      accredLine =
+        '<p>We don\'t run this course — <strong>'+prov+'</strong> does. Choose it and we buy your '+
+        'seat on your behalf; you study on their own platform and receive '+
+        (m.certificate ? 'a <strong>'+esc(m.certificate)+'</strong>' : 'their certificate')+
+        ', issued by them.</p>'+
+        '<p>It does <strong>not</strong> carry credits toward the '+qual+', and employer spend on it '+
+        'is <strong>not</strong> claimable as B-BBEE Skills Development. What you get is the '+
+        'provider\'s own credential, which stands on its own.</p>'+
+        '<p style="font-size:15px;color:var(--muted)">'+esc(B.academyName||"Credit for Credit")+
+        ' is not affiliated with, endorsed by, or acting as an agent of '+prov+'. '+
+        (m.providerUrl ? 'Course details and pricing are set by them — see <a href="'+esc(m.providerUrl)+
+          '" target="_blank" rel="noopener nofollow">their course page</a>.' : '')+'</p>';
+    } else if (isCpd) {
       /* NEVER add a credit or B-BBEE claim to this branch. These courses are
          professional development, not units of a national qualification. */
       accredLine =
@@ -220,9 +298,11 @@
     detail.querySelector("#enrolLabel").textContent = enrolLabel;
     detail.querySelector("#priceMain").textContent = price;
     detail.querySelector("#priceSub").textContent = priceSub;
-    detail.querySelector("#enrolNote").innerHTML = isCpd
-      ? 'Certificate of completion, recorded on your credit record. Not NQF credit-bearing and not B-BBEE skills spend.'
-      : 'Credit-bearing toward the <span>'+qual+'</span> ('+(B.nqf||"NQF 5")+') · scorecard-ready skills spend.';
+    detail.querySelector("#enrolNote").innerHTML = isBrok
+      ? 'We buy your seat; you study with '+esc(m.provider||"the provider")+' and receive their certificate. Not NQF credit-bearing and not B-BBEE skills spend.'
+      : isCpd
+        ? 'Certificate of completion, recorded on your credit record. Not NQF credit-bearing and not B-BBEE skills spend.'
+        : 'Credit-bearing toward the <span>'+qual+'</span> ('+(B.nqf||"NQF 5")+') · scorecard-ready skills spend.';
     detail.querySelector("#learnList").innerHTML = learn.map(function(l){ return '<li>'+tickSvg+'<span>'+l+'</span></li>'; }).join("");
     detail.querySelector("#courseProse").innerHTML = '<p>'+m.lead+'</p>' + accredLine;
 

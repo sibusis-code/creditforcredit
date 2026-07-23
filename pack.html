@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Pack</title>
+<!-- A proposal shared by link, not a public page. Keep this noindex. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A curated corporate learning pack.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="brand.js"></script>
+</head>
+<body data-page="companies">
+
+<nav id="nav"></nav>
+<script>SITE.renderNav()</script>
+
+<div id="packDetail">
+  <section class="pagehead">
+    <div class="wrap">
+      <div class="crumb"><a href="./">Home</a><span>›</span><a href="companies">For Companies</a><span>›</span><span class="cur" id="packCrumb">Pack</span></div>
+      <h1 id="packTitle">Corporate Pack</h1>
+      <p class="lead" id="packIntro"></p>
+      <p id="packAudience" style="margin-top:14px;font-size:15px;color:var(--body);font-weight:600"></p>
+    </div>
+    <div class="hero-curve"><svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,56 L0,26 C320,58 560,58 720,40 C900,20 1160,10 1440,38 L1440,56 Z" fill="#ffffff"/></svg></div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">How the pack works</span>
+        <h2>Pick it, we buy it, they study</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div><h3>1 · They choose</h3><p>An employee or executive picks a course from the pack that fits where they're going.</p></div>
+        <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>2 · We buy the seat</h3><p>Where the course belongs to another institution, we purchase it on their behalf — one invoice to you, no procurement scramble.</p></div>
+        <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>3 · They study</h3><p>On the provider's own platform, and they receive that provider's certificate.</p></div>
+        <div class="pillar reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div><h3>4 · It lands on their record</h3><p>Everything completed sits on one <a href="record">credit record</a> — credits where they apply, certificates where they don't.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROUPS (rendered by app.js) -->
+  <div id="packGroups"></div>
+
+  <!-- WHAT COUNTS -->
+  <section class="section-soft">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">Read this bit</span><h2>What counts for what</h2></div>
+      <div class="prose reveal">
+        <p><strong>Credit-bearing modules</strong> are delivered through an accredited QCTO Skills Development Provider. They carry credits toward the <span data-b="qualification">Occupational Certificate: Computer Technician</span> and the spend is recognised <strong>B-BBEE Skills Development</strong>.</p>
+        <p><strong>Brokered courses and wellness</strong> are not. They earn the provider's own certificate, they do not carry NQF credits, and we do not claim them as scorecard spend. We'd rather tell you that now than have a verification agency tell you later.</p>
+        <p>That split is deliberate: the pack mixes what scores with what's genuinely worth doing, and labels which is which.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Shall we cost it out?</h2>
+      <p>Tell us the headcount and which groups matter, and we'll come back with numbers.</p>
+      <a href="contact" class="btn btn-white">Talk to our team</a>
+    </div>
+  </section>
+</div>
+
+<footer id="siteFooter"></footer>
+<script>SITE.renderFooter()</script>
+
+<script src="catalog.js"></script>
+<script src="packs.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
